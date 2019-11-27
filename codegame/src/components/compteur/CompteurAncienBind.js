@@ -3,16 +3,16 @@ import ReactDOM from "react-dom";
 import  convertMS from 'ms-convert';
 //import avion from "../../assets/avion/Plane/Fly (1).png";
 class Compteur extends React.Component {
-
-    state = {
+  constructor(props){
+    super(props)
+    this.state = {
       time: 0,
+
     }
+    this.startTimer = this.startTimer.bind(this)
 
-
-componentDidMount(){
-  this.startTimer()
-}
-  startTimer=()=> {
+  }
+  startTimer() {
 {/*
   -modifie le state start qui sera le time total (ex:16h05 50ms) en ms au moment ou je clique sur start (=ancien time )
   - nouveau time ms = time actuelle en ms - ancien time ms
@@ -36,9 +36,7 @@ componentDidMount(){
      return (
        <div>
          <h3>timer: {this.state.time}</h3>
-      {/*
-          <button onClick={this.startTimer}>start</button>
-        */}
+         <button onClick={this.startTimer}>start</button>
 
        </div>
      );

@@ -11,7 +11,9 @@ constructor(props){
 
 componentDidUpdate(){
   setTimeout(    document.addEventListener('keydown',   this.onKeyPressed),1000);
+
 }
+
 
 
   onKeyPressed(e) {
@@ -45,7 +47,7 @@ var margin = .1;
     return (
     !this.props.state   &&<div
 
-        style={{ position: "absolute",width:"100%",height:"30em",background:"#000",overflow:"hidden" }}
+        style={{ position: "absolute",width:"100%",height:"30em",overflow:"hidden" }}
 
       >
       <div><button>Défi suivant</button></div>
@@ -53,6 +55,7 @@ var margin = .1;
           <div >
 
             <img id="avion" src={avion} style={{width:"7%"}} />
+
           </div>
         </div>
       </div>
