@@ -19,7 +19,6 @@ class Test extends React.Component {
         valeur:"",
 
         valeurcss:"",
-        click:false
       }
 
     }
@@ -52,13 +51,13 @@ class Test extends React.Component {
   const url = getGeneratedPageURL({
     html: this.state.valeurhtml,
     css: this.state.valeurcss,
-  js:setTimeout(()=>{
+  js:setInterval(()=>{
     if(this.state.click){
         js:eval(this.state.valeurjs)
     }
 
 
-},1),
+},10),
 
   })
 
@@ -94,12 +93,6 @@ class Test extends React.Component {
 
   }
   />
-  <button onClick={()=>{
-    this.setState({click: true});
-    setTimeout(()=>{
-     this.setState({click: false})
-  },2000)
-}}>compile</button>
   <CodeMirror
 
     value='//html'

@@ -5,6 +5,7 @@
   "dependencies": {
     "codemirror": "^5.49.2",
     "jshint": "^2.10.3",
+    "locutus": "^2.0.11",
     "ms-convert": "^1.0.1",
     "pretty-ms": "^5.1.0",
     "react": "^16.12.0",
