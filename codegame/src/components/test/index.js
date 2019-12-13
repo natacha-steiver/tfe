@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import { JSHINT } from 'jshint'
-
+import {getList} from '../../ajax'
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/javascript-lint'
 import 'codemirror/mode/javascript/javascript'
@@ -17,12 +17,37 @@ class Test extends React.Component {
       this.state={
 
         valeur:"",
+        solution: "",
 
         valeurcss:"",
         click:false
       }
 
     }
+    componentDidMount(){
+      this.getAll()
+    }
+
+
+
+    getAll = () =>{
+      getList().then(
+        data => {
+          const result=data[0].result.replace(/\\n/g,"<br />").replace(/\\t/g,"&nbsp; ")
+          this.setState(
+          {
+
+            solution:result,
+
+          },    () => {
+              console.log(this.state.solution)
+
+              }
+          )
+        }
+      )
+    }
+
   componentDidUpdate(){
       this.test= React.createRef();
     const getGeneratedPageURL = ({ html, css, js }) => {
@@ -83,7 +108,12 @@ class Test extends React.Component {
         style={{width:'100%',height:'50%'}}
         onChange={(editor, data, value) => {
 
+if(editor.getValue().includes(this.state.solution)){
+  alert('ok')
+}else{
 
+console.log( this.state.solution+"</br>"+editor.getValue())
+}
 
 
         this.setState({valeurjs:  editor.getValue()})
@@ -104,7 +134,8 @@ class Test extends React.Component {
 
     value='//html'
     options={{
-      mode: 'javascript',
+      mode : "xml",
+      htmlMode: true,
       gutters: ["CodeMirror-lint-markers"],
       lint:true,
       styleActiveLine: true,
@@ -116,7 +147,7 @@ class Test extends React.Component {
 
 
 
-    this.setState({valeurhtml: `<h1>hhhh</h1>`})
+    this.setState({valeurhtml: editor.getValue()})
 
 
 

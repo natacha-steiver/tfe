@@ -31,7 +31,7 @@ getAllItem = () =>{
       this.setState(
       {
 
-        menu:data[0].nom,
+        menu:data,
 
       },    () => {
           console.log(this.state.menu)
@@ -51,12 +51,20 @@ render(){
           <div>
             <nav>
               <ul>
-
+{/*map a l'extérieur ou comme clé li...*/}
                       <ul>
                       <h2>javascript</h2>
-                      <li>
-                        <Link to="/js/ex1">ex1</Link>
-                      </li>
+
+                        {
+                          this.state.menu.map(item=>(
+                                <li  key={item}>
+                            <Link to={ `js/${item.nom}` }>
+                            {item.nom}
+                            </Link>
+                                  </li>
+                          ))
+                        }
+
                       </ul>
               </ul>
             </nav>
