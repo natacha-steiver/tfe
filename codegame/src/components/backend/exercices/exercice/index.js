@@ -2,24 +2,24 @@ import React,{Component} from 'react'
 //import {getList,storeSite} from './ajax'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
-import Exercice from '../backend/exercices/exercice/index'
-
-
-class Admin extends Component{
+import Add from '..//add/index'
+import Update from '../update/index'
+import Delete from '../delete/index'
+class Exercice extends Component{
 
 
     render() {
 
 
 return(
-  <div>
-  <h2>01 <span> - Administration</span></h2>
-  <div>
 
-  <Exercice/>
+  <div>
+  <h3>exercices</h3>
+  <Add/>
+  <Update/>
+  <Delete/>
+  </div>
 
-  </div>
-  </div>
 );
 
 
@@ -30,4 +30,4 @@ return(
 
 }
 
-export default Admin
+export default Exercice

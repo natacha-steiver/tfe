@@ -62,20 +62,18 @@ componentDidUpdate(){
     let test= document.querySelectorAll('.modifier')
 //a modifier pour que ce soit le bon résultat et pas que le premier p
 
-//var placeholder =  document.querySelector('.modifier').innerHTML
+    var placeholder =  document.querySelector('.modifier').innerHTML
         test.forEach((test) => {
 /*
 this.state.items.map(item=>(
   test.innerHTML=`<input class="input"  placeholder=${item.type}/><input class="input"  placeholder=${item.solution}/>`
 ))
  */
-var placeholder=test.innerHTML;
-
            test.innerHTML='<input class="input" type="text" placeholder='+placeholder+' />'
             function logKey(event) {
               if (event.key === "Enter") {
                event.preventDefault();
-                 test.innerHTML="<p>"+event.target.value+"</p>"
+                 test.innerHTML=event.target.value
 
                // Do more work
            }
@@ -136,22 +134,22 @@ const data=this.state.items
       <button id="update" >envoie</button>
 
         </form>
-{this.state.items.map(item=>(
+{this.state.items.map((item,index)=>(
   <div>
 
-  <div >
+  <div className="conteneur">
 
-  <p className="modifier" id="type" >{item.type}</p>
+  <p className="modifier" id="type" data={"type"+index}>{item.type}</p>
   </div>
-  <div >
-  <p  className="modifier" id="solution">{item.solution}</p>
+  <div className="conteneur">
+  <p className="modifier" id="solution"  data={"solution"+index}>{item.solution}</p>
   </div>
 
 
 
 
 <button onClick={(e)=>{this.modifier(e)}}>modif</button>
-<button onClick={()=>{         updateEx(item._id,document.querySelector('.modifier:nth-of-type(1) p').innerHTML,document.querySelector('.modifier:nth-of-type(2) p').innerHTML)
+<button onClick={()=>{console.log(document.querySelector(`[data="type${index}"]`).innerHTML) ;updateEx(item._id,document.querySelector(`[data="type${index}"]`).innerHTML,document.querySelector(`[data="solution${index}"]`).innerHTML)
 }}>update</button>
   </div>
 ))}

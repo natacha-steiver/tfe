@@ -39,9 +39,7 @@ class AuthController {
         }
 
 
-        async getUser({request, auth, response}){
 
-        }
 }
 
 
