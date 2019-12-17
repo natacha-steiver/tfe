@@ -33,8 +33,12 @@ Route.group(
 /*
     Authentification
  */
+
   Route.get('users', 'AuthController.getUser')
   Route.get('auth/register', 'AuthController.register')
   Route.post('auth/register', 'AuthController.register')
   Route.get('auth/login', 'AuthController.login')
   Route.post('auth/login', 'AuthController.login')
+
+
+Route.on('/').render('app')
