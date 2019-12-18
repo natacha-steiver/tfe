@@ -16,9 +16,13 @@ async index({response}){
     const exercice = new Solution()
     exercice.type = exType.type
     exercice.solution =exSolution.solution
-
+const exerciceLast=  await Solution
+    .sort({ "_id":-1 })
+    .limit(1)
+    .fetch()
+//db.tfe.getCollection("solutions").find().sort({"_id":-1}).limit(1)
     await exercice.save()
-    return response.status(201).json(exercice.type)
+    return response.status(201).json({type:exercice.type,solution:exercice.solution,all:exerciceLast})
   }
 
   async show ({params,response}) {
@@ -36,10 +40,7 @@ async index({response}){
     exercice.type = exType.type
     exercice.solution =exSolution.solution
 
-  return response.status(200).json({
-  type:'js'
-
-  })
+  return response.status(200).json({type:exercice.type,solution:exercice.solution,id:params.id})
   }
 
   async delete ({  params, response }) {
@@ -49,7 +50,7 @@ async index({response}){
 
     return response.status(200).json({
 
-      idec: JSON.stringify(params.id),
+      id: params.id,
 
 
 

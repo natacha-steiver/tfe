@@ -58,7 +58,7 @@ render(){
 
                         {
                           this.state.menu.map(item=>(
-                                <li  key={item}>
+                                <li  key={item._id}>
                             <Link to={ `/js/${item.nom}` }>
                             {item.nom}
                             </Link>

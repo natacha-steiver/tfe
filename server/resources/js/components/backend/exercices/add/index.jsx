@@ -24,14 +24,14 @@ class Add extends Component{
       this.getAll()
     }
 
-    onSubmit = e =>{
+    onSubmit(e){
       e.preventDefault()
       storeEx()
     }
 
 
 
-    modifier=e=>{
+    modifier(e){
       e.preventDefault()
 /*
 let test= document.querySelectorAll('.modifier')
@@ -65,7 +65,7 @@ var placeholder =  document.querySelector('.modifier:nth-of-type(1) p').innerHTM
 
     }
 
-    getAll = () =>{
+    getAll(){
       getList().then(
         data => {
           this.setState(

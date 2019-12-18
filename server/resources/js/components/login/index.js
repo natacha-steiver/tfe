@@ -24,7 +24,7 @@ class Login extends Component{
 
     }
 
-    onSubmit = e =>{
+    onSubmit(e){
       e.preventDefault()
       var email = document.getElementById("email").value;
       var password = document.getElementById("password").value;

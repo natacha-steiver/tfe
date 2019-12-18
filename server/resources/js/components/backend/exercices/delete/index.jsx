@@ -2,6 +2,9 @@ import React,{Component} from 'react'
 import {getList,deleteEx,storeEx,updateEx,showOneEx} from '../../../../ajax'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
+
+
+
 //ajout nom dans DB ok
 class Delete extends Component{
 
@@ -23,21 +26,22 @@ class Delete extends Component{
     this.getAll()
   }
 
-  componentDidUpdate(){
 
-      this.getAll()
+
+
+
+delete(id){
+()=>{
+     deleteEx(id),console.log(this.state.items)
+}
+
+
 
 
   }
-delete = (id) =>{
-
-   deleteEx(id)
 
 
-  }
-
-
-  getAll = () =>{
+  getAll(){
     getList().then(
       data => {
         this.setState(
@@ -45,9 +49,7 @@ delete = (id) =>{
 
           items: data,
 
-        },    () => {
-              console.log(this.state.items)
-            }
+        }
         )
       }
     )

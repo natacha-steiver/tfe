@@ -24,14 +24,14 @@ class Update extends Component{
 
     }
 
-    componentDidUpdate(){
+    onChange(){
 
         this.getAll()
 
 
     }
 
-        modifier=e=>{
+        modifier(e){
           e.preventDefault()
     /*
     let test= document.querySelectorAll('.modifier')
@@ -74,18 +74,21 @@ this.state.items.map(item=>(
         }
 
 
-update = e =>{
+update(e){
   e.preventDefault()
   var id= document.getElementById("id").value;
   var solution= document.getElementById("solution").value;
   var type= document.getElementById("type").value;
 
   updateEx(id,solution,type)
+
+        console.log(this.state.items)
+
 }
 
 
 
-    getAll = () =>{
+    getAll(){
       getList().then(
         data => {
           this.setState(
@@ -93,9 +96,7 @@ update = e =>{
 
             items: data,
 
-          },    () => {
-                console.log(this.state.items)
-              }
+          }
           )
         }
       )
@@ -114,17 +115,17 @@ const data=this.state.items
 
   <div className="conteneur">
 
-  <p className="modifier" id="type" data={"type"+index}>{item.type}</p>
+  <p onChange={()=>{this.onChange()}} className="modifier" id="type" data={"type"+index}>{item.type}</p>
   </div>
   <div className="conteneur">
-  <p className="modifier" id="solution"  data={"solution"+index}>{item.solution}</p>
+  <p onChange={()=>{this.onChange()}} className="modifier" id="solution"  data={"solution"+index}>{item.solution}</p>
   </div>
 
 
 
 
 <button onClick={(e)=>{this.modifier(e)}}>modif</button>
-<button onClick={()=>{console.log(document.querySelector(`[data="type${index}"]`).innerHTML) ;updateEx(item._id,document.querySelector(`[data="type${index}"]`).innerHTML,document.querySelector(`[data="solution${index}"]`).innerHTML)
+<button  onClick={()=>{console.log(document.querySelector(`[data="type${index}"]`).innerHTML) ;updateEx(item._id,document.querySelector(`[data="type${index}"]`).innerHTML,document.querySelector(`[data="solution${index}"]`).innerHTML)
 }}>update</button>
   </div>
 ))}

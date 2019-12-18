@@ -2,10 +2,7 @@
 
 let mix = require('laravel-mix');
 
-// setting the public directory to public (this is where the mix-manifest.json gets created)
-mix.setPublicPath('public')
-// transpiling, babelling, minifying and creating the public/js/main.js out of our assets
-    .js('resources/assets/js/main.js', 'public/js')
+
 
 
 mix.react('resources/js/app.jsx', 'public/js/app.js');
