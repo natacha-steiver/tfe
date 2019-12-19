@@ -54,7 +54,7 @@ export const updateSolution = (id,solution,type)=>{
         headers:{'Content-Type':'application/json'}
           })
       .then(response => {
-        console.log(response.data._id+'+'+response.data.solution+'+'+response.data.type+"reponse")
+        console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateSolutionSuccess(response.data))
         })
         .catch(error => {
@@ -64,12 +64,11 @@ export const updateSolution = (id,solution,type)=>{
 }
 
 export const updateSolutionSuccess =  (data) => {
+  console.log("put"+JSON.stringify(data.id))
   return {
     type: UPDATE_SOLUTION,
     payload: {
-      _id: data.all.map(item=>(
-          item._id
-        )).toString(),
+      _id: data.id,
       solution: data.solution,
       type: data.type,
       date: new Date().toLocaleDateString()

@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React, { useState }  from 'react';
 import store from "../../../../redux/store"
 
 import { UPDATE_SOLUTION } from "../../../../redux/constantes/index";
@@ -16,8 +16,8 @@ window.store=store;
 export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
   console.log(solution)
 
-
-
+  const [typeNew, setType] = useState('');
+  const [solutionNew, setSolution] = useState('');
   return (
     <div style={ styles }>
       <h2>{ type }</h2>
@@ -25,11 +25,11 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
 
       <form >
     <label htmlFor="">Solution:</label>
-    <input type="text" name="solution"  placeholder={solution} value={solution}/>
+    <input type="text" name="solution"  placeholder={solution}  onChange={event => setSolution(event.target.value)}/>
     <label htmlFor="">Type:</label>
-    <input type="text" name="type"  placeholder={type}  value={type}/>
+    <input type="text" name="type"  placeholder={type}    onChange={event => setType(event.target.value)}/>
 
-    <button type="submit">envoie</button>
+
       </form>
 
 
@@ -38,11 +38,8 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
       </button>
 
 
-      <button className="btn btn-danger" type="button" onClick={() => onUpdate({
-        _id,
-        solution,
-        type
-      })} >
+      <button className="btn btn-danger" type="button" onClick={() => onUpdate(
+    _id,typeNew,solutionNew)} >
         Update
       </button>
 

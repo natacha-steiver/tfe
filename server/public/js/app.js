@@ -85503,6 +85503,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../redux/store */ "./resources/js/redux/store/index.jsx");
 /* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -85523,6 +85531,17 @@ window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
       onDelete = _ref.onDelete,
       onUpdate = _ref.onUpdate;
   console.log(solution);
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      typeNew = _useState2[0],
+      setType = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      solutionNew = _useState4[0],
+      setSolution = _useState4[1];
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: styles
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, solution), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -85531,17 +85550,19 @@ window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
     type: "text",
     name: "solution",
     placeholder: solution,
-    value: solution
+    onChange: function onChange(event) {
+      return setSolution(event.target.value);
+    }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: ""
   }, "Type:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "text",
     name: "type",
     placeholder: type,
-    value: type
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit"
-  }, "envoie")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onChange: function onChange(event) {
+      return setType(event.target.value);
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-danger",
     type: "button",
     onClick: function onClick() {
@@ -85551,11 +85572,7 @@ window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
     className: "btn btn-danger",
     type: "button",
     onClick: function onClick() {
-      return onUpdate({
-        _id: _id,
-        solution: solution,
-        type: type
-      });
+      return onUpdate(_id, typeNew, solutionNew);
     }
   }, "Update"));
 });
@@ -85844,8 +85861,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     onDelete: function onDelete(id) {
       dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["deleteSolution"])(id));
     },
-    onUpdate: function onUpdate(solution) {
-      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["updateSolution"])(solution));
+    onUpdate: function onUpdate(id, type, solution) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["updateSolution"])(id, type, solution));
     }
   };
 };
@@ -86566,7 +86583,7 @@ var updateSolution = function updateSolution(id, solution, type) {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data._id + '+' + response.data.solution + '+' + response.data.type + "reponse");
+      console.log(JSON.stringify(response) + "reponseok");
       dispatch(updateSolutionSuccess(response.data));
     })["catch"](function (error) {
       throw error;
@@ -86574,12 +86591,11 @@ var updateSolution = function updateSolution(id, solution, type) {
   };
 };
 var updateSolutionSuccess = function updateSolutionSuccess(data) {
+  console.log("put" + JSON.stringify(data.id));
   return {
     type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_SOLUTION"],
     payload: {
-      _id: data.all.map(function (item) {
-        return item._id;
-      }).toString(),
+      _id: data.id,
       solution: data.solution,
       type: data.type,
       date: new Date().toLocaleDateString()
@@ -86685,12 +86701,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return solutionReducer; });
 /* harmony import */ var _constantes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constantes/index */ "./resources/js/redux/constantes/index.jsx");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -86715,14 +86725,16 @@ function solutionReducer() {
       });
 
     case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_SOLUTION"]:
-      return state.map(function (solution) {
-        if (solution._id === action.payload.id) {
-          return _objectSpread({}, solution, {
-            type: action.payload.type,
-            solution: action.payload.solution
-          });
-        } else return post;
-      });
+      var indexOfSolution = state.findIndex(function (solution) {
+        return solution._id === action.payload._id;
+      }); //console.log(JSON.stringify(state)+'test')
+      //console.log(state.findIndex(solution => solution.id === action.payload._id))
+      //const indexOfSolution =2
+
+      var newState = _toConsumableArray(state);
+
+      newState[indexOfSolution] = action.payload;
+      return newState;
 
     case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_SOLUTION"]:
       return action.solutions;

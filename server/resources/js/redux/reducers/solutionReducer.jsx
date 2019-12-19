@@ -10,16 +10,14 @@ export default function solutionReducer(state = [], action) {
     case DELETE_SOLUTION:
       return state.filter(solution => solution._id !== action.payload.id);
     case UPDATE_SOLUTION:
-    return state.map((solution)=>{
-        if(solution._id === action.payload.id) {
-          return {
-             ...solution,
-             type:action.payload.type,
-             solution:action.payload.solution,
+      const indexOfSolution = state.findIndex(solution => solution._id === action.payload._id);
+      //console.log(JSON.stringify(state)+'test')
+      //console.log(state.findIndex(solution => solution.id === action.payload._id))
+      //const indexOfSolution =2
+      let newState = [...state];
+      newState[indexOfSolution] = action.payload;
+      return newState;
 
-          }
-        } else return post;
-        })
       case FETCH_SOLUTION:
       return action.solutions;
     default:

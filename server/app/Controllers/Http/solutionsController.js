@@ -39,8 +39,8 @@ const exerciceLast=  await Solution
     const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution})
     exercice.type = exType.type
     exercice.solution =exSolution.solution
-
-  return response.status(200).json({type:exercice.type,solution:exercice.solution,id:params.id})
+console.log(request+"requete")
+  return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution})
   }
 
   async delete ({  params, response }) {
