@@ -20,6 +20,7 @@ const providers = [
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
   'lucid-mongo/providers/LucidMongoProvider',
+  '@adonisjs/ally/providers/AllyProvider'
 
 
 ]
@@ -39,6 +40,14 @@ const aceProviders = [
 
 
 ]
+
+const globalMiddleware = [
+  'Adonis/Middleware/AuthInit'
+]
+
+const namedMiddleware = {
+  auth: 'Adonis/Middleware/Auth'
+}
 
 /*
 |--------------------------------------------------------------------------

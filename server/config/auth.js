@@ -4,6 +4,9 @@
 const Env = use('Env')
 
 module.exports = {
+
+
+
   /*
   |--------------------------------------------------------------------------
   | Authenticator
@@ -54,7 +57,8 @@ module.exports = {
      options: {
        secret: 'self::app.appKey',
        expiresIn: '1800s'
-     }
+     },
+     sameSite: false,
    },
 
    api: {

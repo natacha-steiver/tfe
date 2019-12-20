@@ -13524,6 +13524,25 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css":
+/*!**************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/App.css ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #09d3ac;\n}\n\n/* Shared */\n.loginBtn {\n    box-sizing: border-box;\n    position: relative;\n    /* width: 13em;  - apply for fixed size */\n    margin: 0.2em;\n    padding: 0 15px 0 46px;\n    border: none;\n    text-align: left;\n    line-height: 34px;\n    white-space: nowrap;\n    border-radius: 0.2em;\n    font-size: 16px;\n    color: #FFF;\n  }\n  .loginBtn:before {\n    content: \"\";\n    box-sizing: border-box;\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 34px;\n    height: 100%;\n  }\n  .loginBtn:focus {\n    outline: none;\n  }\n  .loginBtn:active {\n    box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);\n  }\n\n\n  /* Google */\n  .loginBtn--google {\n    /*font-family: \"Roboto\", Roboto, arial, sans-serif;*/\n    background: #DD4B39;\n  }\n  .loginBtn--google:before {\n    border-right: #BB3F30 1px solid;\n    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;\n  }\n  .loginBtn--google:hover,\n  .loginBtn--google:focus {\n    background: #E74B37;\n  }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/keyevent/keyevent.min.css":
 /*!*******************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/components/keyevent/keyevent.min.css ***!
@@ -84832,6 +84851,36 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/App.css":
+/*!******************************!*\
+  !*** ./resources/js/App.css ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../node_modules/css-loader??ref--5-1!../../node_modules/postcss-loader/src??ref--5-2!./App.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./resources/js/ajax.jsx":
 /*!*******************************!*\
   !*** ./resources/js/ajax.jsx ***!
@@ -84976,8 +85025,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_keyevent_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/keyevent/index */ "./resources/js/components/keyevent/index.jsx");
 /* harmony import */ var _components_keyevent_MoveOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/keyevent/MoveOffset */ "./resources/js/components/keyevent/MoveOffset.js");
 /* harmony import */ var _components_menu_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/menu/index */ "./resources/js/components/menu/index.jsx");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./redux/store */ "./resources/js/redux/store/index.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84988,13 +85039,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -85004,7 +85057,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- //import './App.css';
+
 
 
 
@@ -85014,16 +85067,98 @@ var App =
 function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
+    var _this;
+
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(App).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "prepareLoginButton", function () {
+      console.log(_this.refs.googleLoginBtn);
+
+      _this.auth2.attachClickHandler(_this.refs.googleLoginBtn, {}, function (googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); //YOUR CODE HERE
+
+        _this.setState({
+          url: profile.getImageUrl(),
+          nom: profile.getName()
+        });
+      }, function (error) {
+        alert(JSON.stringify(error, undefined, 2));
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "googleSDK", function () {
+      window['googleSDKLoaded'] = function () {
+        window['gapi'].load('auth2', function () {
+          _this.auth2 = window['gapi'].auth2.init({
+            client_id: '49593059337-lftuid18b6gjfohqtuegcmtq5k0o57fs.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            scope: 'profile email'
+          });
+
+          _this.prepareLoginButton();
+        });
+      };
+
+      (function (d, s, id) {
+        var js,
+            fjs = d.getElementsByTagName(s)[0];
+
+        if (d.getElementById(id)) {
+          return;
+        }
+
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://apis.google.com/js/platform.js?onload=googleSDKLoaded";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'google-jssdk');
+    });
+
+    _this.state = {
+      url: '',
+      nom: ''
+    };
+    return _this;
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.googleSDK();
+      console.log('sfsfd');
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_createSolution__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_SolutionList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_menu_index__WEBPACK_IMPORTED_MODULE_7__["default"], null));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_createSolution__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_SolutionList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_menu_index__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row mt-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "text-left"
+      }, "Google Login Demo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card mt-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row mt-5 mb-5"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-md-4 mt-2 m-auto "
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "loginBtn loginBtn--google",
+        ref: "googleLoginBtn"
+      }, "Login with Google"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: this.state.url,
+        alt: this.state.url
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, this.state.nom), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "D\xE9connexion")));
     }
   }]);
 
@@ -85031,8 +85166,8 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var rootElement = document.getElementById("root");
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_8__["Provider"], {
-  store: _redux_store__WEBPACK_IMPORTED_MODULE_9__["default"]
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_9__["Provider"], {
+  store: _redux_store__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null)), rootElement);
 Object(register_service_worker__WEBPACK_IMPORTED_MODULE_2__["register"])();
 /* harmony default export */ __webpack_exports__["default"] = (App);

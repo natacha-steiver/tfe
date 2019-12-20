@@ -40,5 +40,11 @@ Route.group(
   Route.get('auth/login', 'AuthController.login')
   Route.post('auth/login', 'AuthController.login')
 
-
+//accueil
+//Route.get('/', 'accueilController.index')
 Route.on('/').render('app')
+
+
+Route.get('auth/google', 'AuthController.redirect').as('social.login')
+Route.get('authenticated/google', 'AuthController.handleCallback').as('social.login.callback')
+Route.post('/files', 'FileController.upload')
