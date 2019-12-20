@@ -85167,11 +85167,13 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(NewSolution).call(this, props));
     _this.state = {
-      type: '',
-      solution: ''
+      _id: "hhjhj",
+      type: 'type',
+      solution: 'solution'
     };
-    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
+    _this.handleReset = _this.handleReset.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -85184,7 +85186,6 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.onAddSolution(this.state);
       this.handleReset();
     }
   }, {
@@ -85198,8 +85199,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleSubmit
+        onSubmit: function onSubmit() {
+          _this2.props.onAddSolution(_this2.state);
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -85208,7 +85213,7 @@ function (_React$Component) {
         className: "form-control",
         name: "type",
         onChange: this.handleInputChange,
-        value: this.state.type
+        defaultValue: this.state.type
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
@@ -85218,7 +85223,7 @@ function (_React$Component) {
         className: "form-control",
         name: "solution",
         onChange: this.handleInputChange,
-        value: this.state.solution
+        defaultValue: this.state.solution
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -86559,14 +86564,22 @@ var createSolution = function createSolution(_ref) {
   };
 };
 var createSolutionSuccess = function createSolutionSuccess(data) {
+  console.log(data.all + "testAddReponse");
+  console.log(data.all.map(function (item) {
+    return item._id;
+  }).toString() + 'id add');
   return {
     type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_SOLUTION"],
     payload: {
       _id: data.all.map(function (item) {
         return item._id;
       }).toString(),
-      solution: data.solution,
-      type: data.type,
+      solution: data.all.map(function (item) {
+        return item.solution;
+      }).toString(),
+      type: data.all.map(function (item) {
+        return item.type;
+      }).toString(),
       date: new Date().toLocaleDateString()
     }
   };
@@ -86603,11 +86616,11 @@ var updateSolutionSuccess = function updateSolutionSuccess(data) {
   };
 }; //--------------DELETE---------------------------
 
-var deleteSolutionSuccess = function deleteSolutionSuccess(id) {
+var deleteSolutionSuccess = function deleteSolutionSuccess(_id) {
   return {
     type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_SOLUTION"],
     payload: {
-      id: id
+      _id: _id
     }
   };
 };
@@ -86721,7 +86734,7 @@ function solutionReducer() {
 
     case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_SOLUTION"]:
       return state.filter(function (solution) {
-        return solution._id !== action.payload.id;
+        return solution._id !== action.payload._id;
       });
 
     case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_SOLUTION"]:

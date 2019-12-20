@@ -31,14 +31,22 @@ dispatch({
 };
 
 export const createSolutionSuccess =  (data) => {
+  console.log(data.all+"testAddReponse")
+  console.log(data.all.map(item=>(
+      item._id
+    )).toString()+'id add')
   return {
     type: ADD_SOLUTION,
     payload: {
       _id: data.all.map(item=>(
           item._id
         )).toString(),
-      solution: data.solution,
-      type: data.type,
+      solution: data.all.map(item=>(
+          item.solution
+        )).toString(),
+      type:data.all.map(item=>(
+          item.type
+        )).toString(),
       date: new Date().toLocaleDateString()
     }
   }
@@ -76,11 +84,11 @@ export const updateSolutionSuccess =  (data) => {
   }
 };
 //--------------DELETE---------------------------
-export const deleteSolutionSuccess = id => {
+export const deleteSolutionSuccess = _id => {
   return {
     type: DELETE_SOLUTION,
     payload: {
-      id
+      _id
     }
   }
 }

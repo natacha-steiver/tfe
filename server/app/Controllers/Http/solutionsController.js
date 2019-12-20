@@ -17,12 +17,11 @@ async index({response}){
     exercice.type = exType.type
     exercice.solution =exSolution.solution
 const exerciceLast=  await Solution
-    .sort({ "_id":-1 })
-    .limit(1)
     .fetch()
 //db.tfe.getCollection("solutions").find().sort({"_id":-1}).limit(1)
     await exercice.save()
-    return response.status(201).json({type:exercice.type,solution:exercice.solution,all:exerciceLast})
+    console.log(response)
+    return response.status(201).json({all:exerciceLast})
   }
 
   async show ({params,response}) {
