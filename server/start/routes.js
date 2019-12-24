@@ -27,6 +27,7 @@ Route.group(
     Route.post('exercice/add','solutionsController.store').as('solution.store')
     Route.put('exercice/:id','solutionsController.update')
     Route.delete('exercice/:id','solutionsController.delete')
+    Route.any('*', ({ view }) => view.render('app'))
   }
 ).prefix('api')
 
@@ -42,7 +43,7 @@ Route.group(
 
 //accueil
 //Route.get('/', 'accueilController.index')
-Route.on('/').render('app')
+Route.any('*', ({ view }) => view.render('app'))
 
 
 Route.get('auth/google', 'AuthController.redirect').as('social.login')

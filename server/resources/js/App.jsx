@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { register } from 'register-service-worker'
-import CreateSolution from './components/container/createSolution';
-import SolutionList from './components/container/SolutionList';
+
 
 //import Perso from "./components/introduction/perso/index"
 import Keyevent from "./components/keyevent/index"
@@ -77,8 +76,7 @@ render(){
   return (
     <div>
 
-<CreateSolution/>
- <SolutionList />
+
     <Menu/>
     <div className="row mt-5">
               <div className="col-md-12">

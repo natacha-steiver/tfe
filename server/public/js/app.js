@@ -3337,8 +3337,8 @@ module.exports = function isBuffer (obj) {
     } else if (emitter.attachEvent) {
       emitter.attachEvent("on" + type, f);
     } else {
-      var map$$1 = emitter._handlers || (emitter._handlers = {});
-      map$$1[type] = (map$$1[type] || noHandlers).concat(f);
+      var map = emitter._handlers || (emitter._handlers = {});
+      map[type] = (map[type] || noHandlers).concat(f);
     }
   };
 
@@ -3352,11 +3352,11 @@ module.exports = function isBuffer (obj) {
     } else if (emitter.detachEvent) {
       emitter.detachEvent("on" + type, f);
     } else {
-      var map$$1 = emitter._handlers, arr = map$$1 && map$$1[type];
+      var map = emitter._handlers, arr = map && map[type];
       if (arr) {
         var index = indexOf(arr, f);
         if (index > -1)
-          { map$$1[type] = arr.slice(0, index).concat(arr.slice(index + 1)); }
+          { map[type] = arr.slice(0, index).concat(arr.slice(index + 1)); }
       }
     }
   }
@@ -3484,11 +3484,11 @@ module.exports = function isBuffer (obj) {
     try { return te.selectionStart != te.selectionEnd }
     catch(e) { return false }
   } : function (te) {
-    var range$$1;
-    try {range$$1 = te.ownerDocument.selection.createRange();}
+    var range;
+    try {range = te.ownerDocument.selection.createRange();}
     catch(e) {}
-    if (!range$$1 || range$$1.parentElement() != te) { return false }
-    return range$$1.compareEndPoints("StartToEnd", range$$1) != 0
+    if (!range || range.parentElement() != te) { return false }
+    return range.compareEndPoints("StartToEnd", range) != 0
   };
 
   var hasCopyEvent = (function () {
@@ -3636,10 +3636,8 @@ module.exports = function isBuffer (obj) {
     return this.pos > start
   };
   StringStream.prototype.eatSpace = function () {
-      var this$1 = this;
-
     var start = this.pos;
-    while (/[\s\u00a0]/.test(this.string.charAt(this.pos))) { ++this$1.pos; }
+    while (/[\s\u00a0]/.test(this.string.charAt(this.pos))) { ++this.pos; }
     return this.pos > start
   };
   StringStream.prototype.skipToEnd = function () {this.pos = this.string.length;};
@@ -3835,11 +3833,9 @@ module.exports = function isBuffer (obj) {
   };
 
   Context.prototype.baseToken = function (n) {
-      var this$1 = this;
-
     if (!this.baseTokens) { return null }
     while (this.baseTokens[this.baseTokenPos] <= n)
-      { this$1.baseTokenPos += 2; }
+      { this.baseTokenPos += 2; }
     var type = this.baseTokens[this.baseTokenPos + 1];
     return {type: type && type.replace(/( |^)overlay .*/, ""),
             size: this.baseTokens[this.baseTokenPos] - n}
@@ -4328,8 +4324,8 @@ module.exports = function isBuffer (obj) {
   // Test whether there exists a collapsed span that partially
   // overlaps (covers the start or end, but not both) of a new span.
   // Such overlap is not allowed.
-  function conflictingCollapsedRange(doc, lineNo$$1, from, to, marker) {
-    var line = getLine(doc, lineNo$$1);
+  function conflictingCollapsedRange(doc, lineNo, from, to, marker) {
+    var line = getLine(doc, lineNo);
     var sps = sawCollapsedSpans && line.markedSpans;
     if (sps) { for (var i = 0; i < sps.length; ++i) {
       var sp = sps[i];
@@ -5010,10 +5006,10 @@ module.exports = function isBuffer (obj) {
 
   function updateLineWidgets(cm, lineView, dims) {
     if (lineView.alignable) { lineView.alignable = null; }
+    var isWidget = classTest("CodeMirror-linewidget");
     for (var node = lineView.node.firstChild, next = (void 0); node; node = next) {
       next = node.nextSibling;
-      if (node.className == "CodeMirror-linewidget")
-        { lineView.node.removeChild(node); }
+      if (isWidget.test(node)) { lineView.node.removeChild(node); }
     }
     insertLineWidgets(cm, lineView, dims);
   }
@@ -5043,7 +5039,7 @@ module.exports = function isBuffer (obj) {
     if (!line.widgets) { return }
     var wrap = ensureLineWrapped(lineView);
     for (var i = 0, ws = line.widgets; i < ws.length; ++i) {
-      var widget = ws[i], node = elt("div", [widget.node], "CodeMirror-linewidget");
+      var widget = ws[i], node = elt("div", [widget.node], "CodeMirror-linewidget" + (widget.className ? " " + widget.className : ""));
       if (!widget.handleMouseEvents) { node.setAttribute("cm-ignore-events", "true"); }
       positionLineWidget(widget, node, lineView, dims);
       cm.display.input.setUneditable(node);
@@ -5231,36 +5227,36 @@ module.exports = function isBuffer (obj) {
 
   var nullRect = {left: 0, right: 0, top: 0, bottom: 0};
 
-  function nodeAndOffsetInLineMap(map$$1, ch, bias) {
+  function nodeAndOffsetInLineMap(map, ch, bias) {
     var node, start, end, collapse, mStart, mEnd;
     // First, search the line map for the text node corresponding to,
     // or closest to, the target character.
-    for (var i = 0; i < map$$1.length; i += 3) {
-      mStart = map$$1[i];
-      mEnd = map$$1[i + 1];
+    for (var i = 0; i < map.length; i += 3) {
+      mStart = map[i];
+      mEnd = map[i + 1];
       if (ch < mStart) {
         start = 0; end = 1;
         collapse = "left";
       } else if (ch < mEnd) {
         start = ch - mStart;
         end = start + 1;
-      } else if (i == map$$1.length - 3 || ch == mEnd && map$$1[i + 3] > ch) {
+      } else if (i == map.length - 3 || ch == mEnd && map[i + 3] > ch) {
         end = mEnd - mStart;
         start = end - 1;
         if (ch >= mEnd) { collapse = "right"; }
       }
       if (start != null) {
-        node = map$$1[i + 2];
+        node = map[i + 2];
         if (mStart == mEnd && bias == (node.insertLeft ? "left" : "right"))
           { collapse = bias; }
         if (bias == "left" && start == 0)
-          { while (i && map$$1[i - 2] == map$$1[i - 3] && map$$1[i - 1].insertLeft) {
-            node = map$$1[(i -= 3) + 2];
+          { while (i && map[i - 2] == map[i - 3] && map[i - 1].insertLeft) {
+            node = map[(i -= 3) + 2];
             collapse = "left";
           } }
         if (bias == "right" && start == mEnd - mStart)
-          { while (i < map$$1.length - 3 && map$$1[i + 3] == map$$1[i + 4] && !map$$1[i + 5].insertLeft) {
-            node = map$$1[(i += 3) + 2];
+          { while (i < map.length - 3 && map[i + 3] == map[i + 4] && !map[i + 5].insertLeft) {
+            node = map[(i += 3) + 2];
             collapse = "right";
           } }
         break
@@ -5543,13 +5539,13 @@ module.exports = function isBuffer (obj) {
     return box.bottom <= y ? false : box.top > y ? true : (left ? box.left : box.right) > x
   }
 
-  function coordsCharInner(cm, lineObj, lineNo$$1, x, y) {
+  function coordsCharInner(cm, lineObj, lineNo, x, y) {
     // Move y into line-local coordinate space
     y -= heightAtLine(lineObj);
     var preparedMeasure = prepareMeasureForLine(cm, lineObj);
     // When directly calling `measureCharPrepared`, we have to adjust
     // for the widgets at this line.
-    var widgetHeight$$1 = widgetTopHeight(lineObj);
+    var widgetHeight = widgetTopHeight(lineObj);
     var begin = 0, end = lineObj.text.length, ltr = true;
 
     var order = getOrder(lineObj, cm.doc.direction);
@@ -5557,7 +5553,7 @@ module.exports = function isBuffer (obj) {
     // which bidi section the coordinates fall into.
     if (order) {
       var part = (cm.options.lineWrapping ? coordsBidiPartWrapped : coordsBidiPart)
-                   (cm, lineObj, lineNo$$1, preparedMeasure, order, x, y);
+                   (cm, lineObj, lineNo, preparedMeasure, order, x, y);
       ltr = part.level != 1;
       // The awkward -1 offsets are needed because findFirst (called
       // on these below) will treat its first bound as inclusive,
@@ -5573,7 +5569,7 @@ module.exports = function isBuffer (obj) {
     var chAround = null, boxAround = null;
     var ch = findFirst(function (ch) {
       var box = measureCharPrepared(cm, preparedMeasure, ch);
-      box.top += widgetHeight$$1; box.bottom += widgetHeight$$1;
+      box.top += widgetHeight; box.bottom += widgetHeight;
       if (!boxIsAfter(box, x, y, false)) { return false }
       if (box.top <= y && box.left <= x) {
         chAround = ch;
@@ -5597,27 +5593,27 @@ module.exports = function isBuffer (obj) {
       // left of the character and compare it's vertical position to the
       // coordinates
       sticky = ch == 0 ? "after" : ch == lineObj.text.length ? "before" :
-        (measureCharPrepared(cm, preparedMeasure, ch - (ltr ? 1 : 0)).bottom + widgetHeight$$1 <= y) == ltr ?
+        (measureCharPrepared(cm, preparedMeasure, ch - (ltr ? 1 : 0)).bottom + widgetHeight <= y) == ltr ?
         "after" : "before";
       // Now get accurate coordinates for this place, in order to get a
       // base X position
-      var coords = cursorCoords(cm, Pos(lineNo$$1, ch, sticky), "line", lineObj, preparedMeasure);
+      var coords = cursorCoords(cm, Pos(lineNo, ch, sticky), "line", lineObj, preparedMeasure);
       baseX = coords.left;
       outside = y < coords.top ? -1 : y >= coords.bottom ? 1 : 0;
     }
 
     ch = skipExtendingChars(lineObj.text, ch, 1);
-    return PosWithInfo(lineNo$$1, ch, sticky, outside, x - baseX)
+    return PosWithInfo(lineNo, ch, sticky, outside, x - baseX)
   }
 
-  function coordsBidiPart(cm, lineObj, lineNo$$1, preparedMeasure, order, x, y) {
+  function coordsBidiPart(cm, lineObj, lineNo, preparedMeasure, order, x, y) {
     // Bidi parts are sorted left-to-right, and in a non-line-wrapping
     // situation, we can take this ordering to correspond to the visual
     // ordering. This finds the first part whose end is after the given
     // coordinates.
     var index = findFirst(function (i) {
       var part = order[i], ltr = part.level != 1;
-      return boxIsAfter(cursorCoords(cm, Pos(lineNo$$1, ltr ? part.to : part.from, ltr ? "before" : "after"),
+      return boxIsAfter(cursorCoords(cm, Pos(lineNo, ltr ? part.to : part.from, ltr ? "before" : "after"),
                                      "line", lineObj, preparedMeasure), x, y, true)
     }, 0, order.length - 1);
     var part = order[index];
@@ -5626,7 +5622,7 @@ module.exports = function isBuffer (obj) {
     // that start, move one part back.
     if (index > 0) {
       var ltr = part.level != 1;
-      var start = cursorCoords(cm, Pos(lineNo$$1, ltr ? part.from : part.to, ltr ? "after" : "before"),
+      var start = cursorCoords(cm, Pos(lineNo, ltr ? part.from : part.to, ltr ? "after" : "before"),
                                "line", lineObj, preparedMeasure);
       if (boxIsAfter(start, x, y, true) && start.top > y)
         { part = order[index - 1]; }
@@ -5766,7 +5762,7 @@ module.exports = function isBuffer (obj) {
     try { x = e.clientX - space.left; y = e.clientY - space.top; }
     catch (e) { return null }
     var coords = coordsChar(cm, x, y), line;
-    if (forRect && coords.xRel == 1 && (line = getLine(cm.doc, coords.line).text).length == coords.ch) {
+    if (forRect && coords.xRel > 0 && (line = getLine(cm.doc, coords.line).text).length == coords.ch) {
       var colDiff = countColumn(line, line.length, cm.options.tabSize) - line.length;
       coords = Pos(coords.line, Math.max(0, Math.round((x - paddingH(cm.display).left) / charWidth(cm.display)) - colDiff));
     }
@@ -5947,13 +5943,13 @@ module.exports = function isBuffer (obj) {
 
     for (var i = 0; i < doc.sel.ranges.length; i++) {
       if (!primary && i == doc.sel.primIndex) { continue }
-      var range$$1 = doc.sel.ranges[i];
-      if (range$$1.from().line >= cm.display.viewTo || range$$1.to().line < cm.display.viewFrom) { continue }
-      var collapsed = range$$1.empty();
+      var range = doc.sel.ranges[i];
+      if (range.from().line >= cm.display.viewTo || range.to().line < cm.display.viewFrom) { continue }
+      var collapsed = range.empty();
       if (collapsed || cm.options.showCursorWhenSelecting)
-        { drawSelectionCursor(cm, range$$1.head, curFragment); }
+        { drawSelectionCursor(cm, range.head, curFragment); }
       if (!collapsed)
-        { drawSelectionRange(cm, range$$1, selFragment); }
+        { drawSelectionRange(cm, range, selFragment); }
     }
     return result
   }
@@ -5980,7 +5976,7 @@ module.exports = function isBuffer (obj) {
   function cmpCoords(a, b) { return a.top - b.top || a.left - b.left }
 
   // Draws the given range as a highlighted selection
-  function drawSelectionRange(cm, range$$1, output) {
+  function drawSelectionRange(cm, range, output) {
     var display = cm.display, doc = cm.doc;
     var fragment = document.createDocumentFragment();
     var padding = paddingH(cm.display), leftSide = padding.left;
@@ -6049,7 +6045,7 @@ module.exports = function isBuffer (obj) {
       return {start: start, end: end}
     }
 
-    var sFrom = range$$1.from(), sTo = range$$1.to();
+    var sFrom = range.from(), sTo = range.to();
     if (sFrom.line == sTo.line) {
       drawForLine(sFrom.line, sFrom.ch, sTo.ch);
     } else {
@@ -6316,9 +6312,9 @@ module.exports = function isBuffer (obj) {
     if (y != null) { cm.curOp.scrollTop = y; }
   }
 
-  function scrollToRange(cm, range$$1) {
+  function scrollToRange(cm, range) {
     resolveScrollToPos(cm);
-    cm.curOp.scrollToPos = range$$1;
+    cm.curOp.scrollToPos = range;
   }
 
   // When an operation has its scrollToPos property set, and another
@@ -6326,11 +6322,11 @@ module.exports = function isBuffer (obj) {
   // 'simulates' scrolling that position into view in a cheap way, so
   // that the effect of intermediate scroll commands is not ignored.
   function resolveScrollToPos(cm) {
-    var range$$1 = cm.curOp.scrollToPos;
-    if (range$$1) {
+    var range = cm.curOp.scrollToPos;
+    if (range) {
       cm.curOp.scrollToPos = null;
-      var from = estimateCoords(cm, range$$1.from), to = estimateCoords(cm, range$$1.to);
-      scrollToCoordsRange(cm, from, to, range$$1.margin);
+      var from = estimateCoords(cm, range.from), to = estimateCoords(cm, range.to);
+      scrollToCoordsRange(cm, from, to, range.margin);
     }
   }
 
@@ -6477,9 +6473,9 @@ module.exports = function isBuffer (obj) {
       // (when the bar is hidden). If it is still visible, we keep
       // it enabled, if it's hidden, we disable pointer events.
       var box = bar.getBoundingClientRect();
-      var elt$$1 = type == "vert" ? document.elementFromPoint(box.right - 1, (box.top + box.bottom) / 2)
+      var elt = type == "vert" ? document.elementFromPoint(box.right - 1, (box.top + box.bottom) / 2)
           : document.elementFromPoint((box.right + box.left) / 2, box.bottom - 1);
-      if (elt$$1 != bar) { bar.style.pointerEvents = "none"; }
+      if (elt != bar) { bar.style.pointerEvents = "none"; }
       else { delay.set(1000, maybeDisable); }
     }
     delay.set(1000, maybeDisable);
@@ -6819,10 +6815,8 @@ module.exports = function isBuffer (obj) {
       { this.events.push(arguments); }
   };
   DisplayUpdate.prototype.finish = function () {
-      var this$1 = this;
-
     for (var i = 0; i < this.events.length; i++)
-      { signal.apply(null, this$1.events[i]); }
+      { signal.apply(null, this.events[i]); }
   };
 
   function maybeClipScrollbars(cm) {
@@ -6857,11 +6851,11 @@ module.exports = function isBuffer (obj) {
     if (!snapshot || !snapshot.activeElt || snapshot.activeElt == activeElt()) { return }
     snapshot.activeElt.focus();
     if (snapshot.anchorNode && contains(document.body, snapshot.anchorNode) && contains(document.body, snapshot.focusNode)) {
-      var sel = window.getSelection(), range$$1 = document.createRange();
-      range$$1.setEnd(snapshot.anchorNode, snapshot.anchorOffset);
-      range$$1.collapse(false);
+      var sel = window.getSelection(), range = document.createRange();
+      range.setEnd(snapshot.anchorNode, snapshot.anchorOffset);
+      range.collapse(false);
       sel.removeAllRanges();
-      sel.addRange(range$$1);
+      sel.addRange(range);
       sel.extend(snapshot.focusNode, snapshot.focusOffset);
     }
   }
@@ -7354,40 +7348,32 @@ module.exports = function isBuffer (obj) {
   Selection.prototype.primary = function () { return this.ranges[this.primIndex] };
 
   Selection.prototype.equals = function (other) {
-      var this$1 = this;
-
     if (other == this) { return true }
     if (other.primIndex != this.primIndex || other.ranges.length != this.ranges.length) { return false }
     for (var i = 0; i < this.ranges.length; i++) {
-      var here = this$1.ranges[i], there = other.ranges[i];
+      var here = this.ranges[i], there = other.ranges[i];
       if (!equalCursorPos(here.anchor, there.anchor) || !equalCursorPos(here.head, there.head)) { return false }
     }
     return true
   };
 
   Selection.prototype.deepCopy = function () {
-      var this$1 = this;
-
     var out = [];
     for (var i = 0; i < this.ranges.length; i++)
-      { out[i] = new Range(copyPos(this$1.ranges[i].anchor), copyPos(this$1.ranges[i].head)); }
+      { out[i] = new Range(copyPos(this.ranges[i].anchor), copyPos(this.ranges[i].head)); }
     return new Selection(out, this.primIndex)
   };
 
   Selection.prototype.somethingSelected = function () {
-      var this$1 = this;
-
     for (var i = 0; i < this.ranges.length; i++)
-      { if (!this$1.ranges[i].empty()) { return true } }
+      { if (!this.ranges[i].empty()) { return true } }
     return false
   };
 
   Selection.prototype.contains = function (pos, end) {
-      var this$1 = this;
-
     if (!end) { end = pos; }
     for (var i = 0; i < this.ranges.length; i++) {
-      var range = this$1.ranges[i];
+      var range = this.ranges[i];
       if (cmp(end, range.from()) >= 0 && cmp(pos, range.to()) <= 0)
         { return i }
     }
@@ -7513,16 +7499,16 @@ module.exports = function isBuffer (obj) {
   }
 
   // Perform a change on the document data structure.
-  function updateDoc(doc, change, markedSpans, estimateHeight$$1) {
+  function updateDoc(doc, change, markedSpans, estimateHeight) {
     function spansFor(n) {return markedSpans ? markedSpans[n] : null}
     function update(line, text, spans) {
-      updateLine(line, text, spans, estimateHeight$$1);
+      updateLine(line, text, spans, estimateHeight);
       signalLater(line, "change", line, change);
     }
     function linesFor(start, end) {
       var result = [];
       for (var i = start; i < end; ++i)
-        { result.push(new Line(text[i], spansFor(i), estimateHeight$$1)); }
+        { result.push(new Line(text[i], spansFor(i), estimateHeight)); }
       return result
     }
 
@@ -7546,7 +7532,7 @@ module.exports = function isBuffer (obj) {
         update(firstLine, firstLine.text.slice(0, from.ch) + lastText + firstLine.text.slice(to.ch), lastSpans);
       } else {
         var added$1 = linesFor(1, text.length - 1);
-        added$1.push(new Line(lastText + firstLine.text.slice(to.ch), lastSpans, estimateHeight$$1));
+        added$1.push(new Line(lastText + firstLine.text.slice(to.ch), lastSpans, estimateHeight));
         update(firstLine, firstLine.text.slice(0, from.ch) + text[0], spansFor(0));
         doc.insert(from.line + 1, added$1);
       }
@@ -7883,11 +7869,9 @@ module.exports = function isBuffer (obj) {
     var obj = {
       ranges: sel.ranges,
       update: function(ranges) {
-        var this$1 = this;
-
         this.ranges = [];
         for (var i = 0; i < ranges.length; i++)
-          { this$1.ranges[i] = new Range(clipPos(doc, ranges[i].anchor),
+          { this.ranges[i] = new Range(clipPos(doc, ranges[i].anchor),
                                      clipPos(doc, ranges[i].head)); }
       },
       origin: options && options.origin
@@ -8374,13 +8358,11 @@ module.exports = function isBuffer (obj) {
   // See also http://marijnhaverbeke.nl/blog/codemirror-line-tree.html
 
   function LeafChunk(lines) {
-    var this$1 = this;
-
     this.lines = lines;
     this.parent = null;
     var height = 0;
     for (var i = 0; i < lines.length; ++i) {
-      lines[i].parent = this$1;
+      lines[i].parent = this;
       height += lines[i].height;
     }
     this.height = height;
@@ -8391,11 +8373,9 @@ module.exports = function isBuffer (obj) {
 
     // Remove the n lines at offset 'at'.
     removeInner: function(at, n) {
-      var this$1 = this;
-
       for (var i = at, e = at + n; i < e; ++i) {
-        var line = this$1.lines[i];
-        this$1.height -= line.height;
+        var line = this.lines[i];
+        this.height -= line.height;
         cleanUpLine(line);
         signalLater(line, "delete");
       }
@@ -8410,31 +8390,25 @@ module.exports = function isBuffer (obj) {
     // Insert the given array of lines at offset 'at', count them as
     // having the given height.
     insertInner: function(at, lines, height) {
-      var this$1 = this;
-
       this.height += height;
       this.lines = this.lines.slice(0, at).concat(lines).concat(this.lines.slice(at));
-      for (var i = 0; i < lines.length; ++i) { lines[i].parent = this$1; }
+      for (var i = 0; i < lines.length; ++i) { lines[i].parent = this; }
     },
 
     // Used to iterate over a part of the tree.
     iterN: function(at, n, op) {
-      var this$1 = this;
-
       for (var e = at + n; at < e; ++at)
-        { if (op(this$1.lines[at])) { return true } }
+        { if (op(this.lines[at])) { return true } }
     }
   };
 
   function BranchChunk(children) {
-    var this$1 = this;
-
     this.children = children;
     var size = 0, height = 0;
     for (var i = 0; i < children.length; ++i) {
       var ch = children[i];
       size += ch.chunkSize(); height += ch.height;
-      ch.parent = this$1;
+      ch.parent = this;
     }
     this.size = size;
     this.height = height;
@@ -8445,16 +8419,14 @@ module.exports = function isBuffer (obj) {
     chunkSize: function() { return this.size },
 
     removeInner: function(at, n) {
-      var this$1 = this;
-
       this.size -= n;
       for (var i = 0; i < this.children.length; ++i) {
-        var child = this$1.children[i], sz = child.chunkSize();
+        var child = this.children[i], sz = child.chunkSize();
         if (at < sz) {
           var rm = Math.min(n, sz - at), oldHeight = child.height;
           child.removeInner(at, rm);
-          this$1.height -= oldHeight - child.height;
-          if (sz == rm) { this$1.children.splice(i--, 1); child.parent = null; }
+          this.height -= oldHeight - child.height;
+          if (sz == rm) { this.children.splice(i--, 1); child.parent = null; }
           if ((n -= rm) == 0) { break }
           at = 0;
         } else { at -= sz; }
@@ -8471,18 +8443,14 @@ module.exports = function isBuffer (obj) {
     },
 
     collapse: function(lines) {
-      var this$1 = this;
-
-      for (var i = 0; i < this.children.length; ++i) { this$1.children[i].collapse(lines); }
+      for (var i = 0; i < this.children.length; ++i) { this.children[i].collapse(lines); }
     },
 
     insertInner: function(at, lines, height) {
-      var this$1 = this;
-
       this.size += lines.length;
       this.height += height;
       for (var i = 0; i < this.children.length; ++i) {
-        var child = this$1.children[i], sz = child.chunkSize();
+        var child = this.children[i], sz = child.chunkSize();
         if (at <= sz) {
           child.insertInner(at, lines, height);
           if (child.lines && child.lines.length > 50) {
@@ -8492,11 +8460,11 @@ module.exports = function isBuffer (obj) {
             for (var pos = remaining; pos < child.lines.length;) {
               var leaf = new LeafChunk(child.lines.slice(pos, pos += 25));
               child.height -= leaf.height;
-              this$1.children.splice(++i, 0, leaf);
-              leaf.parent = this$1;
+              this.children.splice(++i, 0, leaf);
+              leaf.parent = this;
             }
             child.lines = child.lines.slice(0, remaining);
-            this$1.maybeSpill();
+            this.maybeSpill();
           }
           break
         }
@@ -8528,10 +8496,8 @@ module.exports = function isBuffer (obj) {
     },
 
     iterN: function(at, n, op) {
-      var this$1 = this;
-
       for (var i = 0; i < this.children.length; ++i) {
-        var child = this$1.children[i], sz = child.chunkSize();
+        var child = this.children[i], sz = child.chunkSize();
         if (at < sz) {
           var used = Math.min(n, sz - at);
           if (child.iterN(at, used, op)) { return true }
@@ -8545,20 +8511,16 @@ module.exports = function isBuffer (obj) {
   // Line widgets are block elements displayed above or below a line.
 
   var LineWidget = function(doc, node, options) {
-    var this$1 = this;
-
     if (options) { for (var opt in options) { if (options.hasOwnProperty(opt))
-      { this$1[opt] = options[opt]; } } }
+      { this[opt] = options[opt]; } } }
     this.doc = doc;
     this.node = node;
   };
 
   LineWidget.prototype.clear = function () {
-      var this$1 = this;
-
     var cm = this.doc.cm, ws = this.line.widgets, line = this.line, no = lineNo(line);
     if (no == null || !ws) { return }
-    for (var i = 0; i < ws.length; ++i) { if (ws[i] == this$1) { ws.splice(i--, 1); } }
+    for (var i = 0; i < ws.length; ++i) { if (ws[i] == this) { ws.splice(i--, 1); } }
     if (!ws.length) { line.widgets = null; }
     var height = widgetHeight(this);
     updateLineHeight(line, Math.max(0, line.height - height));
@@ -8641,8 +8603,6 @@ module.exports = function isBuffer (obj) {
 
   // Clear the marker.
   TextMarker.prototype.clear = function () {
-      var this$1 = this;
-
     if (this.explicitlyCleared) { return }
     var cm = this.doc.cm, withOp = cm && !cm.curOp;
     if (withOp) { startOperation(cm); }
@@ -8652,19 +8612,19 @@ module.exports = function isBuffer (obj) {
     }
     var min = null, max = null;
     for (var i = 0; i < this.lines.length; ++i) {
-      var line = this$1.lines[i];
-      var span = getMarkedSpanFor(line.markedSpans, this$1);
-      if (cm && !this$1.collapsed) { regLineChange(cm, lineNo(line), "text"); }
+      var line = this.lines[i];
+      var span = getMarkedSpanFor(line.markedSpans, this);
+      if (cm && !this.collapsed) { regLineChange(cm, lineNo(line), "text"); }
       else if (cm) {
         if (span.to != null) { max = lineNo(line); }
         if (span.from != null) { min = lineNo(line); }
       }
       line.markedSpans = removeMarkedSpan(line.markedSpans, span);
-      if (span.from == null && this$1.collapsed && !lineIsHidden(this$1.doc, line) && cm)
+      if (span.from == null && this.collapsed && !lineIsHidden(this.doc, line) && cm)
         { updateLineHeight(line, textHeight(cm.display)); }
     }
     if (cm && this.collapsed && !cm.options.lineWrapping) { for (var i$1 = 0; i$1 < this.lines.length; ++i$1) {
-      var visual = visualLine(this$1.lines[i$1]), len = lineLength(visual);
+      var visual = visualLine(this.lines[i$1]), len = lineLength(visual);
       if (len > cm.display.maxLineLength) {
         cm.display.maxLine = visual;
         cm.display.maxLineLength = len;
@@ -8690,13 +8650,11 @@ module.exports = function isBuffer (obj) {
   // Pos objects returned contain a line object, rather than a line
   // number (used to prevent looking up the same line twice).
   TextMarker.prototype.find = function (side, lineObj) {
-      var this$1 = this;
-
     if (side == null && this.type == "bookmark") { side = 1; }
     var from, to;
     for (var i = 0; i < this.lines.length; ++i) {
-      var line = this$1.lines[i];
-      var span = getMarkedSpanFor(line.markedSpans, this$1);
+      var line = this.lines[i];
+      var span = getMarkedSpanFor(line.markedSpans, this);
       if (span.from != null) {
         from = Pos(lineObj ? line : lineNo(line), span.from);
         if (side == -1) { return from }
@@ -8830,21 +8788,17 @@ module.exports = function isBuffer (obj) {
   // implemented as a meta-marker-object controlling multiple normal
   // markers.
   var SharedTextMarker = function(markers, primary) {
-    var this$1 = this;
-
     this.markers = markers;
     this.primary = primary;
     for (var i = 0; i < markers.length; ++i)
-      { markers[i].parent = this$1; }
+      { markers[i].parent = this; }
   };
 
   SharedTextMarker.prototype.clear = function () {
-      var this$1 = this;
-
     if (this.explicitlyCleared) { return }
     this.explicitlyCleared = true;
     for (var i = 0; i < this.markers.length; ++i)
-      { this$1.markers[i].clear(); }
+      { this.markers[i].clear(); }
     signalLater(this, "clear");
   };
 
@@ -8987,11 +8941,11 @@ module.exports = function isBuffer (obj) {
     clipPos: function(pos) {return clipPos(this, pos)},
 
     getCursor: function(start) {
-      var range$$1 = this.sel.primary(), pos;
-      if (start == null || start == "head") { pos = range$$1.head; }
-      else if (start == "anchor") { pos = range$$1.anchor; }
-      else if (start == "end" || start == "to" || start === false) { pos = range$$1.to(); }
-      else { pos = range$$1.from(); }
+      var range = this.sel.primary(), pos;
+      if (start == null || start == "head") { pos = range.head; }
+      else if (start == "anchor") { pos = range.anchor; }
+      else if (start == "end" || start == "to" || start === false) { pos = range.to(); }
+      else { pos = range.from(); }
       return pos
     },
     listSelections: function() { return this.sel.ranges },
@@ -9014,13 +8968,11 @@ module.exports = function isBuffer (obj) {
       extendSelections(this, clipPosArray(this, heads), options);
     }),
     setSelections: docMethodOp(function(ranges, primary, options) {
-      var this$1 = this;
-
       if (!ranges.length) { return }
       var out = [];
       for (var i = 0; i < ranges.length; i++)
-        { out[i] = new Range(clipPos(this$1, ranges[i].anchor),
-                           clipPos(this$1, ranges[i].head)); }
+        { out[i] = new Range(clipPos(this, ranges[i].anchor),
+                           clipPos(this, ranges[i].head)); }
       if (primary == null) { primary = Math.min(ranges.length - 1, this.sel.primIndex); }
       setSelection(this, normalizeSelection(this.cm, out, primary), options);
     }),
@@ -9031,23 +8983,19 @@ module.exports = function isBuffer (obj) {
     }),
 
     getSelection: function(lineSep) {
-      var this$1 = this;
-
       var ranges = this.sel.ranges, lines;
       for (var i = 0; i < ranges.length; i++) {
-        var sel = getBetween(this$1, ranges[i].from(), ranges[i].to());
+        var sel = getBetween(this, ranges[i].from(), ranges[i].to());
         lines = lines ? lines.concat(sel) : sel;
       }
       if (lineSep === false) { return lines }
       else { return lines.join(lineSep || this.lineSeparator()) }
     },
     getSelections: function(lineSep) {
-      var this$1 = this;
-
       var parts = [], ranges = this.sel.ranges;
       for (var i = 0; i < ranges.length; i++) {
-        var sel = getBetween(this$1, ranges[i].from(), ranges[i].to());
-        if (lineSep !== false) { sel = sel.join(lineSep || this$1.lineSeparator()); }
+        var sel = getBetween(this, ranges[i].from(), ranges[i].to());
+        if (lineSep !== false) { sel = sel.join(lineSep || this.lineSeparator()); }
         parts[i] = sel;
       }
       return parts
@@ -9059,16 +9007,14 @@ module.exports = function isBuffer (obj) {
       this.replaceSelections(dup, collapse, origin || "+input");
     },
     replaceSelections: docMethodOp(function(code, collapse, origin) {
-      var this$1 = this;
-
       var changes = [], sel = this.sel;
       for (var i = 0; i < sel.ranges.length; i++) {
-        var range$$1 = sel.ranges[i];
-        changes[i] = {from: range$$1.from(), to: range$$1.to(), text: this$1.splitLines(code[i]), origin: origin};
+        var range = sel.ranges[i];
+        changes[i] = {from: range.from(), to: range.to(), text: this.splitLines(code[i]), origin: origin};
       }
       var newSel = collapse && collapse != "end" && computeReplacedSel(this, changes, collapse);
       for (var i$1 = changes.length - 1; i$1 >= 0; i$1--)
-        { makeChange(this$1, changes[i$1]); }
+        { makeChange(this, changes[i$1]); }
       if (newSel) { setSelectionReplaceHistory(this, newSel); }
       else if (this.cm) { ensureCursorVisible(this.cm); }
     }),
@@ -9207,18 +9153,18 @@ module.exports = function isBuffer (obj) {
     },
     findMarks: function(from, to, filter) {
       from = clipPos(this, from); to = clipPos(this, to);
-      var found = [], lineNo$$1 = from.line;
+      var found = [], lineNo = from.line;
       this.iter(from.line, to.line + 1, function (line) {
         var spans = line.markedSpans;
         if (spans) { for (var i = 0; i < spans.length; i++) {
           var span = spans[i];
-          if (!(span.to != null && lineNo$$1 == from.line && from.ch >= span.to ||
-                span.from == null && lineNo$$1 != from.line ||
-                span.from != null && lineNo$$1 == to.line && span.from >= to.ch) &&
+          if (!(span.to != null && lineNo == from.line && from.ch >= span.to ||
+                span.from == null && lineNo != from.line ||
+                span.from != null && lineNo == to.line && span.from >= to.ch) &&
               (!filter || filter(span.marker)))
             { found.push(span.marker.parent || span.marker); }
         } }
-        ++lineNo$$1;
+        ++lineNo;
       });
       return found
     },
@@ -9233,14 +9179,14 @@ module.exports = function isBuffer (obj) {
     },
 
     posFromIndex: function(off) {
-      var ch, lineNo$$1 = this.first, sepSize = this.lineSeparator().length;
+      var ch, lineNo = this.first, sepSize = this.lineSeparator().length;
       this.iter(function (line) {
         var sz = line.text.length + sepSize;
         if (sz > off) { ch = off; return true }
         off -= sz;
-        ++lineNo$$1;
+        ++lineNo;
       });
-      return clipPos(this, Pos(lineNo$$1, ch))
+      return clipPos(this, Pos(lineNo, ch))
     },
     indexFromPos: function (coords) {
       coords = clipPos(this, coords);
@@ -9279,15 +9225,13 @@ module.exports = function isBuffer (obj) {
       return copy
     },
     unlinkDoc: function(other) {
-      var this$1 = this;
-
       if (other instanceof CodeMirror) { other = other.doc; }
       if (this.linked) { for (var i = 0; i < this.linked.length; ++i) {
-        var link = this$1.linked[i];
+        var link = this.linked[i];
         if (link.doc != other) { continue }
-        this$1.linked.splice(i, 1);
-        other.unlinkDoc(this$1);
-        detachSharedMarkers(findSharedMarkers(this$1));
+        this.linked.splice(i, 1);
+        other.unlinkDoc(this);
+        detachSharedMarkers(findSharedMarkers(this));
         break
       } }
       // If the histories were shared, split them again
@@ -9585,18 +9529,18 @@ module.exports = function isBuffer (obj) {
     return keymap
   }
 
-  function lookupKey(key, map$$1, handle, context) {
-    map$$1 = getKeyMap(map$$1);
-    var found = map$$1.call ? map$$1.call(key, context) : map$$1[key];
+  function lookupKey(key, map, handle, context) {
+    map = getKeyMap(map);
+    var found = map.call ? map.call(key, context) : map[key];
     if (found === false) { return "nothing" }
     if (found === "...") { return "multi" }
     if (found != null && handle(found)) { return "handled" }
 
-    if (map$$1.fallthrough) {
-      if (Object.prototype.toString.call(map$$1.fallthrough) != "[object Array]")
-        { return lookupKey(key, map$$1.fallthrough, handle, context) }
-      for (var i = 0; i < map$$1.fallthrough.length; i++) {
-        var result = lookupKey(key, map$$1.fallthrough[i], handle, context);
+    if (map.fallthrough) {
+      if (Object.prototype.toString.call(map.fallthrough) != "[object Array]")
+        { return lookupKey(key, map.fallthrough, handle, context) }
+      for (var i = 0; i < map.fallthrough.length; i++) {
+        var result = lookupKey(key, map.fallthrough[i], handle, context);
         if (result) { return result }
       }
     }
@@ -10040,6 +9984,8 @@ module.exports = function isBuffer (obj) {
       if (!handled && code == 88 && !hasCopyEvent && (mac ? e.metaKey : e.ctrlKey))
         { cm.replaceSelection("", null, "cut"); }
     }
+    if (gecko && !mac && !handled && code == 46 && e.shiftKey && !e.ctrlKey && document.execCommand)
+      { document.execCommand("cut"); }
 
     // Turn mouse into crosshair when Alt is held on Mac.
     if (code == 18 && !/\bCodeMirror-crosshair\b/.test(cm.display.lineDiv.className))
@@ -10271,11 +10217,11 @@ module.exports = function isBuffer (obj) {
       start = posFromMouse(cm, event, true, true);
       ourIndex = -1;
     } else {
-      var range$$1 = rangeForUnit(cm, start, behavior.unit);
+      var range = rangeForUnit(cm, start, behavior.unit);
       if (behavior.extend)
-        { ourRange = extendRange(ourRange, range$$1.anchor, range$$1.head, behavior.extend); }
+        { ourRange = extendRange(ourRange, range.anchor, range.head, behavior.extend); }
       else
-        { ourRange = range$$1; }
+        { ourRange = range; }
     }
 
     if (!behavior.addNew) {
@@ -10318,14 +10264,14 @@ module.exports = function isBuffer (obj) {
         cm.scrollIntoView(pos);
       } else {
         var oldRange = ourRange;
-        var range$$1 = rangeForUnit(cm, pos, behavior.unit);
+        var range = rangeForUnit(cm, pos, behavior.unit);
         var anchor = oldRange.anchor, head;
-        if (cmp(range$$1.anchor, anchor) > 0) {
-          head = range$$1.head;
-          anchor = minPos(oldRange.from(), range$$1.anchor);
+        if (cmp(range.anchor, anchor) > 0) {
+          head = range.head;
+          anchor = minPos(oldRange.from(), range.anchor);
         } else {
-          head = range$$1.anchor;
-          anchor = maxPos(oldRange.to(), range$$1.head);
+          head = range.anchor;
+          anchor = maxPos(oldRange.to(), range.head);
         }
         var ranges$1 = startSel.ranges.slice(0);
         ranges$1[ourIndex] = bidiSimplify(cm, new Range(clipPos(doc, anchor), head));
@@ -10387,17 +10333,17 @@ module.exports = function isBuffer (obj) {
 
   // Used when mouse-selecting to adjust the anchor to the proper side
   // of a bidi jump depending on the visual position of the head.
-  function bidiSimplify(cm, range$$1) {
-    var anchor = range$$1.anchor;
-    var head = range$$1.head;
+  function bidiSimplify(cm, range) {
+    var anchor = range.anchor;
+    var head = range.head;
     var anchorLine = getLine(cm.doc, anchor.line);
-    if (cmp(anchor, head) == 0 && anchor.sticky == head.sticky) { return range$$1 }
+    if (cmp(anchor, head) == 0 && anchor.sticky == head.sticky) { return range }
     var order = getOrder(anchorLine);
-    if (!order) { return range$$1 }
+    if (!order) { return range }
     var index = getBidiPartAt(order, anchor.ch, anchor.sticky), part = order[index];
-    if (part.from != anchor.ch && part.to != anchor.ch) { return range$$1 }
+    if (part.from != anchor.ch && part.to != anchor.ch) { return range }
     var boundary = index + ((part.from == anchor.ch) == (part.level != 1) ? 0 : 1);
-    if (boundary == 0 || boundary == order.length) { return range$$1 }
+    if (boundary == 0 || boundary == order.length) { return range }
 
     // Compute the relative visual position of the head compared to the
     // anchor (<0 is to the left, >0 to the right)
@@ -10416,7 +10362,7 @@ module.exports = function isBuffer (obj) {
     var usePart = order[boundary + (leftSide ? -1 : 0)];
     var from = leftSide == (usePart.level == 1);
     var ch = from ? usePart.from : usePart.to, sticky = from ? "after" : "before";
-    return anchor.ch == ch && anchor.sticky == sticky ? range$$1 : new Range(new Pos(anchor.line, ch, sticky), head)
+    return anchor.ch == ch && anchor.sticky == sticky ? range : new Range(new Pos(anchor.line, ch, sticky), head)
   }
 
 
@@ -10708,10 +10654,10 @@ module.exports = function isBuffer (obj) {
       { onBlur(this); }
 
     for (var opt in optionHandlers) { if (optionHandlers.hasOwnProperty(opt))
-      { optionHandlers[opt](this$1, options[opt], Init); } }
+      { optionHandlers[opt](this, options[opt], Init); } }
     maybeUpdateLineNumberWidth(this);
     if (options.finishInit) { options.finishInit(this); }
-    for (var i = 0; i < initHooks.length; ++i) { initHooks[i](this$1); }
+    for (var i = 0; i < initHooks.length; ++i) { initHooks[i](this); }
     endOperation(this);
     // Suppress optimizelegibility in Webkit, since it breaks text
     // measuring on line wrapping boundaries.
@@ -10933,9 +10879,9 @@ module.exports = function isBuffer (obj) {
     var updateInput = cm.curOp.updateInput;
     // Normal behavior is to insert the new text into every selection
     for (var i$1 = sel.ranges.length - 1; i$1 >= 0; i$1--) {
-      var range$$1 = sel.ranges[i$1];
-      var from = range$$1.from(), to = range$$1.to();
-      if (range$$1.empty()) {
+      var range = sel.ranges[i$1];
+      var from = range.from(), to = range.to();
+      if (range.empty()) {
         if (deleted && deleted > 0) // Handle deletion
           { from = Pos(from.line, from.ch - deleted); }
         else if (cm.state.overwrite && !paste) // Handle overwrite
@@ -10973,21 +10919,21 @@ module.exports = function isBuffer (obj) {
     var sel = cm.doc.sel;
 
     for (var i = sel.ranges.length - 1; i >= 0; i--) {
-      var range$$1 = sel.ranges[i];
-      if (range$$1.head.ch > 100 || (i && sel.ranges[i - 1].head.line == range$$1.head.line)) { continue }
-      var mode = cm.getModeAt(range$$1.head);
+      var range = sel.ranges[i];
+      if (range.head.ch > 100 || (i && sel.ranges[i - 1].head.line == range.head.line)) { continue }
+      var mode = cm.getModeAt(range.head);
       var indented = false;
       if (mode.electricChars) {
         for (var j = 0; j < mode.electricChars.length; j++)
           { if (inserted.indexOf(mode.electricChars.charAt(j)) > -1) {
-            indented = indentLine(cm, range$$1.head.line, "smart");
+            indented = indentLine(cm, range.head.line, "smart");
             break
           } }
       } else if (mode.electricInput) {
-        if (mode.electricInput.test(getLine(cm.doc, range$$1.head.line).text.slice(0, range$$1.head.ch)))
-          { indented = indentLine(cm, range$$1.head.line, "smart"); }
+        if (mode.electricInput.test(getLine(cm.doc, range.head.line).text.slice(0, range.head.ch)))
+          { indented = indentLine(cm, range.head.line, "smart"); }
       }
-      if (indented) { signalLater(cm, "electricInput", cm, range$$1.head.line); }
+      if (indented) { signalLater(cm, "electricInput", cm, range.head.line); }
     }
   }
 
@@ -11052,13 +10998,13 @@ module.exports = function isBuffer (obj) {
       getOption: function(option) {return this.options[option]},
       getDoc: function() {return this.doc},
 
-      addKeyMap: function(map$$1, bottom) {
-        this.state.keyMaps[bottom ? "push" : "unshift"](getKeyMap(map$$1));
+      addKeyMap: function(map, bottom) {
+        this.state.keyMaps[bottom ? "push" : "unshift"](getKeyMap(map));
       },
-      removeKeyMap: function(map$$1) {
+      removeKeyMap: function(map) {
         var maps = this.state.keyMaps;
         for (var i = 0; i < maps.length; ++i)
-          { if (maps[i] == map$$1 || maps[i].name == map$$1) {
+          { if (maps[i] == map || maps[i].name == map) {
             maps.splice(i, 1);
             return true
           } }
@@ -11075,15 +11021,13 @@ module.exports = function isBuffer (obj) {
         regChange(this);
       }),
       removeOverlay: methodOp(function(spec) {
-        var this$1 = this;
-
         var overlays = this.state.overlays;
         for (var i = 0; i < overlays.length; ++i) {
           var cur = overlays[i].modeSpec;
           if (cur == spec || typeof spec == "string" && cur.name == spec) {
             overlays.splice(i, 1);
-            this$1.state.modeGen++;
-            regChange(this$1);
+            this.state.modeGen++;
+            regChange(this);
             return
           }
         }
@@ -11097,24 +11041,22 @@ module.exports = function isBuffer (obj) {
         if (isLine(this.doc, n)) { indentLine(this, n, dir, aggressive); }
       }),
       indentSelection: methodOp(function(how) {
-        var this$1 = this;
-
         var ranges = this.doc.sel.ranges, end = -1;
         for (var i = 0; i < ranges.length; i++) {
-          var range$$1 = ranges[i];
-          if (!range$$1.empty()) {
-            var from = range$$1.from(), to = range$$1.to();
+          var range = ranges[i];
+          if (!range.empty()) {
+            var from = range.from(), to = range.to();
             var start = Math.max(end, from.line);
-            end = Math.min(this$1.lastLine(), to.line - (to.ch ? 0 : 1)) + 1;
+            end = Math.min(this.lastLine(), to.line - (to.ch ? 0 : 1)) + 1;
             for (var j = start; j < end; ++j)
-              { indentLine(this$1, j, how); }
-            var newRanges = this$1.doc.sel.ranges;
+              { indentLine(this, j, how); }
+            var newRanges = this.doc.sel.ranges;
             if (from.ch == 0 && ranges.length == newRanges.length && newRanges[i].from().ch > 0)
-              { replaceOneSelection(this$1.doc, i, new Range(from, newRanges[i].to()), sel_dontScroll); }
-          } else if (range$$1.head.line > end) {
-            indentLine(this$1, range$$1.head.line, how, true);
-            end = range$$1.head.line;
-            if (i == this$1.doc.sel.primIndex) { ensureCursorVisible(this$1); }
+              { replaceOneSelection(this.doc, i, new Range(from, newRanges[i].to()), sel_dontScroll); }
+          } else if (range.head.line > end) {
+            indentLine(this, range.head.line, how, true);
+            end = range.head.line;
+            if (i == this.doc.sel.primIndex) { ensureCursorVisible(this); }
           }
         }
       }),
@@ -11156,8 +11098,6 @@ module.exports = function isBuffer (obj) {
       },
 
       getHelpers: function(pos, type) {
-        var this$1 = this;
-
         var found = [];
         if (!helpers.hasOwnProperty(type)) { return found }
         var help = helpers[type], mode = this.getModeAt(pos);
@@ -11175,7 +11115,7 @@ module.exports = function isBuffer (obj) {
         }
         for (var i$1 = 0; i$1 < help._global.length; i$1++) {
           var cur = help._global[i$1];
-          if (cur.pred(mode, this$1) && indexOf(found, cur.val) == -1)
+          if (cur.pred(mode, this) && indexOf(found, cur.val) == -1)
             { found.push(cur.val); }
         }
         return found
@@ -11188,10 +11128,10 @@ module.exports = function isBuffer (obj) {
       },
 
       cursorCoords: function(start, mode) {
-        var pos, range$$1 = this.doc.sel.primary();
-        if (start == null) { pos = range$$1.head; }
+        var pos, range = this.doc.sel.primary();
+        if (start == null) { pos = range.head; }
         else if (typeof start == "object") { pos = clipPos(this.doc, start); }
-        else { pos = start ? range$$1.from() : range$$1.to(); }
+        else { pos = start ? range.from() : range.to(); }
         return cursorCoords(this, pos, mode || "page")
       },
 
@@ -11275,13 +11215,11 @@ module.exports = function isBuffer (obj) {
       triggerElectric: methodOp(function(text) { triggerElectric(this, text); }),
 
       findPosH: function(from, amount, unit, visually) {
-        var this$1 = this;
-
         var dir = 1;
         if (amount < 0) { dir = -1; amount = -amount; }
         var cur = clipPos(this.doc, from);
         for (var i = 0; i < amount; ++i) {
-          cur = findPosH(this$1.doc, cur, dir, unit, visually);
+          cur = findPosH(this.doc, cur, dir, unit, visually);
           if (cur.hitSide) { break }
         }
         return cur
@@ -11290,11 +11228,11 @@ module.exports = function isBuffer (obj) {
       moveH: methodOp(function(dir, unit) {
         var this$1 = this;
 
-        this.extendSelectionsBy(function (range$$1) {
-          if (this$1.display.shift || this$1.doc.extend || range$$1.empty())
-            { return findPosH(this$1.doc, range$$1.head, dir, unit, this$1.options.rtlMoveVisually) }
+        this.extendSelectionsBy(function (range) {
+          if (this$1.display.shift || this$1.doc.extend || range.empty())
+            { return findPosH(this$1.doc, range.head, dir, unit, this$1.options.rtlMoveVisually) }
           else
-            { return dir < 0 ? range$$1.from() : range$$1.to() }
+            { return dir < 0 ? range.from() : range.to() }
         }, sel_move);
       }),
 
@@ -11303,23 +11241,21 @@ module.exports = function isBuffer (obj) {
         if (sel.somethingSelected())
           { doc.replaceSelection("", null, "+delete"); }
         else
-          { deleteNearSelection(this, function (range$$1) {
-            var other = findPosH(doc, range$$1.head, dir, unit, false);
-            return dir < 0 ? {from: other, to: range$$1.head} : {from: range$$1.head, to: other}
+          { deleteNearSelection(this, function (range) {
+            var other = findPosH(doc, range.head, dir, unit, false);
+            return dir < 0 ? {from: other, to: range.head} : {from: range.head, to: other}
           }); }
       }),
 
       findPosV: function(from, amount, unit, goalColumn) {
-        var this$1 = this;
-
         var dir = 1, x = goalColumn;
         if (amount < 0) { dir = -1; amount = -amount; }
         var cur = clipPos(this.doc, from);
         for (var i = 0; i < amount; ++i) {
-          var coords = cursorCoords(this$1, cur, "div");
+          var coords = cursorCoords(this, cur, "div");
           if (x == null) { x = coords.left; }
           else { coords.left = x; }
-          cur = findPosV(this$1, coords, dir, unit);
+          cur = findPosV(this, coords, dir, unit);
           if (cur.hitSide) { break }
         }
         return cur
@@ -11330,14 +11266,14 @@ module.exports = function isBuffer (obj) {
 
         var doc = this.doc, goals = [];
         var collapse = !this.display.shift && !doc.extend && doc.sel.somethingSelected();
-        doc.extendSelectionsBy(function (range$$1) {
+        doc.extendSelectionsBy(function (range) {
           if (collapse)
-            { return dir < 0 ? range$$1.from() : range$$1.to() }
-          var headPos = cursorCoords(this$1, range$$1.head, "div");
-          if (range$$1.goalColumn != null) { headPos.left = range$$1.goalColumn; }
+            { return dir < 0 ? range.from() : range.to() }
+          var headPos = cursorCoords(this$1, range.head, "div");
+          if (range.goalColumn != null) { headPos.left = range.goalColumn; }
           goals.push(headPos.left);
           var pos = findPosV(this$1, headPos, dir, unit);
-          if (unit == "page" && range$$1 == doc.sel.primary())
+          if (unit == "page" && range == doc.sel.primary())
             { addToScrollTop(this$1, charCoords(this$1, pos, "div").top - headPos.top); }
           return pos
         }, sel_move);
@@ -11384,22 +11320,22 @@ module.exports = function isBuffer (obj) {
                 clientHeight: displayHeight(this), clientWidth: displayWidth(this)}
       },
 
-      scrollIntoView: methodOp(function(range$$1, margin) {
-        if (range$$1 == null) {
-          range$$1 = {from: this.doc.sel.primary().head, to: null};
+      scrollIntoView: methodOp(function(range, margin) {
+        if (range == null) {
+          range = {from: this.doc.sel.primary().head, to: null};
           if (margin == null) { margin = this.options.cursorScrollMargin; }
-        } else if (typeof range$$1 == "number") {
-          range$$1 = {from: Pos(range$$1, 0), to: null};
-        } else if (range$$1.from == null) {
-          range$$1 = {from: range$$1, to: null};
+        } else if (typeof range == "number") {
+          range = {from: Pos(range, 0), to: null};
+        } else if (range.from == null) {
+          range = {from: range, to: null};
         }
-        if (!range$$1.to) { range$$1.to = range$$1.from; }
-        range$$1.margin = margin || 0;
+        if (!range.to) { range.to = range.from; }
+        range.margin = margin || 0;
 
-        if (range$$1.from.line != null) {
-          scrollToRange(this, range$$1);
+        if (range.from.line != null) {
+          scrollToRange(this, range);
         } else {
-          scrollToCoordsRange(this, range$$1.from, range$$1.to, range$$1.margin);
+          scrollToCoordsRange(this, range.from, range.to, range.margin);
         }
       }),
 
@@ -11410,11 +11346,11 @@ module.exports = function isBuffer (obj) {
         if (width != null) { this.display.wrapper.style.width = interpret(width); }
         if (height != null) { this.display.wrapper.style.height = interpret(height); }
         if (this.options.lineWrapping) { clearLineMeasurementCache(this); }
-        var lineNo$$1 = this.display.viewFrom;
-        this.doc.iter(lineNo$$1, this.display.viewTo, function (line) {
+        var lineNo = this.display.viewFrom;
+        this.doc.iter(lineNo, this.display.viewTo, function (line) {
           if (line.widgets) { for (var i = 0; i < line.widgets.length; i++)
-            { if (line.widgets[i].noHScroll) { regLineChange(this$1, lineNo$$1, "widget"); break } } }
-          ++lineNo$$1;
+            { if (line.widgets[i].noHScroll) { regLineChange(this$1, lineNo, "widget"); break } } }
+          ++lineNo;
         });
         this.curOp.forceUpdate = true;
         signal(this, "refresh", this);
@@ -11685,8 +11621,8 @@ module.exports = function isBuffer (obj) {
     var end = to.line < cm.display.viewTo && posToDOM(cm, to);
     if (!end) {
       var measure = view[view.length - 1].measure;
-      var map$$1 = measure.maps ? measure.maps[measure.maps.length - 1] : measure.map;
-      end = {node: map$$1[map$$1.length - 1], offset: map$$1[map$$1.length - 2] - map$$1[map$$1.length - 3]};
+      var map = measure.maps ? measure.maps[measure.maps.length - 1] : measure.map;
+      end = {node: map[map.length - 1], offset: map[map.length - 2] - map[map.length - 3]};
     }
 
     if (!start || !end) {
@@ -11975,11 +11911,11 @@ module.exports = function isBuffer (obj) {
           addText(cmText);
           return
         }
-        var markerID = node.getAttribute("cm-marker"), range$$1;
+        var markerID = node.getAttribute("cm-marker"), range;
         if (markerID) {
           var found = cm.findMarks(Pos(fromLine, 0), Pos(toLine + 1, 0), recognizeMarker(+markerID));
-          if (found.length && (range$$1 = found[0].find(0)))
-            { addText(getBetween(cm.doc, range$$1.from, range$$1.to).join(lineSep)); }
+          if (found.length && (range = found[0].find(0)))
+            { addText(getBetween(cm.doc, range.from, range.to).join(lineSep)); }
           return
         }
         if (node.getAttribute("contenteditable") == "false") { return }
@@ -12047,13 +11983,13 @@ module.exports = function isBuffer (obj) {
 
     function find(textNode, topNode, offset) {
       for (var i = -1; i < (maps ? maps.length : 0); i++) {
-        var map$$1 = i < 0 ? measure.map : maps[i];
-        for (var j = 0; j < map$$1.length; j += 3) {
-          var curNode = map$$1[j + 2];
+        var map = i < 0 ? measure.map : maps[i];
+        for (var j = 0; j < map.length; j += 3) {
+          var curNode = map[j + 2];
           if (curNode == textNode || curNode == topNode) {
             var line = lineNo(i < 0 ? lineView.line : lineView.rest[i]);
-            var ch = map$$1[j] + offset;
-            if (offset < 0 || curNode != textNode) { ch = map$$1[j + (offset ? 1 : 0)]; }
+            var ch = map[j] + offset;
+            if (offset < 0 || curNode != textNode) { ch = map[j + (offset ? 1 : 0)]; }
             return Pos(line, ch)
           }
         }
@@ -12577,7 +12513,7 @@ module.exports = function isBuffer (obj) {
 
   addLegacyProps(CodeMirror);
 
-  CodeMirror.version = "5.49.2";
+  CodeMirror.version = "5.50.0";
 
   return CodeMirror;
 
@@ -13524,128 +13460,129 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/App.css ***!
-  \**************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css":
+/*!**************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/App.css ***!
+  \**************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, ".App {\r\n  text-align: center;\r\n}\r\n\r\n.App-logo {\r\n  height: 40vmin;\r\n}\r\n\r\n.App-header {\r\n  background-color: #282c34;\r\n  min-height: 100vh;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: calc(10px + 2vmin);\r\n  color: white;\r\n}\r\n\r\n.App-link {\r\n  color: #09d3ac;\r\n}\r\n\r\n/* Shared */\r\n.loginBtn {\r\n    box-sizing: border-box;\r\n    position: relative;\r\n    /* width: 13em;  - apply for fixed size */\r\n    margin: 0.2em;\r\n    padding: 0 15px 0 46px;\r\n    border: none;\r\n    text-align: left;\r\n    line-height: 34px;\r\n    white-space: nowrap;\r\n    border-radius: 0.2em;\r\n    font-size: 16px;\r\n    color: #FFF;\r\n  }\r\n  .loginBtn:before {\r\n    content: \"\";\r\n    box-sizing: border-box;\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    width: 34px;\r\n    height: 100%;\r\n  }\r\n  .loginBtn:focus {\r\n    outline: none;\r\n  }\r\n  .loginBtn:active {\r\n    box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);\r\n  }\r\n\r\n\r\n  /* Google */\r\n  .loginBtn--google {\r\n    /*font-family: \"Roboto\", Roboto, arial, sans-serif;*/\r\n    background: #DD4B39;\r\n  }\r\n  .loginBtn--google:before {\r\n    border-right: #BB3F30 1px solid;\r\n    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;\r\n  }\r\n  .loginBtn--google:hover,\r\n  .loginBtn--google:focus {\r\n    background: #E74B37;\r\n  }\r\n", ""]);
 
-
-// module
-exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  height: 40vmin;\n}\n\n.App-header {\n  background-color: #282c34;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #09d3ac;\n}\n\n/* Shared */\n.loginBtn {\n    box-sizing: border-box;\n    position: relative;\n    /* width: 13em;  - apply for fixed size */\n    margin: 0.2em;\n    padding: 0 15px 0 46px;\n    border: none;\n    text-align: left;\n    line-height: 34px;\n    white-space: nowrap;\n    border-radius: 0.2em;\n    font-size: 16px;\n    color: #FFF;\n  }\n  .loginBtn:before {\n    content: \"\";\n    box-sizing: border-box;\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 34px;\n    height: 100%;\n  }\n  .loginBtn:focus {\n    outline: none;\n  }\n  .loginBtn:active {\n    box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);\n  }\n\n\n  /* Google */\n  .loginBtn--google {\n    /*font-family: \"Roboto\", Roboto, arial, sans-serif;*/\n    background: #DD4B39;\n  }\n  .loginBtn--google:before {\n    border-right: #BB3F30 1px solid;\n    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;\n  }\n  .loginBtn--google:hover,\n  .loginBtn--google:focus {\n    background: #E74B37;\n  }\n", ""]);
-
-// exports
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/keyevent/keyevent.min.css":
-/*!*******************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/components/keyevent/keyevent.min.css ***!
-  \*******************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/keyevent/keyevent.min.css":
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--5-1!./node_modules/postcss-loader/src??ref--5-2!./resources/js/components/keyevent/keyevent.min.css ***!
+  \*******************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, ".show{display:block}.hidden{display:none}textarea{height:200%}\r\n", ""]);
 
-
-// module
-exports.push([module.i, ".show{display:block}.hidden{display:none}textarea{height:200%}\n", ""]);
-
-// exports
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/lib/css-base.js":
-/*!*************************************************!*\
-  !*** ./node_modules/css-loader/lib/css-base.js ***!
-  \*************************************************/
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 /*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
 */
 // css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
 
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
 
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
+      if (item[2]) {
+        return '@media ' + item[2] + '{' + content + '}';
+      } else {
+        return content;
+      }
+    }).join('');
+  }; // import a list of modules into the list
+
+
+  list.i = function (modules, mediaQuery) {
+    if (typeof modules === 'string') {
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    for (var i = 0; i < this.length; i++) {
+      var id = this[i][0];
+
+      if (id != null) {
+        alreadyImportedModules[id] = true;
+      }
+    }
+
+    for (i = 0; i < modules.length; i++) {
+      var item = modules[i]; // skip already imported module
+      // this implementation is not 100% perfect for weird media query combinations
+      // when a module is imported multiple times with different media queries.
+      // I hope this will never occur (Hey this way we have smaller bundles)
+
+      if (item[0] == null || !alreadyImportedModules[item[0]]) {
+        if (mediaQuery && !item[2]) {
+          item[2] = mediaQuery;
+        } else if (mediaQuery) {
+          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
+        }
+
+        list.push(item);
+      }
+    }
+  };
+
+  return list;
 };
 
 function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
+  var content = item[1] || '';
+  var cssMapping = item[3];
 
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
+  if (!cssMapping) {
+    return content;
+  }
 
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
 
-	return [content].join('\n');
-}
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
 
-// Adapted from convert-source-map (MIT)
+
 function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+  return '/*# ' + data + ' */';
 }
-
 
 /***/ }),
 
@@ -81182,7 +81119,7 @@ function createStore(reducer, preloadedState, enhancer) {
     }
 
     if (isDispatching) {
-      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
+      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
     }
 
     var isSubscribed = true;
@@ -81194,13 +81131,14 @@ function createStore(reducer, preloadedState, enhancer) {
       }
 
       if (isDispatching) {
-        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.');
+        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
       }
 
       isSubscribed = false;
       ensureCanMutateNextListeners();
       var index = nextListeners.indexOf(listener);
       nextListeners.splice(index, 1);
+      currentListeners = null;
     };
   }
   /**
@@ -81502,6 +81440,7 @@ function combineReducers(reducers) {
       hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
     }
 
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
     return hasChanged ? nextState : state;
   };
 }
@@ -83305,512 +83244,296 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/lib/addStyles.js":
-/*!****************************************************!*\
-  !*** ./node_modules/style-loader/lib/addStyles.js ***!
-  \****************************************************/
+/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
+"use strict";
+
 
 var stylesInDom = {};
 
-var	memoize = function (fn) {
-	var memo;
+var isOldIE = function isOldIE() {
+  var memo;
+  return function memorize() {
+    if (typeof memo === 'undefined') {
+      // Test for IE <= 9 as proposed by Browserhacks
+      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+      // Tests for existence of standard globals is to allow style-loader
+      // to operate correctly into non-standard environments
+      // @see https://github.com/webpack-contrib/style-loader/issues/177
+      memo = Boolean(window && document && document.all && !window.atob);
+    }
 
-	return function () {
-		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-		return memo;
-	};
-};
+    return memo;
+  };
+}();
 
-var isOldIE = memoize(function () {
-	// Test for IE <= 9 as proposed by Browserhacks
-	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-	// Tests for existence of standard globals is to allow style-loader
-	// to operate correctly into non-standard environments
-	// @see https://github.com/webpack-contrib/style-loader/issues/177
-	return window && document && document.all && !window.atob;
-});
+var getTarget = function getTarget() {
+  var memo = {};
+  return function memorize(target) {
+    if (typeof memo[target] === 'undefined') {
+      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
 
-var getTarget = function (target, parent) {
-  if (parent){
-    return parent.querySelector(target);
+      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+        try {
+          // This will throw an exception if access to iframe is blocked
+          // due to cross-origin restrictions
+          styleTarget = styleTarget.contentDocument.head;
+        } catch (e) {
+          // istanbul ignore next
+          styleTarget = null;
+        }
+      }
+
+      memo[target] = styleTarget;
+    }
+
+    return memo[target];
+  };
+}();
+
+function listToStyles(list, options) {
+  var styles = [];
+  var newStyles = {};
+
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var css = item[1];
+    var media = item[2];
+    var sourceMap = item[3];
+    var part = {
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    };
+
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = {
+        id: id,
+        parts: [part]
+      });
+    } else {
+      newStyles[id].parts.push(part);
+    }
   }
-  return document.querySelector(target);
-};
 
-var getElement = (function (fn) {
-	var memo = {};
+  return styles;
+}
 
-	return function(target, parent) {
-                // If passing function in options, then use it for resolve "head" element.
-                // Useful for Shadow Root style i.e
-                // {
-                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
-                // }
-                if (typeof target === 'function') {
-                        return target();
-                }
-                if (typeof memo[target] === "undefined") {
-			var styleTarget = getTarget.call(this, target, parent);
-			// Special case to return head of iframe instead of iframe itself
-			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-				try {
-					// This will throw an exception if access to iframe is blocked
-					// due to cross-origin restrictions
-					styleTarget = styleTarget.contentDocument.head;
-				} catch(e) {
-					styleTarget = null;
-				}
-			}
-			memo[target] = styleTarget;
-		}
-		return memo[target]
-	};
-})();
+function addStylesToDom(styles, options) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i];
+    var domStyle = stylesInDom[item.id];
+    var j = 0;
+
+    if (domStyle) {
+      domStyle.refs++;
+
+      for (; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j]);
+      }
+
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j], options));
+      }
+    } else {
+      var parts = [];
+
+      for (; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j], options));
+      }
+
+      stylesInDom[item.id] = {
+        id: item.id,
+        refs: 1,
+        parts: parts
+      };
+    }
+  }
+}
+
+function insertStyleElement(options) {
+  var style = document.createElement('style');
+
+  if (typeof options.attributes.nonce === 'undefined') {
+    var nonce =  true ? __webpack_require__.nc : undefined;
+
+    if (nonce) {
+      options.attributes.nonce = nonce;
+    }
+  }
+
+  Object.keys(options.attributes).forEach(function (key) {
+    style.setAttribute(key, options.attributes[key]);
+  });
+
+  if (typeof options.insert === 'function') {
+    options.insert(style);
+  } else {
+    var target = getTarget(options.insert || 'head');
+
+    if (!target) {
+      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
+    }
+
+    target.appendChild(style);
+  }
+
+  return style;
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+var replaceText = function replaceText() {
+  var textStore = [];
+  return function replace(index, replacement) {
+    textStore[index] = replacement;
+    return textStore.filter(Boolean).join('\n');
+  };
+}();
+
+function applyToSingletonTag(style, index, remove, obj) {
+  var css = remove ? '' : obj.css; // For old IE
+
+  /* istanbul ignore if  */
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = replaceText(index, css);
+  } else {
+    var cssNode = document.createTextNode(css);
+    var childNodes = style.childNodes;
+
+    if (childNodes[index]) {
+      style.removeChild(childNodes[index]);
+    }
+
+    if (childNodes.length) {
+      style.insertBefore(cssNode, childNodes[index]);
+    } else {
+      style.appendChild(cssNode);
+    }
+  }
+}
+
+function applyToTag(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute('media', media);
+  }
+
+  if (sourceMap && btoa) {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    while (style.firstChild) {
+      style.removeChild(style.firstChild);
+    }
+
+    style.appendChild(document.createTextNode(css));
+  }
+}
 
 var singleton = null;
-var	singletonCounter = 0;
-var	stylesInsertedAtTop = [];
-
-var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
-
-module.exports = function(list, options) {
-	if (typeof DEBUG !== "undefined" && DEBUG) {
-		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-	}
-
-	options = options || {};
-
-	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
-
-	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-	// tags it will allow on a page
-	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
-
-	// By default, add <style> tags to the <head> element
-        if (!options.insertInto) options.insertInto = "head";
-
-	// By default, add <style> tags to the bottom of the target
-	if (!options.insertAt) options.insertAt = "bottom";
-
-	var styles = listToStyles(list, options);
-
-	addStylesToDom(styles, options);
-
-	return function update (newList) {
-		var mayRemove = [];
-
-		for (var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-
-			domStyle.refs--;
-			mayRemove.push(domStyle);
-		}
-
-		if(newList) {
-			var newStyles = listToStyles(newList, options);
-			addStylesToDom(newStyles, options);
-		}
-
-		for (var i = 0; i < mayRemove.length; i++) {
-			var domStyle = mayRemove[i];
-
-			if(domStyle.refs === 0) {
-				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
-
-				delete stylesInDom[domStyle.id];
-			}
-		}
-	};
-};
-
-function addStylesToDom (styles, options) {
-	for (var i = 0; i < styles.length; i++) {
-		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
-
-		if(domStyle) {
-			domStyle.refs++;
-
-			for(var j = 0; j < domStyle.parts.length; j++) {
-				domStyle.parts[j](item.parts[j]);
-			}
-
-			for(; j < item.parts.length; j++) {
-				domStyle.parts.push(addStyle(item.parts[j], options));
-			}
-		} else {
-			var parts = [];
-
-			for(var j = 0; j < item.parts.length; j++) {
-				parts.push(addStyle(item.parts[j], options));
-			}
-
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-		}
-	}
-}
-
-function listToStyles (list, options) {
-	var styles = [];
-	var newStyles = {};
-
-	for (var i = 0; i < list.length; i++) {
-		var item = list[i];
-		var id = options.base ? item[0] + options.base : item[0];
-		var css = item[1];
-		var media = item[2];
-		var sourceMap = item[3];
-		var part = {css: css, media: media, sourceMap: sourceMap};
-
-		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
-		else newStyles[id].parts.push(part);
-	}
-
-	return styles;
-}
-
-function insertStyleElement (options, style) {
-	var target = getElement(options.insertInto)
-
-	if (!target) {
-		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
-	}
-
-	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
-
-	if (options.insertAt === "top") {
-		if (!lastStyleElementInsertedAtTop) {
-			target.insertBefore(style, target.firstChild);
-		} else if (lastStyleElementInsertedAtTop.nextSibling) {
-			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
-		} else {
-			target.appendChild(style);
-		}
-		stylesInsertedAtTop.push(style);
-	} else if (options.insertAt === "bottom") {
-		target.appendChild(style);
-	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
-		var nextSibling = getElement(options.insertAt.before, target);
-		target.insertBefore(style, nextSibling);
-	} else {
-		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
-	}
-}
-
-function removeStyleElement (style) {
-	if (style.parentNode === null) return false;
-	style.parentNode.removeChild(style);
-
-	var idx = stylesInsertedAtTop.indexOf(style);
-	if(idx >= 0) {
-		stylesInsertedAtTop.splice(idx, 1);
-	}
-}
-
-function createStyleElement (options) {
-	var style = document.createElement("style");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-
-	if(options.attrs.nonce === undefined) {
-		var nonce = getNonce();
-		if (nonce) {
-			options.attrs.nonce = nonce;
-		}
-	}
-
-	addAttrs(style, options.attrs);
-	insertStyleElement(options, style);
-
-	return style;
-}
-
-function createLinkElement (options) {
-	var link = document.createElement("link");
-
-	if(options.attrs.type === undefined) {
-		options.attrs.type = "text/css";
-	}
-	options.attrs.rel = "stylesheet";
-
-	addAttrs(link, options.attrs);
-	insertStyleElement(options, link);
-
-	return link;
-}
-
-function addAttrs (el, attrs) {
-	Object.keys(attrs).forEach(function (key) {
-		el.setAttribute(key, attrs[key]);
-	});
-}
-
-function getNonce() {
-	if (false) {}
-
-	return __webpack_require__.nc;
-}
-
-function addStyle (obj, options) {
-	var style, update, remove, result;
-
-	// If a transform function was defined, run it on the css
-	if (options.transform && obj.css) {
-	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
-		 : options.transform.default(obj.css);
-
-	    if (result) {
-	    	// If transform returns a value, use that instead of the original css.
-	    	// This allows running runtime transformations on the css.
-	    	obj.css = result;
-	    } else {
-	    	// If the transform function returns a falsy value, don't add this css.
-	    	// This allows conditional loading of css
-	    	return function() {
-	    		// noop
-	    	};
-	    }
-	}
-
-	if (options.singleton) {
-		var styleIndex = singletonCounter++;
-
-		style = singleton || (singleton = createStyleElement(options));
-
-		update = applyToSingletonTag.bind(null, style, styleIndex, false);
-		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-
-	} else if (
-		obj.sourceMap &&
-		typeof URL === "function" &&
-		typeof URL.createObjectURL === "function" &&
-		typeof URL.revokeObjectURL === "function" &&
-		typeof Blob === "function" &&
-		typeof btoa === "function"
-	) {
-		style = createLinkElement(options);
-		update = updateLink.bind(null, style, options);
-		remove = function () {
-			removeStyleElement(style);
-
-			if(style.href) URL.revokeObjectURL(style.href);
-		};
-	} else {
-		style = createStyleElement(options);
-		update = applyToTag.bind(null, style);
-		remove = function () {
-			removeStyleElement(style);
-		};
-	}
-
-	update(obj);
-
-	return function updateStyle (newObj) {
-		if (newObj) {
-			if (
-				newObj.css === obj.css &&
-				newObj.media === obj.media &&
-				newObj.sourceMap === obj.sourceMap
-			) {
-				return;
-			}
-
-			update(obj = newObj);
-		} else {
-			remove();
-		}
-	};
-}
-
-var replaceText = (function () {
-	var textStore = [];
-
-	return function (index, replacement) {
-		textStore[index] = replacement;
-
-		return textStore.filter(Boolean).join('\n');
-	};
-})();
-
-function applyToSingletonTag (style, index, remove, obj) {
-	var css = remove ? "" : obj.css;
-
-	if (style.styleSheet) {
-		style.styleSheet.cssText = replaceText(index, css);
-	} else {
-		var cssNode = document.createTextNode(css);
-		var childNodes = style.childNodes;
-
-		if (childNodes[index]) style.removeChild(childNodes[index]);
-
-		if (childNodes.length) {
-			style.insertBefore(cssNode, childNodes[index]);
-		} else {
-			style.appendChild(cssNode);
-		}
-	}
-}
-
-function applyToTag (style, obj) {
-	var css = obj.css;
-	var media = obj.media;
-
-	if(media) {
-		style.setAttribute("media", media)
-	}
-
-	if(style.styleSheet) {
-		style.styleSheet.cssText = css;
-	} else {
-		while(style.firstChild) {
-			style.removeChild(style.firstChild);
-		}
-
-		style.appendChild(document.createTextNode(css));
-	}
-}
-
-function updateLink (link, options, obj) {
-	var css = obj.css;
-	var sourceMap = obj.sourceMap;
-
-	/*
-		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
-		and there is no publicPath defined then lets turn convertToAbsoluteUrls
-		on by default.  Otherwise default to the convertToAbsoluteUrls option
-		directly
-	*/
-	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
-
-	if (options.convertToAbsoluteUrls || autoFixUrls) {
-		css = fixUrls(css);
-	}
-
-	if (sourceMap) {
-		// http://stackoverflow.com/a/26603875
-		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-	}
-
-	var blob = new Blob([css], { type: "text/css" });
-
-	var oldSrc = link.href;
-
-	link.href = URL.createObjectURL(blob);
-
-	if(oldSrc) URL.revokeObjectURL(oldSrc);
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/lib/urls.js":
-/*!***********************************************!*\
-  !*** ./node_modules/style-loader/lib/urls.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-/**
- * When source maps are enabled, `style-loader` uses a link element with a data-uri to
- * embed the css on the page. This breaks all relative urls because now they are relative to a
- * bundle instead of the current page.
- *
- * One solution is to only use full urls, but that may be impossible.
- *
- * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
- *
- * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
- *
- */
-
-module.exports = function (css) {
-  // get current location
-  var location = typeof window !== "undefined" && window.location;
-
-  if (!location) {
-    throw new Error("fixUrls requires window.location");
+var singletonCounter = 0;
+
+function addStyle(obj, options) {
+  var style;
+  var update;
+  var remove;
+
+  if (options.singleton) {
+    var styleIndex = singletonCounter++;
+    style = singleton || (singleton = insertStyleElement(options));
+    update = applyToSingletonTag.bind(null, style, styleIndex, false);
+    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+  } else {
+    style = insertStyleElement(options);
+    update = applyToTag.bind(null, style, options);
+
+    remove = function remove() {
+      removeStyleElement(style);
+    };
   }
 
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
+  update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
+
+      update(obj = newObj);
+    } else {
+      remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {};
+  options.attributes = typeof options.attributes === 'object' ? options.attributes : {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+  // tags it will allow on a page
+
+  if (!options.singleton && typeof options.singleton !== 'boolean') {
+    options.singleton = isOldIE();
   }
 
-  var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+  var styles = listToStyles(list, options);
+  addStylesToDom(styles, options);
+  return function update(newList) {
+    var mayRemove = [];
 
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i];
+      var domStyle = stylesInDom[item.id];
 
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
+      if (domStyle) {
+        domStyle.refs--;
+        mayRemove.push(domStyle);
+      }
+    }
 
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+    if (newList) {
+      var newStyles = listToStyles(newList, options);
+      addStylesToDom(newStyles, options);
+    }
 
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
+    for (var _i = 0; _i < mayRemove.length; _i++) {
+      var _domStyle = mayRemove[_i];
 
-		// convert the url to a full url
-		var newUrl;
+      if (_domStyle.refs === 0) {
+        for (var j = 0; j < _domStyle.parts.length; j++) {
+          _domStyle.parts[j]();
+        }
 
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
-
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
-
-	// send back the fixed css
-	return fixedCss;
+        delete stylesInDom[_domStyle.id];
+      }
+    }
+  };
 };
-
 
 /***/ }),
 
@@ -84858,26 +84581,23 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var content = __webpack_require__(/*! !../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../node_modules/postcss-loader/src??ref--5-2!./App.css */ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css");
 
-var content = __webpack_require__(/*! !../../node_modules/css-loader??ref--5-1!../../node_modules/postcss-loader/src??ref--5-2!./App.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/App.css");
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+var options = {}
 
-var transform;
-var insertInto;
+options.insert = "head";
+options.singleton = false;
 
+var update = __webpack_require__(/*! ../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
 
+if (content.locals) {
+  module.exports = content.locals;
+}
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
 
 /***/ }),
 
@@ -85020,15 +84740,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var register_service_worker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! register-service-worker */ "./node_modules/register-service-worker/index.js");
-/* harmony import */ var _components_container_createSolution__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/container/createSolution */ "./resources/js/components/container/createSolution.jsx");
-/* harmony import */ var _components_container_SolutionList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/container/SolutionList */ "./resources/js/components/container/SolutionList.jsx");
-/* harmony import */ var _components_keyevent_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/keyevent/index */ "./resources/js/components/keyevent/index.jsx");
-/* harmony import */ var _components_keyevent_MoveOffset__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/keyevent/MoveOffset */ "./resources/js/components/keyevent/MoveOffset.js");
-/* harmony import */ var _components_menu_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/menu/index */ "./resources/js/components/menu/index.jsx");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _components_keyevent_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/keyevent/index */ "./resources/js/components/keyevent/index.jsx");
+/* harmony import */ var _components_keyevent_MoveOffset__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/keyevent/MoveOffset */ "./resources/js/components/keyevent/MoveOffset.js");
+/* harmony import */ var _components_menu_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/menu/index */ "./resources/js/components/menu/index.jsx");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./redux/store */ "./resources/js/redux/store/index.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85048,8 +84766,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 
 
 
@@ -85138,7 +84854,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_createSolution__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_container_SolutionList__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_menu_index__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_menu_index__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row mt-5"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-12"
@@ -85166,8 +84882,8 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 var rootElement = document.getElementById("root");
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_9__["Provider"], {
-  store: _redux_store__WEBPACK_IMPORTED_MODULE_10__["default"]
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_7__["Provider"], {
+  store: _redux_store__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null)), rootElement);
 Object(register_service_worker__WEBPACK_IMPORTED_MODULE_2__["register"])();
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -85199,8 +84915,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _backend_exercices_exercice_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../backend/exercices/exercice/index */ "./resources/js/components/backend/exercices/exercice/index.jsx");
-/* harmony import */ var _login_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../login/index */ "./resources/js/components/login/index.js");
-/* harmony import */ var _register_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../register/index */ "./resources/js/components/register/index.js");
+/* harmony import */ var _container_createSolution__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/createSolution */ "./resources/js/components/container/createSolution.jsx");
+/* harmony import */ var _container_SolutionList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../container/SolutionList */ "./resources/js/components/container/SolutionList.jsx");
+/* harmony import */ var _login_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../login/index */ "./resources/js/components/login/index.js");
+/* harmony import */ var _register_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../register/index */ "./resources/js/components/register/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85227,6 +84945,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var Admin =
 /*#__PURE__*/
 function (_Component) {
@@ -85241,7 +84961,7 @@ function (_Component) {
   _createClass(Admin, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01 ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " - Administration")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_backend_exercices_exercice_index__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_register_index__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_login_index__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01 ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " - Administration")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_createSolution__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_SolutionList__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
     }
   }]);
 
@@ -86320,26 +86040,23 @@ function (_React$Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js??ref--5-1!../../../../node_modules/postcss-loader/src??ref--5-2!./keyevent.min.css */ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/keyevent/keyevent.min.css");
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/postcss-loader/src??ref--5-2!./keyevent.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/keyevent/keyevent.min.css");
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
 
-if(typeof content === 'string') content = [[module.i, content, '']];
+var options = {}
 
-var transform;
-var insertInto;
+options.insert = "head";
+options.singleton = false;
 
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
 
+if (content.locals) {
+  module.exports = content.locals;
+}
 
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
 
 /***/ }),
 
@@ -86924,7 +86641,7 @@ store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllSolut
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\projets\tfe2\server\resources\js\app.jsx */"./resources/js/app.jsx");
+module.exports = __webpack_require__(/*! D:\projets\tfe4\tfe\server\resources\js\app.jsx */"./resources/js/app.jsx");
 
 
 /***/ })

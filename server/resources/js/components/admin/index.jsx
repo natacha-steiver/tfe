@@ -3,7 +3,8 @@ import React,{Component} from 'react'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
 import Exercice from '../backend/exercices/exercice/index'
-
+import CreateSolution from '../container/createSolution';
+import SolutionList from '../container/SolutionList';
 import Login from '../login/index'
 import Register from '../register/index'
 
@@ -17,10 +18,8 @@ return(
   <div>
   <h2>01 <span> - Administration</span></h2>
   <div>
-
-<Exercice/>
-<Register/>
-<Login/>
+  <CreateSolution/>
+   <SolutionList />
   </div>
   </div>
 );
