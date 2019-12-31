@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import {getMenu} from '../../ajax';
-import Keyevent from '../keyevent/index';
+import Test from '../test/index';
 import Admin from '../admin/index';
 import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
@@ -81,7 +81,7 @@ tester avec admin!!!!!
             <Switch>
 
               <Route path="/js/ex1">
-                <Keyevent/>
+                <Test/>
               </Route>
               <Route path="/admin">
                 <Admin/>

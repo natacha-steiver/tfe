@@ -57,13 +57,13 @@ class Test extends React.Component {
     }
 
     const cssURL = getBlobURL(css, 'text/css')
-    const jsURL = getBlobURL(js, 'text/javascript')
+    const jsURL = getBlobURL(js, 'text/babel')
 
     const source = `
       <html>
         <head>
           ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
-          ${js && `<script src="${jsURL}"></script>`}
+          ${js && `<script type="text/babel" src="${jsURL}"></script>`}
         </head>
         <body>
           ${html || ''}
@@ -99,7 +99,7 @@ class Test extends React.Component {
 
         value='//crée une fonction pour déplacer ton perso'
         options={{
-          mode: 'javascript',
+          mode: 'text/jsx',
           gutters: ["CodeMirror-lint-markers"],
           lint:true,
           styleActiveLine: true,
@@ -109,14 +109,17 @@ class Test extends React.Component {
         onChange={(editor, data, value) => {
 
 if(editor.getValue().includes(this.state.solution)){
-  alert('ok')
+  console.log('ok')
 }else{
 
 console.log( this.state.solution+"</br>"+editor.getValue())
 }
 
-
-        this.setState({valeurjs:  editor.getValue()})
+const getJS = jsx => Babel.transform(jsx, {
+    presets: ["es2015"],
+    plugins: ["transform-react-jsx"]
+}).code;
+        this.setState({valeurjs:  getJS(editor.getValue())})
 
 
 
