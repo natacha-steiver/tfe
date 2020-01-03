@@ -3,7 +3,9 @@
 
 import { combineReducers } from 'redux';
 import solutions from './solutionReducer';
+import authentifications from './authReducer';
 
 export default combineReducers({
-    solutions: solutions
+    solutions: solutions,
+    authentifications: authentifications
 });

@@ -41,7 +41,7 @@ class Login extends Component{
         <div>
         <h3>Login</h3>
 
-        <form onSubmit={this.onSubmit}>
+        <form  onSubmit={this.onSubmit} >
         <label htmlFor="">email:</label>
         <input type="text" name="email"  id="email" placeholder="email"/>
 

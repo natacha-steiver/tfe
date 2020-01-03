@@ -34,7 +34,7 @@ export const showOneEx = (id)=>{
 export const deleteEx = (id)=>{
   return axios
     .delete(`api/exercice/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
     })
     .then(res =>{
     console.log(res)
@@ -56,7 +56,7 @@ export const storeEx = (id,solution,type)=>{
 export const updateEx = (id,solution,type)=>{
   return axios
     .put(`api/exercice/${id}`,{id:id,solution: solution,type:type},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
         })
     .then(res =>{
     console.log(res)
@@ -84,32 +84,39 @@ export const getMenu = ()=>{
 
 
 export const register = (email,password)=>{
-  return axios
-    .post(`http://localhost:3000/auth/register`,{email:email,password:password},{
-      headers:{'Content-Type':'application/json', 'Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZGYwZmM2YWFhODg1NGQ0MDQ1NTkzM2IiLCJpYXQiOjE1NzYwNzQzNDYsImV4cCI6MTU3NjA3NjE0Nn0.zLGaE_xt-peImOPbG7Psl9Fx3BYwxaXPKO5WHAJdFe8'}
-        })
-    .then(res =>{
-    console.log(res)
-    })
+/*
+return axios
+  .post(`api/auth/register`,{email:email,password:password},{
+    headers:{'Content-Type':'application/json'}
+  // headers:{'Content-Type':'application/json'}
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlMWFlNWIyYTA3OGY2MzBlZTQ2YzMiLCJpYXQiOjE1Nzc5ODU2NTF9.bZVYTE2NTn9Djo_UulfHZKBsLhIKtsYZ2tzge5H9ehM
+      })
+  .then(res =>{
+  console.log(res)
+  })
+ */
 }
 
 
 
 export const login = (email,password)=>{
-  return axios
-    .post(`http://localhost:3000/auth/login`,{email:email,password:password},{
-      headers:{'Content-Type':'application/json'}
-        })
-    .then(res =>{
-    console.log(res)
+/*
+return axios
+  .post(`api/auth/login`,{email:email,password:password},{
+     headers:{'Content-Type':'application/json' }
+
+      })
+  .then(res =>{
+  console.log(res)
 var token= res.data
 return token
-    })
+
+    }) */
 }
 
 export const getUser = ()=>{
   return axios
-    .get(`users`,{
+    .get(`api/users`,{
       headers:{'Content-Type':'application/json'}
         })
     .then(res =>{

@@ -25,25 +25,22 @@ Route.group(
     //backend exercices
     Route.get('exercice/:id','solutionsController.show')
     Route.post('exercice/add','solutionsController.store').as('solution.store')
-    Route.put('exercice/:id','solutionsController.update')
-    Route.delete('exercice/:id','solutionsController.delete')
-    Route.any('*', ({ view }) => view.render('app'))
+    Route.put('exercice/:id','solutionsController.update').middleware(['auth'])
+    Route.delete('exercice/:id','solutionsController.delete').middleware(['auth'])
+
+    Route.get('users', 'AuthController.getUser')
+    Route.get('auth/register', 'AuthController.register')
+    Route.post('auth/register', 'AuthController.register')
+    Route.get('auth/login', 'AuthController.login')
+    Route.post('auth/login', 'AuthController.login')
+        Route.any('*', ({ view }) => view.render('app'))
+
   }
 ).prefix('api')
 
-/*
-    Authentification
- */
 
-  Route.get('users', 'AuthController.getUser')
-  Route.get('auth/register', 'AuthController.register')
-  Route.post('auth/register', 'AuthController.register')
-  Route.get('auth/login', 'AuthController.login')
-  Route.post('auth/login', 'AuthController.login')
 
-//accueil
-//Route.get('/', 'accueilController.index')
-Route.any('*', ({ view }) => view.render('app'))
+    Route.any('*', ({ view }) => view.render('app'))
 
 
 Route.get('auth/google', 'AuthController.redirect').as('social.login')

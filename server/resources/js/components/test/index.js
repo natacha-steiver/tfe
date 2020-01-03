@@ -18,7 +18,7 @@ class Test extends React.Component {
 
         valeur:"",
         solution: "",
-
+        mode:"",
         valeurcss:"",
         click:false
       }
@@ -48,7 +48,22 @@ class Test extends React.Component {
       )
     }
 
+    selectMode(){
+        var modeInput = document.getElementById("select");
+        var myindex  = modeInput.selectedIndex;
+        var modefly = modeInput.options[myindex].text.toLowerCase();
+
+      //  alert(modefly); // This is giving me the exact mode on the screen
+            this.setState({mode:modefly})
+            console.log(this.state.mode)
+      //  editor.setOption("mode", modefly);// no change in the mode
+      //  CodeMirror.autoLoadMode(editor, modefly);//no change in the mode
+        //editor.refresh();
+         }
   componentDidUpdate(){
+  if(this.state.mode==''){
+      this.selectMode()
+  }
       this.test= React.createRef();
     const getGeneratedPageURL = ({ html, css, js }) => {
     const getBlobURL = (code, type) => {
@@ -89,6 +104,7 @@ class Test extends React.Component {
 
   document.getElementById('iframe').src = url
   }
+
 
 
   render(){
@@ -162,7 +178,7 @@ const getJS = jsx => Babel.transform(jsx, {
 
   value='//css'
   options={{
-    mode: 'css',
+    mode: this.state.mode,
     gutters: ["CodeMirror-lint-markers"],
     lint:true,
     styleActiveLine: true,
@@ -171,10 +187,10 @@ const getJS = jsx => Babel.transform(jsx, {
   style={{width:'100%',height:'50%'}}
   onChange={(editor, data, value) => {
 
+  console.log(this.state.mode)
 
 
-
-  this.setState({valeurcss:  editor.getValue()})
+  this.setState({valeurjs:  editor.getValue()})
 
 
 
@@ -187,6 +203,24 @@ const getJS = jsx => Babel.transform(jsx, {
 
 
       </iframe>
+
+<div>
+<select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
+<option value="1">Python</option>
+<option value="10">JavaScript</option>
+<option value="33">Asterisk dialplan</option>
+<option value="34">Clojure</option>
+<option value="35">Common Lisp</option>
+<option value="36">D</option>
+<option value="37">ECL</option>
+<option value="38">Go</option>
+<option value="39">Haskell</option>
+<option value="40">HTML</option>
+<option value="41">Jinja2</option>
+<option value="42">LiveScript</option>
+<option value="43">mIRC</option>
+</select>
+</div>
 </div>
       );
   }

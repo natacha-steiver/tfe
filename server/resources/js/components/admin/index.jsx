@@ -3,10 +3,12 @@ import React,{Component} from 'react'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
 import Exercice from '../backend/exercices/exercice/index'
+
 import CreateSolution from '../container/createSolution';
 import SolutionList from '../container/SolutionList';
-import Login from '../login/index'
-import Register from '../register/index'
+
+//import Login from '../login/index'
+//import Register from '../register/index'
 
 class Admin extends Component{
 
@@ -20,6 +22,7 @@ return(
   <div>
   <CreateSolution/>
    <SolutionList />
+
   </div>
   </div>
 );

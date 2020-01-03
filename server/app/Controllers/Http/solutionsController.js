@@ -9,7 +9,8 @@ async index({response}){
   }
 
 
-  async store({request,response}){
+  async store({request,auth,response}){
+
     const exType = request.post('type')
     const exSolution = request.post('solution')
 
@@ -31,15 +32,24 @@ const exerciceLast=  await Solution
   }
 
   async update ({params,response,request}) {
-    const exType = request.post('type')
-    const exSolution = request.post('solution')
 
 
-    const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution})
-    exercice.type = exType.type
-    exercice.solution =exSolution.solution
-console.log(request+"requete")
-  return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution})
+
+        try {
+          const exType = request.post('type')
+          const exSolution = request.post('solution')
+
+
+          const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution})
+          exercice.type = exType.type
+          exercice.solution =exSolution.solution
+      console.log(request+"requete")
+        return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution})
+
+        } catch (e) {
+          console.log(e)
+          return response.json({message: 'You are not authorized to perform this action'})
+        }
   }
 
   async delete ({  params, response }) {

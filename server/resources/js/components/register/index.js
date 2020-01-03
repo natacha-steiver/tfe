@@ -39,10 +39,10 @@ class Register extends Component{
     render() {
 
     return (
-        <div>
+        <div >
         <h3>Register</h3>
 
-        <form onSubmit={this.onSubmit}>
+        <form  onSubmit={this.onSubmit} >
         <label htmlFor="">email:</label>
         <input type="text" name="email"  id="email" placeholder="email"/>
 
