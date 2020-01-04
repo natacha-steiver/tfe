@@ -19,16 +19,32 @@ const Route = use('Route')
 Route.group(
   ()=> {
     Route.get('solutions','solutionsController.index')
-
+    Route.get('exercices','exercicesController.index')
     Route.get('items','itemsController.index')
-
+    Route.get('theories','theoriesController.index')
+    Route.get('users','usersController.index')
     //backend exercices
-    Route.get('exercice/:id','solutionsController.show')
-    Route.post('exercice/add','solutionsController.store').as('solution.store')
-    Route.put('exercice/:id','solutionsController.update').middleware(['auth'])
-    Route.delete('exercice/:id','solutionsController.delete').middleware(['auth'])
-
-    Route.get('users', 'AuthController.getUser')
+    Route.get('exercice/:id','exercicesController.show')
+    Route.post('exercice/add','exercicesController.store').as('exercice.store')
+    Route.put('exercice/:id','exercicesController.update')
+    Route.delete('exercice/:id','exercicesController.delete')
+    //backend solution
+    Route.get('solution/:id','solutionsController.show')
+    Route.post('solution/add','solutionsController.store').as('solution.store')
+    Route.put('solution/:id','solutionsController.update')
+    Route.delete('solution/:id','solutionsController.delete')
+    //backend utilisateurs(user redux)
+    Route.get('user/:id','utilisateursController.show')
+    Route.post('user/add','utilisateursController.store').as('utilisateur.store')
+    Route.put('user/:id','utilisateursController.update')
+    Route.delete('user/:id','utilisateursController.delete')
+    //backend theories
+    Route.get('theorie/:id','theoriesController.show')
+    Route.post('theorie/add','theoriesController.store').as('theorie.store')
+    Route.put('theorie/:id','theoriesController.update')
+    Route.delete('theorie/:id','theoriesController.delete')
+    //auth admin
+  //  Route.get('users', 'AuthController.getUser')
     Route.get('auth/register', 'AuthController.register')
     Route.post('auth/register', 'AuthController.register')
     Route.get('auth/login', 'AuthController.login')

@@ -84925,11 +84925,14 @@ module.exports = "/images/Fly (1).png?1fcf41c786be2547af0d02e9b32cfddb";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _backend_exercices_exercice_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../backend/exercices/exercice/index */ "./resources/js/components/backend/exercices/exercice/index.jsx");
-/* harmony import */ var _container_createSolution__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/createSolution */ "./resources/js/components/container/createSolution.jsx");
-/* harmony import */ var _container_SolutionList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../container/SolutionList */ "./resources/js/components/container/SolutionList.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _backend_exercices_exercice_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/exercices/exercice/index */ "./resources/js/components/backend/exercices/exercice/index.jsx");
+/* harmony import */ var _container_createSolution__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../container/createSolution */ "./resources/js/components/container/createSolution.jsx");
+/* harmony import */ var _container_SolutionList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../container/SolutionList */ "./resources/js/components/container/SolutionList.jsx");
+/* harmony import */ var _container_createExercice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../container/createExercice */ "./resources/js/components/container/createExercice.jsx");
+/* harmony import */ var _container_ExerciceList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../container/ExerciceList */ "./resources/js/components/container/ExerciceList.jsx");
+/* harmony import */ var _container_createTheorie__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../container/createTheorie */ "./resources/js/components/container/createTheorie.jsx");
+/* harmony import */ var _container_TheorieList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../container/TheorieList */ "./resources/js/components/container/TheorieList.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84954,6 +84957,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
  //import Login from '../login/index'
 //import Register from '../register/index'
 
@@ -84971,7 +84977,21 @@ function (_Component) {
   _createClass(Admin, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01 ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " - Administration")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_createSolution__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_SolutionList__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "01 ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, " - Administration")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "      ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/exercices"
+      }, "exercices")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/solutions"
+      }, "solutions")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "      ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/theories"
+      }, "theories")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/utilisateurs"
+      }, "utilisateurs")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/solutions"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_createSolution__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_SolutionList__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/exercices"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_createExercice__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_ExerciceList__WEBPACK_IMPORTED_MODULE_6__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        path: "/theories"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_createTheorie__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_TheorieList__WEBPACK_IMPORTED_MODULE_8__["default"], null)))))));
     }
   }]);
 
@@ -84979,6 +84999,134 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Admin);
+
+/***/ }),
+
+/***/ "./resources/js/components/backend/exercices/add/NewExercice.jsx":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/backend/exercices/add/NewExercice.jsx ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// NewPost.js
+
+
+
+
+var NewExercice =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewExercice, _React$Component);
+
+  function NewExercice(props) {
+    var _this;
+
+    _classCallCheck(this, NewExercice);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewExercice).call(this, props));
+    _this.state = {
+      _id: "hhjhj",
+      type: 'type',
+      ennonce: 'ennonce'
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
+    _this.handleReset = _this.handleReset.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(NewExercice, [{
+    key: "handleInputChange",
+    value: function handleInputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.handleReset();
+    }
+  }, {
+    key: "handleReset",
+    value: function handleReset() {
+      this.setState({
+        type: '',
+        ennonce: ''
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        method: "POST",
+        onSubmit: function onSubmit() {
+          _this2.props.onAddExercice(_this2.state);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Type",
+        className: "form-control",
+        name: "type",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.type
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        cols: "19",
+        rows: "8",
+        placeholder: "ennonce",
+        className: "form-control",
+        name: "ennonce",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.ennonce
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary"
+      }, "Add Exercice"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-warning",
+        onClick: this.handleReset
+      }, "Reset"))));
+    }
+  }]);
+
+  return NewExercice;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (NewExercice);
 
 /***/ }),
 
@@ -85107,6 +85255,158 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (NewSolution);
+
+/***/ }),
+
+/***/ "./resources/js/components/backend/exercices/add/NewTheorie.jsx":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/backend/exercices/add/NewTheorie.jsx ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// NewPost.js
+
+
+
+
+var NewTheorie =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewTheorie, _React$Component);
+
+  function NewTheorie(props) {
+    var _this;
+
+    _classCallCheck(this, NewTheorie);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewTheorie).call(this, props));
+    _this.state = {
+      _id: "hhjhj",
+      titre: 'titre',
+      texte: 'texte',
+      image: 'image',
+      video: 'video'
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleInputChange = _this.handleInputChange.bind(_assertThisInitialized(_this));
+    _this.handleReset = _this.handleReset.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(NewTheorie, [{
+    key: "handleInputChange",
+    value: function handleInputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.handleReset();
+    }
+  }, {
+    key: "handleReset",
+    value: function handleReset() {
+      this.setState({
+        titre: '',
+        texte: '',
+        image: '',
+        video: ''
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        method: "POST",
+        onSubmit: function onSubmit() {
+          _this2.props.onAddTheorie(_this2.state);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        placeholder: "Type",
+        className: "form-control",
+        name: "titre",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.titre
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        cols: "19",
+        rows: "8",
+        placeholder: "texte",
+        className: "form-control",
+        name: "texte",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.texte
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        cols: "19",
+        rows: "8",
+        placeholder: "image",
+        className: "form-control",
+        name: "image",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.image
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        cols: "19",
+        rows: "8",
+        placeholder: "video",
+        className: "form-control",
+        name: "video",
+        onChange: this.handleInputChange,
+        defaultValue: this.state.video
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary"
+      }, "Add Theorie"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-warning",
+        onClick: this.handleReset
+      }, "Reset"))));
+    }
+  }]);
+
+  return NewTheorie;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (NewTheorie);
 
 /***/ }),
 
@@ -85251,6 +85551,95 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Add);
+
+/***/ }),
+
+/***/ "./resources/js/components/backend/exercices/delete/exercice.jsx":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/backend/exercices/delete/exercice.jsx ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var styles = {
+  borderBottom: '2px solid #eee',
+  background: '#fafafa',
+  margin: '.75rem auto',
+  padding: '.6rem 1rem',
+  maxWidth: '500px',
+  borderRadius: '7px'
+};
+window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var _ref$exercice = _ref.exercice,
+      type = _ref$exercice.type,
+      ennonce = _ref$exercice.ennonce,
+      _id = _ref$exercice._id,
+      onDelete = _ref.onDelete,
+      onUpdate = _ref.onUpdate;
+
+  //console.log(exercice)
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      typeNew = _useState2[0],
+      setType = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      ennonceNew = _useState4[0],
+      setEnnonce = _useState4[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: styles
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, type), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, ennonce), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Ennonce:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "ennonce",
+    placeholder: ennonce,
+    onChange: function onChange(event) {
+      return setEnnonce(event.target.value);
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Type:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "type",
+    placeholder: type,
+    onChange: function onChange(event) {
+      return setType(event.target.value);
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    type: "button",
+    onClick: function onClick() {
+      return onDelete(_id);
+    }
+  }, "Remove"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    type: "button",
+    onClick: function onClick() {
+      return onUpdate(_id, typeNew, ennonceNew);
+    }
+  }, "Update"));
+});
 
 /***/ }),
 
@@ -85444,6 +85833,131 @@ window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
     type: "button",
     onClick: function onClick() {
       return onUpdate(_id, typeNew, solutionNew);
+    }
+  }, "Update"));
+});
+
+/***/ }),
+
+/***/ "./resources/js/components/backend/exercices/delete/theorie.jsx":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/backend/exercices/delete/theorie.jsx ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../redux/store */ "./resources/js/redux/store/index.jsx");
+/* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+var styles = {
+  borderBottom: '2px solid #eee',
+  background: '#fafafa',
+  margin: '.75rem auto',
+  padding: '.6rem 1rem',
+  maxWidth: '500px',
+  borderRadius: '7px'
+};
+window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var _ref$theorie = _ref.theorie,
+      titre = _ref$theorie.titre,
+      texte = _ref$theorie.texte,
+      image = _ref$theorie.image,
+      video = _ref$theorie.video,
+      _id = _ref$theorie._id,
+      onDelete = _ref.onDelete,
+      onUpdate = _ref.onUpdate;
+
+  //console.log(exercice)
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      titreNew = _useState2[0],
+      setTitre = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      texteNew = _useState4[0],
+      setTexte = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      imageNew = _useState6[0],
+      setImage = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      videoNew = _useState8[0],
+      setVideo = _useState8[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: styles
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, titre), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, texte), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: image,
+    alt: image
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+    src: video,
+    frameBorder: "0"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Titre:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "titre",
+    placeholder: titre,
+    onChange: function onChange(event) {
+      return setTitre(event.target.value);
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Texte:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "texte",
+    placeholder: texte,
+    onChange: function onChange(event) {
+      return setTexte(event.target.value);
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Image:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "image",
+    placeholder: image,
+    onChange: function onChange(event) {
+      return setImage(event.target.value);
+    }
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: ""
+  }, "Video:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    name: "video",
+    placeholder: video,
+    onChange: function onChange(event) {
+      return setVideo(event.target.value);
+    }
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    type: "button",
+    onClick: function onClick() {
+      return onDelete(_id);
+    }
+  }, "Remove"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    type: "button",
+    onClick: function onClick() {
+      return onUpdate(_id, titreNew, texteNew, imageNew, videoNew);
     }
   }, "Update"));
 });
@@ -85683,6 +86197,65 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/container/ExerciceList.jsx":
+/*!************************************************************!*\
+  !*** ./resources/js/components/container/ExerciceList.jsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _backend_exercices_delete_exercice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/exercices/delete/exercice */ "./resources/js/components/backend/exercices/delete/exercice.jsx");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/actions */ "./resources/js/redux/actions/index.jsx");
+// SolutionList.js
+
+
+
+
+
+
+function ExerciceList(_ref) {
+  var exercices = _ref.exercices,
+      onDelete = _ref.onDelete,
+      onUpdate = _ref.onUpdate;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, exercices.map(function (exercice, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_backend_exercices_delete_exercice__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      exercice: exercice,
+      onDelete: onDelete,
+      onUpdate: onUpdate,
+      key: exercice._id
+    });
+  }));
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  {
+    /*utilisé uniquement pour faire le map au dessus et undefined state (solutions correspond au props)*/
+  }
+  return {
+    exercices: state.exercices
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onDelete: function onDelete(id) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["deleteExercice"])(id));
+    },
+    onUpdate: function onUpdate(id, type, ennonce) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["updateExercice"])(id, type, ennonce));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(ExerciceList));
+
+/***/ }),
+
 /***/ "./resources/js/components/container/RegisterList.jsx":
 /*!************************************************************!*\
   !*** ./resources/js/components/container/RegisterList.jsx ***!
@@ -85783,6 +86356,94 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./resources/js/components/container/TheorieList.jsx":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/container/TheorieList.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _backend_exercices_delete_theorie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/exercices/delete/theorie */ "./resources/js/components/backend/exercices/delete/theorie.jsx");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/actions */ "./resources/js/redux/actions/index.jsx");
+// SolutionList.js
+
+
+
+
+
+
+function TheorieList(_ref) {
+  var theories = _ref.theories,
+      onDelete = _ref.onDelete,
+      onUpdate = _ref.onUpdate;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, theories.map(function (theorie, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_backend_exercices_delete_theorie__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      theorie: theorie,
+      onDelete: onDelete,
+      onUpdate: onUpdate,
+      key: theorie._id
+    });
+  }));
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  {
+    /*utilisé uniquement pour faire le map au dessus et undefined state (solutions correspond au props)*/
+  }
+  return {
+    theories: state.theories
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onDelete: function onDelete(id) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["deleteTheorie"])(id));
+    },
+    onUpdate: function onUpdate(id, titre, texte, image, video) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["updateTheorie"])(id, titre, texte, image, video));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(TheorieList));
+
+/***/ }),
+
+/***/ "./resources/js/components/container/createExercice.jsx":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/container/createExercice.jsx ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../redux/actions */ "./resources/js/redux/actions/index.jsx");
+/* harmony import */ var _backend_exercices_add_NewExercice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/exercices/add/NewExercice */ "./resources/js/components/backend/exercices/add/NewExercice.jsx");
+// CreateSolution.js
+
+
+
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onAddExercice: function onAddExercice(exercice) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_1__["createExercice"])(exercice));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mapDispatchToProps)(_backend_exercices_add_NewExercice__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
 /***/ "./resources/js/components/container/createLogin.jsx":
 /*!***********************************************************!*\
   !*** ./resources/js/components/container/createLogin.jsx ***!
@@ -85867,6 +86528,35 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mapDispatchToProps)(_backend_exercices_add_NewSolution__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./resources/js/components/container/createTheorie.jsx":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/container/createTheorie.jsx ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../redux/actions */ "./resources/js/redux/actions/index.jsx");
+/* harmony import */ var _backend_exercices_add_NewTheorie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/exercices/add/NewTheorie */ "./resources/js/components/backend/exercices/add/NewTheorie.jsx");
+// CreateSolution.js
+
+
+
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onAddTheorie: function onAddTheorie(theorie) {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_1__["createTheorie"])(theorie));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mapDispatchToProps)(_backend_exercices_add_NewTheorie__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -86869,7 +87559,7 @@ function (_React$Component) {
 /*!**********************************************!*\
   !*** ./resources/js/redux/actions/index.jsx ***!
   \**********************************************/
-/*! exports provided: createSolution, createSolutionSuccess, updateSolution, updateSolutionSuccess, deleteSolutionSuccess, deleteSolution, fetchSolutions, fetchAllSolutions, createRegister, createRegisterSuccess, getRegister, getRegisters, createLogin, createLoginSuccess, getLogin, getLogins */
+/*! exports provided: createSolution, createSolutionSuccess, updateSolution, updateSolutionSuccess, deleteSolutionSuccess, deleteSolution, fetchSolutions, fetchAllSolutions, createExercice, createExerciceSuccess, updateExercice, updateExerciceSuccess, deleteExerciceSuccess, deleteExercice, fetchExercices, fetchAllExercices, createRegister, createRegisterSuccess, getRegister, getRegisters, createLogin, createLoginSuccess, getLogin, getLogins, createTheorie, createTheorieSuccess, updateTheorie, updateTheorieSuccess, deleteTheorieSuccess, deleteTheorie, fetchTheories, fetchAllTheories, createUser, createUserSuccess, updateUser, updateUserSuccess, deleteUserSuccess, deleteUser, fetchUsers, fetchAllUsers */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -86882,6 +87572,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteSolution", function() { return deleteSolution; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSolutions", function() { return fetchSolutions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllSolutions", function() { return fetchAllSolutions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createExercice", function() { return createExercice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createExerciceSuccess", function() { return createExerciceSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateExercice", function() { return updateExercice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateExerciceSuccess", function() { return updateExerciceSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteExerciceSuccess", function() { return deleteExerciceSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteExercice", function() { return deleteExercice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchExercices", function() { return fetchExercices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllExercices", function() { return fetchAllExercices; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRegister", function() { return createRegister; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRegisterSuccess", function() { return createRegisterSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRegister", function() { return getRegister; });
@@ -86890,6 +87588,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createLoginSuccess", function() { return createLoginSuccess; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLogin", function() { return getLogin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLogins", function() { return getLogins; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTheorie", function() { return createTheorie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTheorieSuccess", function() { return createTheorieSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateTheorie", function() { return updateTheorie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateTheorieSuccess", function() { return updateTheorieSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteTheorieSuccess", function() { return deleteTheorieSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteTheorie", function() { return deleteTheorie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTheories", function() { return fetchTheories; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllTheories", function() { return fetchAllTheories; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUser", function() { return createUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createUserSuccess", function() { return createUserSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUser", function() { return updateUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateUserSuccess", function() { return updateUserSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUserSuccess", function() { return deleteUserSuccess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteUser", function() { return deleteUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return fetchUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllUsers", function() { return fetchAllUsers; });
 /* harmony import */ var _constantes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constantes/index */ "./resources/js/redux/constantes/index.jsx");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
@@ -86902,7 +87616,7 @@ var createSolution = function createSolution(_ref) {
   var solution = _ref.solution,
       type = _ref.type;
   return function (dispatch) {
-    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/exercice/add", {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/solution/add", {
       solution: solution,
       type: type
     }).then(function (response) {
@@ -86947,14 +87661,13 @@ var createSolutionSuccess = function createSolutionSuccess(data) {
 
 var updateSolution = function updateSolution(id, solution, type) {
   return function (dispatch) {
-    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/exercice/".concat(id), {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/solution/".concat(id), {
       id: id,
       solution: solution,
       type: type
     }, {
       headers: {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"
+        'Content-Type': 'application/json'
       }
     }).then(function (response) {
       console.log(JSON.stringify(response) + "reponseok");
@@ -86987,12 +87700,12 @@ var deleteSolutionSuccess = function deleteSolutionSuccess(_id) {
 };
 var deleteSolution = function deleteSolution(id) {
   return function (dispatch) {
-    return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/exercice/".concat(id), {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/solution/".concat(id), {
       id: id
     }, {
+      //headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
       headers: {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"
+        'Content-Type': 'application/json'
       }
     }).then(function (response) {
       dispatch(deleteSolutionSuccess(id));
@@ -87020,12 +87733,125 @@ var fetchAllSolutions = function fetchAllSolutions() {
       throw error;
     });
   };
+}; //------------------------------------------EXERCICES-------------------------------
+//-------------------ADD-------------------
+
+var createExercice = function createExercice(_ref2) {
+  var ennonce = _ref2.ennonce,
+      type = _ref2.type;
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/exercice/add", {
+      ennonce: ennonce,
+      type: type
+    }).then(function (response) {
+      dispatch(createExerciceSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var createExerciceSuccess = function createExerciceSuccess(data) {
+  console.log(data.all + "testAddReponse");
+  console.log(data.all.map(function (item) {
+    return item._id;
+  }).toString() + 'id add');
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_EXERCICE"],
+    payload: {
+      _id: data.all.map(function (item) {
+        return item._id;
+      }).toString(),
+      ennonce: data.all.map(function (item) {
+        return item.ennonce;
+      }).toString(),
+      type: data.all.map(function (item) {
+        return item.type;
+      }).toString(),
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //-------------------UPDATE-------------------
+
+var updateExercice = function updateExercice(id, ennonce, type) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/exercice/".concat(id), {
+      id: id,
+      ennonce: ennonce,
+      type: type
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"
+      }
+    }).then(function (response) {
+      console.log(JSON.stringify(response) + "reponseok");
+      dispatch(updateExerciceSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var updateExerciceSuccess = function updateExerciceSuccess(data) {
+  console.log("put" + JSON.stringify(data.id));
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_EXERCICE"],
+    payload: {
+      _id: data.id,
+      ennonce: data.ennonce,
+      type: data.type,
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //--------------DELETE---------------------------
+
+var deleteExerciceSuccess = function deleteExerciceSuccess(_id) {
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_EXERCICE"],
+    payload: {
+      _id: _id
+    }
+  };
+};
+var deleteExercice = function deleteExercice(id) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/exercice/".concat(id), {
+      id: id
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(deleteExerciceSuccess(id));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+}; //--------------GET ALL---------------------------
+
+var fetchExercices = function fetchExercices(exercices) {
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_EXERCICE"],
+    exercices: exercices
+  };
+};
+var fetchAllExercices = function fetchAllExercices() {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/exercices', {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(fetchExercices(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
 }; //----------------------------------AUTHENTIFICATION--------------------------------------------
 //POST_REGISTER
 
-var createRegister = function createRegister(_ref2) {
-  var email = _ref2.email,
-      password = _ref2.password;
+var createRegister = function createRegister(_ref3) {
+  var email = _ref3.email,
+      password = _ref3.password;
   return function (dispatch) {
     return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/auth/register", {
       email: email,
@@ -87071,9 +87897,9 @@ var getRegisters = function getRegisters() {
   };
 }; //POST_LOGIN
 
-var createLogin = function createLogin(_ref3) {
-  var email = _ref3.email,
-      password = _ref3.password;
+var createLogin = function createLogin(_ref4) {
+  var email = _ref4.email,
+      password = _ref4.password;
   return function (dispatch) {
     return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/auth/login", {
       email: email,
@@ -87116,6 +87942,257 @@ var getLogins = function getLogins() {
       throw error;
     });
   };
+}; //------------------------------------------THEORIES-------------------------------
+//-------------------ADD-------------------
+
+var createTheorie = function createTheorie(_ref5) {
+  var titre = _ref5.titre,
+      texte = _ref5.texte,
+      image = _ref5.image,
+      video = _ref5.video;
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/theorie/add", {
+      titre: titre,
+      texte: texte,
+      image: image,
+      video: video
+    }).then(function (response) {
+      /*
+      dispatch({
+        type: ADD_SOLUTION,
+        payload: {
+          type: response.data.type,
+          solution: response.data.solution,
+          date: new Date().toLocaleDateString(),
+          _id:"jjjj46554"
+        }
+      });
+       */
+      dispatch(createTheorieSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var createTheorieSuccess = function createTheorieSuccess(data) {
+  console.log(data.all + "testAddReponse");
+  console.log(data.all.map(function (item) {
+    return item._id;
+  }).toString() + 'id add');
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_THEORIE"],
+    payload: {
+      _id: data.all.map(function (item) {
+        return item._id;
+      }).toString(),
+      titre: data.all.map(function (item) {
+        return item.titre;
+      }).toString(),
+      texte: data.all.map(function (item) {
+        return item.texte;
+      }).toString(),
+      image: data.all.map(function (item) {
+        return item.image;
+      }).toString(),
+      video: data.all.map(function (item) {
+        return item.video;
+      }).toString(),
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //-------------------UPDATE-------------------
+
+var updateTheorie = function updateTheorie(titre, texte, image, video) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/theorie/".concat(id), {
+      id: id,
+      titre: titre,
+      texte: texte,
+      image: image,
+      video: video
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(JSON.stringify(response) + "reponseok");
+      dispatch(updateTheorieSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var updateTheorieSuccess = function updateTheorieSuccess(data) {
+  console.log("put" + JSON.stringify(data.id));
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_THEORIE"],
+    payload: {
+      _id: data.id,
+      titre: data.titre,
+      texte: data.texte,
+      image: data.image,
+      video: data.video,
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //--------------DELETE---------------------------
+
+var deleteTheorieSuccess = function deleteTheorieSuccess(_id) {
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_THEORIE"],
+    payload: {
+      _id: _id
+    }
+  };
+};
+var deleteTheorie = function deleteTheorie(id) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/theorie/".concat(id), {
+      id: id
+    }, {
+      //headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(deleteTheorieSuccess(id));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+}; //--------------GET ALL---------------------------
+
+var fetchTheories = function fetchTheories(theories) {
+  return {
+    type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_THEORIE"],
+    theories: theories
+  };
+};
+var fetchAllTheories = function fetchAllTheories() {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/theories', {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(fetchTheories(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+}; //------------------------------------------UTILISATEURS-------------------------------
+//-------------------ADD-------------------
+
+var createUser = function createUser(_ref6) {
+  var email = _ref6.email,
+      password = _ref6.password;
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/user/add", {
+      email: email,
+      password: password
+    }).then(function (response) {
+      dispatch(createUserSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var createUserSuccess = function createUserSuccess(data) {
+  console.log(data.all + "testAddReponse");
+  console.log(data.all.map(function (item) {
+    return item._id;
+  }).toString() + 'id add');
+  return {
+    type: ADD_USER,
+    payload: {
+      _id: data.all.map(function (item) {
+        return item._id;
+      }).toString(),
+      email: data.all.map(function (item) {
+        return item.email;
+      }).toString(),
+      password: data.all.map(function (item) {
+        return item.password;
+      }).toString(),
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //-------------------UPDATE-------------------
+
+var updateUser = function updateUser(email, password) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("api/user/".concat(id), {
+      id: id,
+      email: email,
+      password: password
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(JSON.stringify(response) + "reponseok");
+      dispatch(updateUserSuccess(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+};
+var updateUserSuccess = function updateUserSuccess(data) {
+  console.log("put" + JSON.stringify(data.id));
+  return {
+    type: UPDATE_USER,
+    payload: {
+      _id: data.id,
+      email: data.email,
+      password: data.password,
+      date: new Date().toLocaleDateString()
+    }
+  };
+}; //--------------DELETE---------------------------
+
+var deleteUserSuccess = function deleteUserSuccess(_id) {
+  return {
+    type: DELETE_USER,
+    payload: {
+      _id: _id
+    }
+  };
+};
+var deleteUser = function deleteUser(id) {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/user/".concat(id), {
+      id: id
+    }, {
+      //headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(deleteUserSuccess(id));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
+}; //--------------GET ALL---------------------------
+
+var fetchUsers = function fetchUsers(users) {
+  return {
+    type: FETCH_USER,
+    users: users
+  };
+};
+var fetchAllUsers = function fetchAllUsers() {
+  return function (dispatch) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/users', {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      dispatch(fetchUsers(response.data));
+    })["catch"](function (error) {
+      throw error;
+    });
+  };
 };
 
 /***/ }),
@@ -87124,7 +88201,7 @@ var getLogins = function getLogins() {
 /*!*************************************************!*\
   !*** ./resources/js/redux/constantes/index.jsx ***!
   \*************************************************/
-/*! exports provided: ADD_SOLUTION, DELETE_SOLUTION, FETCH_SOLUTION, UPDATE_SOLUTION, POST_LOGIN, GET_LOGIN, POST_REGISTER, GET_REGISTER */
+/*! exports provided: ADD_SOLUTION, DELETE_SOLUTION, FETCH_SOLUTION, UPDATE_SOLUTION, POST_LOGIN, GET_LOGIN, POST_REGISTER, GET_REGISTER, ADD_THEORIE, DELETE_THEORIE, FETCH_THEORIE, UPDATE_THEORIE, ADD_USER, DELETE_USER, FETCH_USER, UPDATE_USER, ADD_EXERCICE, DELETE_EXERCICE, FETCH_EXERCICE, UPDATE_EXERCICE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -87137,6 +88214,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_LOGIN", function() { return GET_LOGIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "POST_REGISTER", function() { return POST_REGISTER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_REGISTER", function() { return GET_REGISTER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_THEORIE", function() { return ADD_THEORIE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_THEORIE", function() { return DELETE_THEORIE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_THEORIE", function() { return FETCH_THEORIE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_THEORIE", function() { return UPDATE_THEORIE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_USER", function() { return ADD_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_USER", function() { return DELETE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_USER", function() { return FETCH_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_USER", function() { return UPDATE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_EXERCICE", function() { return ADD_EXERCICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_EXERCICE", function() { return DELETE_EXERCICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_EXERCICE", function() { return FETCH_EXERCICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_EXERCICE", function() { return UPDATE_EXERCICE; });
 // src/js/constants/action-types.js
 //solutions
 var ADD_SOLUTION = 'ADD_SOLUTION';
@@ -87147,7 +88236,22 @@ var UPDATE_SOLUTION = 'UPDATE_SOLUTION'; //authentification
 var POST_LOGIN = 'POST_LOGIN';
 var GET_LOGIN = 'GET_LOGIN';
 var POST_REGISTER = 'POST_REGISTER';
-var GET_REGISTER = 'GET_REGISTER';
+var GET_REGISTER = 'GET_REGISTER'; //théories
+
+var ADD_THEORIE = 'ADD_THEORIE';
+var DELETE_THEORIE = 'DELETE_THEORIE';
+var FETCH_THEORIE = 'FETCH_THEORIE';
+var UPDATE_THEORIE = 'UPDATE_THEORIE'; //utilisateurs
+
+var ADD_USER = 'ADD_USER';
+var DELETE_USER = 'DELETE_USER';
+var FETCH_USER = 'FETCH_USER';
+var UPDATE_USER = 'UPDATE_USER'; //exercices
+
+var ADD_EXERCICE = 'ADD_EXERCICE';
+var DELETE_EXERCICE = 'DELETE_EXERCICE';
+var FETCH_EXERCICE = 'FETCH_EXERCICE';
+var UPDATE_EXERCICE = 'UPDATE_EXERCICE';
 
 /***/ }),
 
@@ -87196,6 +88300,64 @@ function authReducer() {
 
 /***/ }),
 
+/***/ "./resources/js/redux/reducers/exerciceReducer.jsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/redux/reducers/exerciceReducer.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return exerciceReducer; });
+/* harmony import */ var _constantes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+// src/js/reducers/index.js
+
+function exerciceReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [{
+    _id: "_id",
+    type: "type",
+    ennonce: "ennonce"
+  }];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_EXERCICE"]:
+      return [].concat(_toConsumableArray(state), [action.payload]);
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_EXERCICE"]:
+      return state.filter(function (exercice) {
+        return exercice._id !== action.payload._id;
+      });
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_EXERCICE"]:
+      var indexOfExercice = state.findIndex(function (exercice) {
+        return exercice._id === action.payload._id;
+      });
+
+      var newState = _toConsumableArray(state);
+
+      newState[indexOfExercice] = action.payload;
+      return newState;
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_EXERCICE"]:
+      return action.exercices;
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/redux/reducers/index.jsx":
 /*!***********************************************!*\
   !*** ./resources/js/redux/reducers/index.jsx ***!
@@ -87208,14 +88370,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _solutionReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./solutionReducer */ "./resources/js/redux/reducers/solutionReducer.jsx");
 /* harmony import */ var _authReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./authReducer */ "./resources/js/redux/reducers/authReducer.jsx");
+/* harmony import */ var _userReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./userReducer */ "./resources/js/redux/reducers/userReducer.jsx");
+/* harmony import */ var _exerciceReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./exerciceReducer */ "./resources/js/redux/reducers/exerciceReducer.jsx");
+/* harmony import */ var _theorieReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./theorieReducer */ "./resources/js/redux/reducers/theorieReducer.jsx");
 // src/js/reducers/index.js
 
 
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
+  exercices: _exerciceReducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   solutions: _solutionReducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  authentifications: _authReducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  authentifications: _authReducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  users: _userReducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  theories: _theorieReducer__WEBPACK_IMPORTED_MODULE_5__["default"]
 }));
+/*
+
+const rootReducer = (state = {}, action) => {
+  console.log('Test if rootReducer is ever called')
+
+  return {
+    solutions: solutions(state.solutions, action),
+    exercices: exercices(state.exercices, action),
+
+  }
+}
+
+
+export default rootReducer
+ */
 
 /***/ }),
 
@@ -87275,6 +88461,114 @@ function solutionReducer() {
 
 /***/ }),
 
+/***/ "./resources/js/redux/reducers/theorieReducer.jsx":
+/*!********************************************************!*\
+  !*** ./resources/js/redux/reducers/theorieReducer.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return theorieReducer; });
+/* harmony import */ var _constantes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+// src/js/reducers/index.js
+
+function theorieReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_THEORIE"]:
+      return [].concat(_toConsumableArray(state), [action.payload]);
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_THEORIE"]:
+      return state.filter(function (theorie) {
+        return theorie._id !== action.payload._id;
+      });
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_THEORIE"]:
+      var indexOfTheorie = state.findIndex(function (theorie) {
+        return theorie._id === action.payload._id;
+      });
+
+      var newState = _toConsumableArray(state);
+
+      newState[indexOfTheorie] = action.payload;
+      return newState;
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_THEORIE"]:
+      return action.theories;
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/redux/reducers/userReducer.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/redux/reducers/userReducer.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return userReducer; });
+/* harmony import */ var _constantes_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constantes/index */ "./resources/js/redux/constantes/index.jsx");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+// src/js/reducers/index.js
+
+function userReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["ADD_USER"]:
+      return [].concat(_toConsumableArray(state), [action.payload]);
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["DELETE_USER"]:
+      return state.filter(function (user) {
+        return user._id !== action.payload._id;
+      });
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["UPDATE_USER"]:
+      var indexOfUser = state.findIndex(function (user) {
+        return user._id === action.payload._id;
+      });
+
+      var newState = _toConsumableArray(state);
+
+      newState[indexOfUser] = action.payload;
+      return newState;
+
+    case _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_USER"]:
+      return action.users;
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/redux/store/index.jsx":
 /*!********************************************!*\
   !*** ./resources/js/redux/store/index.jsx ***!
@@ -87292,8 +88586,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_index__WEBPACK_IMPORTED_MODULE_2__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+
+ //import { fetchAllAuthentification } from '../actions/index';
+//import { getRegister } from '../actions/index';
+
+var composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux__WEBPACK_IMPORTED_MODULE_0__["compose"];
+var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_index__WEBPACK_IMPORTED_MODULE_2__["default"], composeEnhancer(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])));
 store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllSolutions"])());
+store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])()); //  store.dispatch(getRegister())
+
+store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllUsers"])());
+store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllTheories"])());
+var unsubscribe = store.subscribe(function () {
+  return console.log(store.getState());
+});
 /* harmony default export */ __webpack_exports__["default"] = (store);
 
 /***/ }),

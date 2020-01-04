@@ -24,3 +24,9 @@ export const ADD_USER = 'ADD_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const FETCH_USER = 'FETCH_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+
+//exercices
+export const ADD_EXERCICE = 'ADD_EXERCICE';
+export const DELETE_EXERCICE = 'DELETE_EXERCICE';
+export const FETCH_EXERCICE = 'FETCH_EXERCICE';
+export const UPDATE_EXERCICE = 'UPDATE_EXERCICE';
