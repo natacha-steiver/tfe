@@ -6,7 +6,7 @@ export const DELETE_SOLUTION = 'DELETE_SOLUTION';
 export const FETCH_SOLUTION = 'FETCH_SOLUTION';
 export const UPDATE_SOLUTION = 'UPDATE_SOLUTION';
 
-//authentification
+//authentification (admin)
 
 export const  POST_LOGIN='POST_LOGIN';
 export const  GET_LOGIN='GET_LOGIN';
@@ -24,6 +24,8 @@ export const ADD_USER = 'ADD_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const FETCH_USER = 'FETCH_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const  POST_LOGIN_USER='POST_LOGIN_USER';
+export const  GET_LOGIN_USER='GET_LOGIN_USER';
 
 //exercices
 export const ADD_EXERCICE = 'ADD_EXERCICE';

@@ -1,6 +1,6 @@
 // src/js/reducers/index.js
 
-import { ADD_USER,DELETE_USER,FETCH_USER,UPDATE_USER } from "../constantes/index";
+import { ADD_USER,DELETE_USER,FETCH_USER,UPDATE_USER,POST_LOGIN_USER,GET_LOGIN_USER } from "../constantes/index";
 
 
 export default function userReducer(state = [], action) {
@@ -14,9 +14,14 @@ export default function userReducer(state = [], action) {
       let newState = [...state];
       newState[indexOfUser] = action.payload;
       return newState;
-
       case FETCH_USER:
       return action.users;
+
+      case POST_LOGIN_USER:
+      return [...state,action.payload];
+      case GET_LOGIN_USER:
+      return action.users;
+
     default:
       return state;
   }

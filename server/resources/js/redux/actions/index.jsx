@@ -17,7 +17,13 @@ import {
   POST_LOGIN,
   GET_LOGIN,
   POST_REGISTER,
-  GET_REGISTER
+  GET_REGISTER,
+  ADD_USER,
+  DELETE_USER,
+  FETCH_USER ,
+  UPDATE_USER,
+  POST_LOGIN_USER,
+  GET_LOGIN_USER
 
 
  } from  "../constantes/index";
@@ -504,13 +510,15 @@ export const fetchAllTheories = () => {
 
 //------------------------------------------UTILISATEURS-------------------------------
 //-------------------ADD-------------------
-export const createUser = ({email,password }) => {
+
+//POST_REGISTER
+export const createRegisterUser = ({email,password}) => {
   return (dispatch) => {
-    return axios.post(`api/user/add`, {email,password })
+    return axios.post(`api/user/add`, {email,password})
       .then(response => {
+console.log(response)
+        dispatch(createRegisterUserSuccess(response.data))
 
-
-        dispatch(createUserSuccess(response.data))
       })
       .catch(error => {
         throw(error);
@@ -518,36 +526,82 @@ export const createUser = ({email,password }) => {
   };
 };
 
-export const createUserSuccess =  (data) => {
-  console.log(data.all+"testAddReponse")
-  console.log(data.all.map(item=>(
-      item._id
-    )).toString()+'id add')
+export const createRegisterUserSuccess =  (data) => {
+  console.log(data.user+"testAddRegister")
+
   return {
     type: ADD_USER,
     payload: {
-      _id: data.all.map(item=>(
-          item._id
-        )).toString(),
-      email: data.all.map(item=>(
-          item.email
-        )).toString(),
-      password:data.all.map(item=>(
-          item.password
-        )).toString(),
+      _id: ",;,n;",
+      email: "jkhkjhkj",
+      password:"nn,b,n"
 
-      date: new Date().toLocaleDateString()
+    }
+  }
+};
+//GET_REGISTER
+export const fetchUsers= (users) => {
+  return {
+    type: FETCH_USER,
+    users
+  }
+};
+
+export const fetchAllUsers = () => {
+  return (dispatch) => {
+    return axios.get('users',{
+      headers:{'Content-Type':'application/json'}
+        })
+      .then(response => {
+              console.log(response.data+"getRegister")
+        dispatch(fetchUsers(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+
+
+//POST_LOGIN
+export const createLoginUser = ({email,password}) => {
+  return (dispatch) => {
+    return axios.post(`api/user/login`, {email,password})
+      .then(response => {
+
+        dispatch(createLoginUserSuccess(response.data))
+
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+
+export const createLoginUserSuccess =  (data) => {
+  console.log(data.user+"testAddLogin")
+
+  return {
+    type: POST_LOGIN,
+    payload: {
+      _id: ",;,n;",
+      email: "jkhkjhkj",
+      password:"nn,b,n"
+
     }
   }
 };
 
+
+
 //-------------------UPDATE-------------------
-export const updateUser = (email,password)=>{
+export const updateUser = (id,email,password)=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/user/${id}`,{id:id,email:email,password:password},{
+      return axios.put(`api/user/${id}`,{id:id,email: email,password:password},{
         headers:{'Content-Type':'application/json'}
           })
       .then(response => {
@@ -566,8 +620,8 @@ export const updateUserSuccess =  (data) => {
     type: UPDATE_USER,
     payload: {
       _id: data.id,
-      email:data.email,
-      password:data.password,
+      email: data.email,
+      password: data.password,
       date: new Date().toLocaleDateString()
     }
   }
@@ -582,7 +636,7 @@ export const deleteUserSuccess = _id => {
   }
 }
 
-export const deleteUser= id => {
+export const deleteUser = id => {
   return (dispatch) => {
     return axios.delete(`api/user/${id}`,{id:id},{
 //headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
@@ -596,21 +650,23 @@ export const deleteUser= id => {
       });
   };
 };
-//--------------GET ALL---------------------------
-export const fetchUsers = (users) => {
+
+//GET_LOGIN
+export const getLoginUser = (users) => {
   return {
-    type: FETCH_USER,
+    type: GET_LOGIN_USER,
     users
   }
 };
 
-export const fetchAllUsers = () => {
+export const getLoginsUser = () => {
   return (dispatch) => {
-    return axios.get('api/users',{
+    return axios.get('api/user/login',{
       headers:{'Content-Type':'application/json'}
         })
       .then(response => {
-        dispatch(fetchUsers(response.data))
+              console.log(response.data+"getLogin")
+        dispatch(getLoginUser(response.data))
       })
       .catch(error => {
         throw(error);

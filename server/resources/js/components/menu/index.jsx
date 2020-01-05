@@ -8,6 +8,10 @@ import CreateRegister from '../container/createRegister';
 import RegisterList from '../container/RegisterList';
 import CreateLogin from '../container/createLogin';
 
+import CreateRegisterUser from '../container/createRegisterUser';
+import UserList from '../container/UserList';
+import CreateLoginUser from '../container/createLoginUser';
+
 import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -83,6 +87,16 @@ render(){
                       <Link to={ `/api/auth/register` }>
                       register
                       </Link>
+
+</li>
+                      <li>      <Link to={ `/api/user/login` }>
+                            login user
+                            </Link>
+                            </li>
+                            <li>
+                            <Link to={ `/api/user/register` }>
+                            register user
+                            </Link>
                       </li>
               </ul>
             </nav>
@@ -109,6 +123,24 @@ tester avec admin!!!!!
     <CreateLogin/>
 
               </Route>
+
+
+
+              <Route path="/api/user/register">
+    <CreateRegisterUser/>
+      <UserList />
+              </Route>
+
+
+
+<Route path="/api/user/login">
+<CreateLoginUser/>
+
+</Route>
+
+
+
+
             </Switch>
           </div>
         </Router>

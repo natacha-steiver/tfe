@@ -34,10 +34,16 @@ Route.group(
     Route.put('solution/:id','solutionsController.update')
     Route.delete('solution/:id','solutionsController.delete')
     //backend utilisateurs(user redux)
-    Route.get('user/:id','utilisateursController.show')
-    Route.post('user/add','utilisateursController.store').as('utilisateur.store')
-    Route.put('user/:id','utilisateursController.update')
-    Route.delete('user/:id','utilisateursController.delete')
+    // /users register all
+    // register
+    Route.post('user/add','utilisateursController.register').as('utilisateur.register')
+    Route.get('user/:id','utilisateursController.register') //profil
+
+    Route.put('user/:id','utilisateursController.updateUser')
+    Route.delete('user/:id','utilisateursController.deleteUser')
+    //login
+    Route.post('user/login','utilisateursController.login').as('utilisateur.login')
+    Route.get('user/login','utilisateursController.login') //profil
     //backend theories
     Route.get('theorie/:id','theoriesController.show')
     Route.post('theorie/add','theoriesController.store').as('theorie.store')

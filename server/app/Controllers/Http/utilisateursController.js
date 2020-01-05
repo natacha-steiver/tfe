@@ -2,7 +2,7 @@
 const Utilisateur = use('App/Models/Utilisateur');
 class UtilisateursController {
 
-
+//add and get user in DB
         async register({request, auth, response}) {
 
           let user = await Utilisateur.create(request.all())
@@ -39,12 +39,35 @@ class UtilisateursController {
           }
         }
 
-
+        //get all users
         async getUser({request, auth, response}){
-return response.json({verif: auth.check(),
-user:auth.getUser()
-})
-}
+            return response.json({verif: auth.check(),
+            user:auth.getUser()
+            })
+          }
+
+        //delete user/token
+        async deleteUser({request, auth, response}){
+          const refreshToken = '' // get it from user
+/*
+          await auth
+            .authenticator('jwt')
+            .revokeTokens([refreshToken], true)
+*/
+            return response.json({verif: auth.check(),
+            user:auth.getUser()
+            })
+          }
+
+
+          //delete user/token
+          async updateUser({request, auth, response}){
+            const refreshToken = '' // get it from user
+
+              return response.json({verif: auth.check(),
+              user:auth.getUser()
+              })
+            }
 
 }
 
