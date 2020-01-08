@@ -1,66 +1,83 @@
 import axios from 'axios';
 
 export const getList = ()=>{
-  return axios
+/*
 
-    .get('api/solutions',{
-      headers:{'Content-Type':'application/json'}
-        })
-    .then(res =>{
+return axios
 
-      var data = res.data
+  .get('api/solutions',{
+    headers:{'Content-Type':'application/json'}
+      })
+  .then(res =>{
+
+    var data = res.data
 
 
-      return data
-    })
+    return data
+  })
+ */
 }
 
 
 
 
 export const showOneEx = (id)=>{
-  return axios
-    .get(`api/exercice/${id}`,{
-      headers:{'Content-Type':'application/json'}
-        })
-    .then(res =>{
-      var data = res.data
+/*
+return axios
+  .get(`api/exercice/${id}`,{
+    headers:{'Content-Type':'application/json'}
+      })
+  .then(res =>{
+    var data = res.data
 
 
-      return data
-    })
+    return data
+  })
+ */
 }
 
 export const deleteEx = (id)=>{
-  return axios
-    .delete(`api/exercice/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
-    })
-    .then(res =>{
-    console.log(res)
-    })
+/*
+return axios
+  .delete(`api/exercice/${id}`,{id:id},{
+    headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
+  })
+  .then(res =>{
+  console.log(res)
+  })
+ */
 }
 
 export const storeEx = (id,solution,type)=>{
-  return axios
+/*  return axios
     .post(`api/exercice/add`,{
       headers:{'Content-Type':'application/json'}
         })
     .then(res =>{
     console.log(res)
     })
+    return axios
+      .post(`api/exercice/add`,{
+        headers:{'Content-Type':'application/json'}
+          })
+      .then(res =>{
+      console.log(res)
+      })
+ */
 }
 
 
 
 export const updateEx = (id,solution,type)=>{
-  return axios
-    .put(`api/exercice/${id}`,{id:id,solution: solution,type:type},{
-      headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
-        })
-    .then(res =>{
-    console.log(res)
-    })
+/*
+return axios
+  .put(`api/exercice/${id}`,{id:id,solution: solution,type:type},{
+    headers:{'Content-Type':'application/json','Authorization' :'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlNWRiODM1NzUxNTQ3MjQ4ZTUwZmIiLCJpYXQiOjE1Nzc5OTk4MDAsImV4cCI6MTU3ODAwMTYwMH0.I2dRrjS3EVhDP0Og8aqW4mdsLV5oJz2YUlb4SpU3UAo'}
+      })
+  .then(res =>{
+  console.log(res)
+  })
+ */
 }
 
 //------------
@@ -84,7 +101,7 @@ export const getMenu = ()=>{
 
 
 export const register = (email,password)=>{
-/*
+
 return axios
   .post(`api/auth/register`,{email:email,password:password},{
     headers:{'Content-Type':'application/json'}
@@ -94,24 +111,33 @@ return axios
   .then(res =>{
   console.log(res)
   })
- */
+
 }
 
 
 
 export const login = (email,password)=>{
-/*
+
 return axios
   .post(`api/auth/login`,{email:email,password:password},{
      headers:{'Content-Type':'application/json' }
 
       })
   .then(res =>{
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
+
   console.log(res)
 var token= res.data
-return token
+return axios
+  .get(`api/user/${res.data._id}`)
+  .then(res=>{
+    console.log("redirection profil ok")
+  }).catch(error=>{
+    console.log(error)
+  })
 
-    }) */
+    })
 }
 
 export const getUser = ()=>{
@@ -123,3 +149,5 @@ export const getUser = ()=>{
     console.log(res)
     })
 }
+
+//axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');

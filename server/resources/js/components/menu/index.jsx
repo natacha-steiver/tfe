@@ -4,13 +4,9 @@ import {getMenu} from '../../ajax';
 import Test from '../test/index';
 import Admin from '../admin/index';
 
-import CreateRegister from '../container/createRegister';
-import RegisterList from '../container/RegisterList';
-import CreateLogin from '../container/createLogin';
 
-import CreateRegisterUser from '../container/createRegisterUser';
-import UserList from '../container/UserList';
-import CreateLoginUser from '../container/createLoginUser';
+
+
 
 import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
@@ -79,25 +75,9 @@ render(){
                       <Link to={ `/admin` }>
                       admin
                       </Link>
-                <li>      <Link to={ `/api/auth/login` }>
-                      login
-                      </Link>
-                      </li>
-                      <li>
-                      <Link to={ `/api/auth/register` }>
-                      register
-                      </Link>
 
-</li>
-                      <li>      <Link to={ `/api/user/login` }>
-                            login user
-                            </Link>
-                            </li>
-                            <li>
-                            <Link to={ `/api/user/register` }>
-                            register user
-                            </Link>
-                      </li>
+    
+
               </ul>
             </nav>
 
@@ -114,29 +94,15 @@ tester avec admin!!!!!
               <Route path="/admin">
                 <Admin/>
               </Route>
-              <Route path="/api/auth/register">
-    <CreateRegister/>
-      <RegisterList />
-              </Route>
-
-              <Route path="/api/auth/login">
-    <CreateLogin/>
-
-              </Route>
 
 
 
-              <Route path="/api/user/register">
-    <CreateRegisterUser/>
-      <UserList />
-              </Route>
 
 
 
-<Route path="/api/user/login">
-<CreateLoginUser/>
 
-</Route>
+
+
 
 
 

@@ -27,13 +27,41 @@ import {
 
 
  } from  "../constantes/index";
+
 import axios from 'axios';
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTEyM2E0YWQzMGFhZmE4MjFmOWEzMGIiLCJpYXQiOjE1NzgyNTI4NzR9.P4ceTZ_QdYavhgF2Ik_xY9ZD63HosjdnqSC3CcWrKPc
+/*
+
+
+axios.post('api/auth/register')
+.then(response => {
+alert(JSON.stringify(response.data))
+})
+.catch(error => {
+  alert('error')
+  throw(error);
+});
+
+ */
+//const token = JSON.parse(sessionStorage.getItem('user-token'));
+const token2 =  JSON.parse(sessionStorage.getItem('user-token'));
+//undefined
+const token=  JSON.parse(sessionStorage.getItem('token5'));
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
+//axios.defaults.headers.common['Authorization'] = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"
+
+
+
 
 //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
 export const createSolution = ({solution,type }) => {
   return (dispatch) => {
-    return axios.post(`api/solution/add`, {solution,type})
+    return axios.post(`api/solution/add`, {solution,type},{
+      headers:{'Content-Type':'application/json','Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"}
+    })
       .then(response => {
 
 /*
@@ -47,19 +75,21 @@ dispatch({
   }
 });
  */
-        dispatch(createSolutionSuccess(response.data))
+return reponse=()=>{
+
+         dispatch(createSolutionSuccess(response.data))
+         alert('solution add')
+}
       })
       .catch(error => {
+        alert('error')
         throw(error);
       });
   };
 };
 
 export const createSolutionSuccess =  (data) => {
-  console.log(data.all+"testAddReponse")
-  console.log(data.all.map(item=>(
-      item._id
-    )).toString()+'id add')
+
   return {
     type: ADD_SOLUTION,
     payload: {
@@ -85,7 +115,7 @@ export const updateSolution = (id,solution,type)=>{
     return (dispatch) => {
       return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type},{
         headers:{'Content-Type':'application/json'}
-          })
+      })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateSolutionSuccess(response.data))
@@ -121,9 +151,7 @@ export const deleteSolutionSuccess = _id => {
 export const deleteSolution = id => {
   return (dispatch) => {
     return axios.delete(`api/solution/${id}`,{id:id},{
-//headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
-    headers:{'Content-Type':'application/json'}
-
+      headers:{'Content-Type':'application/json'}
     }).then(response => {
         dispatch(deleteSolutionSuccess(id))
       })
@@ -159,7 +187,9 @@ export const fetchAllSolutions = () => {
 //-------------------ADD-------------------
 export const createExercice = ({ennonce,type }) => {
   return (dispatch) => {
-    return axios.post(`api/exercice/add`, {ennonce,type})
+    return axios.post(`api/exercice/add`, {ennonce,type},{
+      headers:{'Content-Type':'application/json'}
+    })
       .then(response => {
 
         dispatch(createExerciceSuccess(response.data))
@@ -199,8 +229,8 @@ export const updateExercice = (id,ennonce,type)=>{
 
     return (dispatch) => {
       return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type},{
-        headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
-          })
+        headers:{'Content-Type':'application/json'}
+      })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateExerciceSuccess(response.data))
@@ -266,111 +296,7 @@ export const fetchAllExercices = () => {
       });
   };
 };
-//----------------------------------AUTHENTIFICATION--------------------------------------------
 
-//POST_REGISTER
-export const createRegister = ({email,password}) => {
-  return (dispatch) => {
-    return axios.post(`api/auth/register`, {email,password})
-      .then(response => {
-console.log(response)
-        dispatch(createRegisterSuccess(response.data))
-
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export const createRegisterSuccess =  (data) => {
-  console.log(data.user+"testAddRegister")
-
-  return {
-    type: POST_REGISTER,
-    payload: {
-      _id: ",;,n;",
-      email: "jkhkjhkj",
-      password:"nn,b,n"
-
-    }
-  }
-};
-//GET_REGISTER
-export const getRegister = (authentifications) => {
-  return {
-    type: GET_REGISTER,
-    authentifications
-  }
-};
-
-export const getRegisters = () => {
-  return (dispatch) => {
-    return axios.get('api/auth/register',{
-      headers:{'Content-Type':'application/json'}
-        })
-      .then(response => {
-              console.log(response.data+"getRegister")
-        dispatch(getRegister(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-
-
-//POST_LOGIN
-export const createLogin = ({email,password}) => {
-  return (dispatch) => {
-    return axios.post(`api/auth/login`, {email,password})
-      .then(response => {
-
-        dispatch(createLoginSuccess(response.data))
-
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export const createLoginSuccess =  (data) => {
-  console.log(data.user+"testAddLogin")
-
-  return {
-    type: POST_LOGIN,
-    payload: {
-      _id: ",;,n;",
-      email: "jkhkjhkj",
-      password:"nn,b,n"
-
-    }
-  }
-};
-//GET_LOGIN
-export const getLogin = (authentifications) => {
-  return {
-    type: GET_LOGIN,
-    authentifications
-  }
-};
-
-export const getLogins = () => {
-  return (dispatch) => {
-    return axios.get('api/auth/login',{
-      headers:{'Content-Type':'application/json'}
-        })
-      .then(response => {
-              console.log(response.data+"getLogin")
-        dispatch(getLogin(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
 
 //------------------------------------------THEORIES-------------------------------
 //-------------------ADD-------------------
@@ -427,14 +353,12 @@ export const createTheorieSuccess =  (data) => {
 };
 
 //-------------------UPDATE-------------------
-export const updateTheorie = (titre,texte,image,video )=>{
+export const updateTheorie = (id,titre,texte,image,video )=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video},{
-        headers:{'Content-Type':'application/json'}
-          })
+      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video})
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateTheorieSuccess(response.data))
@@ -471,11 +395,8 @@ export const deleteTheorieSuccess = _id => {
 
 export const deleteTheorie = id => {
   return (dispatch) => {
-    return axios.delete(`api/theorie/${id}`,{id:id},{
-//headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
-    headers:{'Content-Type':'application/json'}
-
-    }).then(response => {
+    return axios.delete(`api/theorie/${id}`,{id:id})
+    .then(response => {
         dispatch(deleteTheorieSuccess(id))
       })
       .catch(error => {
@@ -493,180 +414,9 @@ export const fetchTheories = (theories) => {
 
 export const fetchAllTheories = () => {
   return (dispatch) => {
-    return axios.get('api/theories',{
-      headers:{'Content-Type':'application/json'}
-        })
+    return axios.get('api/theories')
       .then(response => {
         dispatch(fetchTheories(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-
-
-
-//------------------------------------------UTILISATEURS-------------------------------
-//-------------------ADD-------------------
-
-//POST_REGISTER
-export const createRegisterUser = ({email,password}) => {
-  return (dispatch) => {
-    return axios.post(`api/user/add`, {email,password})
-      .then(response => {
-console.log(response)
-        dispatch(createRegisterUserSuccess(response.data))
-
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export const createRegisterUserSuccess =  (data) => {
-  console.log(data.user+"testAddRegister")
-
-  return {
-    type: ADD_USER,
-    payload: {
-      _id: ",;,n;",
-      email: "jkhkjhkj",
-      password:"nn,b,n"
-
-    }
-  }
-};
-//GET_REGISTER
-export const fetchUsers= (users) => {
-  return {
-    type: FETCH_USER,
-    users
-  }
-};
-
-export const fetchAllUsers = () => {
-  return (dispatch) => {
-    return axios.get('users',{
-      headers:{'Content-Type':'application/json'}
-        })
-      .then(response => {
-              console.log(response.data+"getRegister")
-        dispatch(fetchUsers(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-
-
-//POST_LOGIN
-export const createLoginUser = ({email,password}) => {
-  return (dispatch) => {
-    return axios.post(`api/user/login`, {email,password})
-      .then(response => {
-
-        dispatch(createLoginUserSuccess(response.data))
-
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-export const createLoginUserSuccess =  (data) => {
-  console.log(data.user+"testAddLogin")
-
-  return {
-    type: POST_LOGIN,
-    payload: {
-      _id: ",;,n;",
-      email: "jkhkjhkj",
-      password:"nn,b,n"
-
-    }
-  }
-};
-
-
-
-//-------------------UPDATE-------------------
-export const updateUser = (id,email,password)=>{
-
-
-
-    return (dispatch) => {
-      return axios.put(`api/user/${id}`,{id:id,email: email,password:password},{
-        headers:{'Content-Type':'application/json'}
-          })
-      .then(response => {
-        console.log(JSON.stringify(response)+"reponseok")
-          dispatch(updateUserSuccess(response.data))
-        })
-        .catch(error => {
-          throw(error);
-        });
-    };
-}
-
-export const updateUserSuccess =  (data) => {
-  console.log("put"+JSON.stringify(data.id))
-  return {
-    type: UPDATE_USER,
-    payload: {
-      _id: data.id,
-      email: data.email,
-      password: data.password,
-      date: new Date().toLocaleDateString()
-    }
-  }
-};
-//--------------DELETE---------------------------
-export const deleteUserSuccess = _id => {
-  return {
-    type: DELETE_USER,
-    payload: {
-      _id
-    }
-  }
-}
-
-export const deleteUser = id => {
-  return (dispatch) => {
-    return axios.delete(`api/user/${id}`,{id:id},{
-//headers:{'Content-Type':'application/json',"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBmOGEwZGFlOWM2MzM5Yjc0MmY2ZDAiLCJpYXQiOjE1NzgwNzY2ODUsImV4cCI6MTU3ODA3ODQ4NX0.qN4JbNR8tPk6g5NzYNjA33Qe23apr-zKtSxmFH-46Ls"}
-    headers:{'Content-Type':'application/json'}
-
-    }).then(response => {
-        dispatch(deleteUserSuccess(id))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
-
-//GET_LOGIN
-export const getLoginUser = (users) => {
-  return {
-    type: GET_LOGIN_USER,
-    users
-  }
-};
-
-export const getLoginsUser = () => {
-  return (dispatch) => {
-    return axios.get('api/user/login',{
-      headers:{'Content-Type':'application/json'}
-        })
-      .then(response => {
-              console.log(response.data+"getLogin")
-        dispatch(getLoginUser(response.data))
       })
       .catch(error => {
         throw(error);

@@ -30,6 +30,33 @@ module.exports = {
   | Session authentication is always persistent.
   |
   */
+
+  user: {
+   serializer: 'LucidMongo',
+   model: 'App/Models/Utilisateur',
+   token: 'App/Models/Token',
+   scheme: 'jwt',
+   uid: 'email',
+   password: 'password',
+   expiry: '180s',
+   options: {
+      secret: 'self::app.appKey',
+      expiresIn: '180s'
+   }
+  },
+  admin: {
+   serializer: 'LucidMongo',
+   model: 'App/Models/Administrateur',
+   token: 'App/Models/Token',
+   scheme: 'jwt',
+   uid: 'email',
+   password: 'password',
+   expiry: '180s',
+   options: {
+      secret: 'self::app.appKey',
+      expiresIn: '180s'
+   }
+  },
   session: {
      serializer: 'LucidMongo',
      model: 'App/Models/User',
@@ -53,10 +80,10 @@ module.exports = {
      scheme: 'jwt',
      uid: 'email',
      password: 'password',
-     expiry: '20m',
+     //expiry: '20m',
      options: {
        secret: 'self::app.appKey',
-       expiresIn: '1800s'
+       //expiresIn: '1800s'
      },
      sameSite: false,
    },

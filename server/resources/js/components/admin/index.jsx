@@ -15,8 +15,10 @@ import ExerciceList from '../container/ExerciceList';
 
 import CreateTheorie from '../container/createTheorie';
 import TheorieList from '../container/TheorieList';
-//import Login from '../login/index'
-//import Register from '../register/index'
+
+
+import Login from '../login/index'
+import Register from '../register/index'
 
 class Admin extends Component{
 
@@ -53,11 +55,18 @@ return(
                             theories
                             </Link>
                             </li>
-                            <li>
-                            <Link to={ `/utilisateurs` }>
-                            utilisateurs
-                            </Link>
-                            </li>
+                            <li>      <Link to={ `/login` }>
+                                  login
+                                  </Link>
+                                  </li>
+
+                                  <li>      <Link to={ `/register` }>
+                                      register
+                                        </Link>
+                                        </li>
+
+
+
               </ul>
             </nav>
 
@@ -86,6 +95,18 @@ tester avec admin!!!!!
 
                             <CreateTheorie/>
                              <TheorieList />
+                            </Route>
+
+
+                            <Route path="/login">
+
+                            <Login/>
+
+                            </Route>
+                            <Route path="/register">
+
+                            <Register/>
+
                             </Route>
             </Switch>
           </div>

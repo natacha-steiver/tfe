@@ -4,8 +4,7 @@
 import { combineReducers } from 'redux';
 
 import solutions from './solutionReducer';
-import authentifications from './authReducer';
-import users from './userReducer';
+
 import exercices from './exerciceReducer';
 import theories from './theorieReducer';
 
@@ -13,8 +12,7 @@ export default combineReducers({
 
       exercices: exercices,
     solutions: solutions,
-    authentifications: authentifications,
-    users: users,
+
 
     theories: theories
 });
