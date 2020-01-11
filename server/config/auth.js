@@ -38,10 +38,10 @@ module.exports = {
    scheme: 'jwt',
    uid: 'email',
    password: 'password',
-   expiry: '180s',
+   expiry: '1600s',
    options: {
       secret: 'self::app.appKey',
-      expiresIn: '180s'
+      expiresIn: '1600s'
    }
   },
   admin: {
@@ -51,10 +51,10 @@ module.exports = {
    scheme: 'jwt',
    uid: 'email',
    password: 'password',
-   expiry: '180s',
+   expiry: '1600s',
    options: {
       secret: 'self::app.appKey',
-      expiresIn: '180s'
+      expiresIn: '1600s'
    }
   },
   session: {

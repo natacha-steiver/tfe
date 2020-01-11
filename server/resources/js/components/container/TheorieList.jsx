@@ -36,8 +36,8 @@ const mapDispatchToProps = dispatch => {
     onDelete: id => {
       dispatch(deleteTheorie(id))
     },
-    onUpdate: (id,titre,texte,image,video) => {
-      dispatch(updateTheorie(id,titre,texte,image,video))
+    onUpdate: (id,titre,texte,image,video,langage) => {
+      dispatch(updateTheorie(id,titre,texte,image,video,langage))
     }
   };
 };

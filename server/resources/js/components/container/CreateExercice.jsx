@@ -1,20 +1,33 @@
 // CreateSolution.js
+// SolutionList.js
 
+import React from 'react';
 import { connect } from 'react-redux';
+import ExerciceAdd from './addEx';
+import { deleteExercice} from '../../redux/actions';
+import { updateExercice} from '../../redux/actions';
 import { createExercice } from '../../redux/actions';
-import NewExercice from '../backend/exercices/add/NewExercice';
+function NewExercice({onAddExercice }) {
 
+  return (
+    <div>
+
+
+          <ExerciceAdd  onAddExercice={ onAddExercice } />
+
+    </div>
+  );
+}
 
 const mapDispatchToProps = dispatch => {
 
   return {
 
-    onAddExercice: exercice => {
-      dispatch(createExercice(exercice));
+    onAddExercice: (type,ennonce,titre) => {
+      dispatch(createExercice(type,ennonce,titre));
     }
   };
 };
-
 export default connect(
   null,
   mapDispatchToProps

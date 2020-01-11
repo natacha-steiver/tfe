@@ -2,23 +2,34 @@ import React,{Component} from 'react'
 //import {getList,storeSite} from './ajax'
 
 
-import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
-import Exercice from '../backend/exercices/exercice/index'
-
-import CreateSolution from '../container/createSolution';
-import SolutionList from '../container/SolutionList';
-
-import CreateExercice from '../container/createExercice';
-import ExerciceList from '../container/ExerciceList';
+import { HashRouter, Route, NavLink,Link } from 'react-router-dom';
 
 
-import CreateTheorie from '../container/createTheorie';
-import TheorieList from '../container/TheorieList';
+import Solution from '../backend/crud/solution/index'
+import Theorie from '../backend/crud/theorie/index'
+import Exercice from '../backend/crud/exercice/index'
 
 
-import Login from '../login/index'
+
+
+
 import Register from '../register/index'
+
+
+const routes = [
+
+
+  { path: '/solutions', component:Solution },
+  { path: '/exercices', component:Exercice },
+  { path: '/theories', component:Theorie},
+
+  { path: '/register', component:Register }
+
+
+
+
+ ];
 
 class Admin extends Component{
 
@@ -29,89 +40,47 @@ class Admin extends Component{
 return(
   <div>
   <h2>01 <span> - Administration</span></h2>
-  <div>
+
+
+     <HashRouter>
+       <div>
+        <header>
+          <h2>A Map of Thrones</h2>
+          <ul>
+          <li>
+          <Link to="/solutions" >
+            solutions
+          </Link>
+          </li>
+          <li>
+
+                <Link to="/exercices" >
+                  exercices
+                </Link>
+          </li>
+          <li>
+          <Link to="/theories" >
+            theories
+          </Link>
+          </li>
+          <li>
+          <Link to="/register" >
+          gestion des accès administrateurs
+          </Link>
+
+          </li>
 
 
 
+          </ul>
+        </header>
 
-    <Router>
-          <div>
-            <nav>
-              <ul>
+         <section>
+           {routes.map(route => <Route {...route} key={route.path} />)}
+         </section>
+       </div>
+     </HashRouter>
 
-
-
-                <li>      <Link to={ `/exercices` }>
-                      exercices
-                      </Link>
-                      </li>
-                      <li>
-                      <Link to={ `/solutions` }>
-                      solutions
-                      </Link>
-                      </li>
-
-                      <li>      <Link to={ `/theories` }>
-                            theories
-                            </Link>
-                            </li>
-                            <li>      <Link to={ `/login` }>
-                                  login
-                                  </Link>
-                                  </li>
-
-                                  <li>      <Link to={ `/register` }>
-                                      register
-                                        </Link>
-                                        </li>
-
-
-
-              </ul>
-            </nav>
-
-            {/* A <Switch> looks through its children <Route>s and
-                renders the first one that matches the current URL.
-
-tester avec admin!!!!!
-                */}
-            <Switch>
-
-
-              <Route path="/solutions">
-              <CreateSolution/>
-               <SolutionList />
-
-              </Route>
-
-              <Route path="/exercices">
-
-              <CreateExercice/>
-               <ExerciceList />
-              </Route>
-
-
-                            <Route path="/theories">
-
-                            <CreateTheorie/>
-                             <TheorieList />
-                            </Route>
-
-
-                            <Route path="/login">
-
-                            <Login/>
-
-                            </Route>
-                            <Route path="/register">
-
-                            <Register/>
-
-                            </Route>
-            </Switch>
-          </div>
-        </Router>
-  </div>
   </div>
 );
 

@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import {register,login} from '../../ajax'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
+import Theorie from '../backend/crud/theorie/index'
 //ajout nom dans DB ok
 class Login extends Component{
 
@@ -59,7 +60,6 @@ class Login extends Component{
 
 
   </ul>
-
 
     </div>
     );

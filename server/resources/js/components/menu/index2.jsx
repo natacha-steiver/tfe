@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import {getMenu} from '../../ajax';
 import Test from '../test/index';
-import Login from '../login/index';
+import Admin from '../admin/index';
 import TheorieListe from '../frontend/apprendre/theorie/menu';
 import ExerciceListe from '../frontend/apprendre/pratique/menu';
+import CreateExercice from '../container/createExercice';
+import ExerciceList from '../container/ExerciceList';
+
 
 
 
@@ -72,8 +75,8 @@ render(){
                         }
 
                       </ul>
-                      <Link to={ `/login` }>
-                      login
+                      <Link to={ `/admin` }>
+                      admin
                       </Link>
 
                       <Link to={ `/apprendre` }>
@@ -83,6 +86,10 @@ render(){
                       s'entrainer
                       </Link>
 
+                      <li>      <Link to={ `/exercices` }>
+                            exercices
+                            </Link>
+                            </li>
 
               </ul>
             </nav>
@@ -97,8 +104,8 @@ tester avec admin!!!!!
               <Route path="/js/ex1">
                 <Test/>
               </Route>
-              <Route  path="/login">
-                <Login/>
+              <Route exact path="/admin">
+                <Admin/>
               </Route>
 
 
@@ -109,9 +116,11 @@ tester avec admin!!!!!
                 <ExerciceListe />
               </Route>
 
+              <Route path="/exercices">
 
-
-
+              <CreateExercice/>
+               <ExerciceList />
+              </Route>
             </Switch>
           </div>
         </Router>

@@ -18,22 +18,23 @@ const Route = use('Route')
 
 Route.group(
   ()=> {
-    Route.get('solutions','solutionsController.index')
-    Route.get('exercices','exercicesController.index')
+
+    Route.get('solutions','solutionsController.index').middleware('auth:admin')
+    Route.get('exercices','exercicesController.index').middleware('auth:admin')
     Route.get('items','itemsController.index')
-    Route.get('theories','theoriesController.index')
-    Route.get('users','utilisateursController.index')
-    Route.get('admins','administrateursController.index')
+    Route.get('theories','theoriesController.index').middleware(['auth:admin'])
+    Route.get('users','utilisateursController.index').middleware('auth:admin')
+//    Route.get('admins','administrateursController.index').middleware('auth:admin')
     //backend exercices
     Route.get('exercice/:id','exercicesController.show')
-    Route.post('exercice/add','exercicesController.store').as('exercice.store').middleware('auth:admin')
-    Route.put('exercice/:id','exercicesController.update').middleware('auth:admin')
-    Route.delete('exercice/:id','exercicesController.delete').middleware('auth:admin')
+    Route.post('exercice/add','exercicesController.store').as('exercice.store')
+    Route.put('exercice/:id','exercicesController.update')
+    Route.delete('exercice/:id','exercicesController.delete')
     //backend solution
     Route.get('solution/:id','solutionsController.show')
     Route.post('solution/add','solutionsController.store').as('solution.store')
-    Route.put('solution/:id','solutionsController.update').middleware('auth:admin')
-    Route.delete('solution/:id','solutionsController.delete').middleware('auth:admin')
+    Route.put('solution/:id','solutionsController.update')
+    Route.delete('solution/:id','solutionsController.delete')
     //backend utilisateurs(user redux)
     // /users register all
     // register
@@ -41,31 +42,32 @@ Route.group(
     Route.post('user/register','utilisateursController.register').as('utilisateur.register')
     Route.get('user/delete/token', 'utilisateursController.deleteToken')
     Route.get('user/list/token', 'utilisateursController.listToken')
-    Route.get('user/:id','utilisateursController.register') //profil
+    Route.get('user/:id','utilisateursController.register')
 
-    Route.put('user/:id','utilisateursController.updateUser').middleware('auth:user')
-    Route.delete('user/:id','utilisateursController.deleteUser').middleware('auth:user')
+    Route.put('user/:id','utilisateursController.updateUser')
+    Route.delete('user/:id','utilisateursController.deleteUser')
     //login
     Route.post('user/login','utilisateursController.login').as('utilisateur.login')
     Route.get('user/login','utilisateursController.login') //profil
     //backend theories
-    Route.get('theorie/:id','theoriesController.show').middleware('auth:admin')
-    Route.post('theorie/add','theoriesController.store').as('theorie.store').middleware('auth:admin')
-    Route.put('theorie/:id','theoriesController.update').middleware('auth:admin')
-    Route.delete('theorie/:id','theoriesController.delete').middleware('auth:admin')
+    Route.get('theorie/:id','theoriesController.show')
+    Route.post('theorie/add','theoriesController.store').as('theorie.store')
+    Route.put('theorie/:id','theoriesController.update')
+    Route.delete('theorie/:id','theoriesController.delete')
     //auth admin
   //  Route.get('users', 'administrateursController.getUser')
 
       //  Route.any('*', ({ view }) => view.render('app'))
       Route.get('auth/list/token', 'administrateursController.listToken')
       Route.get('auth/delete/token', 'administrateursController.deleteToken')
-      Route.get('auth/register', 'administrateursController.register')
-      Route.post('auth/register', 'administrateursController.register').as('administrateur.register')
+      Route.get('auth/register', 'administrateursController.register').middleware(['auth:admin'])
+      Route.post('auth/register', 'administrateursController.register').as('administrateur.register').middleware(['auth:admin'])
       Route.get('auth/login', 'administrateursController.login')
       Route.post('auth/login', 'administrateursController.login').as('administrateur.login')
+
+
   }
 ).prefix('api')
-
 
 
     Route.any('*', ({ view }) => view.render('app'))

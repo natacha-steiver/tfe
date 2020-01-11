@@ -4,8 +4,14 @@ const Exercice = use('App/Models/exercices')
 class exercicesController {
 async index({response}){
 
-    let exercice = await Exercice.all()
-    return response.json(exercice)
+try{
+  let exercice = await Exercice.all()
+  return response.json(exercice)
+} catch (e) {
+  console.log(e)
+  alert('connectez-vous pour avoir accès aux exercices')
+  return response.json({message: 'You are not authorized to perform this action'})
+}
   }
 
 
@@ -13,13 +19,15 @@ async index({response}){
 
     const exType = request.post('type')
     const exEnnonce = request.post('ennonce')
+    const exTitre = request.post('titre')
 
     const exercice = new Exercice()
     exercice.type = exType.type
     exercice.ennonce =exEnnonce.ennonce
+    exercice.titre =exTitre.titre
 const exerciceLast=  await Exercice
-    .fetch()
-//db.tfe.getCollection("solutions").find().sort({"_id":-1}).limit(1)
+    .all()
+
     await exercice.save()
     console.log(response)
     return response.status(201).json({all:exerciceLast})
@@ -38,13 +46,16 @@ const exerciceLast=  await Exercice
         try {
           const exType = request.post('type')
           const exEnnonce = request.post('ennonce')
+          const exTitre = request.post('titre')
 
 
-          const exercice= await Exercice.where({_id:params.id}).update({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce})
+
+          const exercice= await Exercice.where({_id:params.id}).update({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre})
           exercice.type = exType.type
           exercice.ennonce =exEnnonce.ennonce
+          exercice.titre =exTitre.titre
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce})
+        return response.status(200).json({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre})
 
         } catch (e) {
           console.log(e)

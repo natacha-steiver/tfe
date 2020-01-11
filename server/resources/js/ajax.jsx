@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const getList = ()=>{
-/*
+
 
 return axios
 
@@ -15,7 +15,7 @@ return axios
 
     return data
   })
- */
+
 }
 
 
@@ -97,6 +97,8 @@ export const getMenu = ()=>{
     })
 }
 
+
+
 //------------------AUTH--------------
 
 
@@ -125,19 +127,25 @@ return axios
       })
   .then(res =>{
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
+//sessionStorage.setItem('test',JSON.stringify(res.data.token))
+window.location.href = '/admin';
+console.log(res.data.auth)
+localStorage.setItem("tokenn",res.data.auth)
+return axios.defaults.headers.common['Authorization']  =`${localStorage.getItem("tokenn")}`
+/*
 
-  console.log(res)
-var token= res.data
-return axios
-  .get(`api/user/${res.data._id}`)
-  .then(res=>{
-    console.log("redirection profil ok")
-  }).catch(error=>{
-    console.log(error)
-  })
-
+return axios.get('api/solutions',{
+  headers:{'Content-Type':'application/json','Authorization':`${localStorage.getItem("tokenn")}`}
     })
+ */
+
+//var token= res.data
+
+
+}).catch(error=>{
+  alert(error+" Problème de connexion en cours... mot de passe et/ou login invalide")
+}
+)
 }
 
 export const getUser = ()=>{

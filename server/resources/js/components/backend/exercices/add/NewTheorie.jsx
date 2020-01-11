@@ -12,7 +12,8 @@ constructor(props){
     titre: 'titre',
     texte: 'texte',
     image:'image',
-    video:'video'
+    video:'video',
+    langage:'langage'
   }
   this.handleSubmit=this.handleSubmit.bind(this)
   this.handleInputChange=this.handleInputChange.bind(this)
@@ -40,7 +41,8 @@ constructor(props){
       titre: '',
       texte: '',
       image:'',
-      video:''
+      video:'',
+      langage:'',
     });
   };
 
@@ -56,6 +58,16 @@ constructor(props){
               name="titre"
               onChange={ this.handleInputChange }
               defaultValue={ this.state.titre }
+            />
+          </div>
+          <div className="form-group">
+              <input
+              type="text"
+              placeholder="Type"
+              className="form-control"
+              name="langage"
+              onChange={ this.handleInputChange }
+              defaultValue={ this.state.langage }
             />
           </div>
           <div className="form-group">

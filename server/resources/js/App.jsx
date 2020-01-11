@@ -1,6 +1,29 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { register } from 'register-service-worker'
+import { Route,Link, Switch,BrowserRouter as Router,withRouter,NavLink } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router';
+
+import Exercice from './components/backend/exercices/exercice/index'
+
+import CreateSolution from './components/container/createSolution';
+import SolutionList from './components/container/SolutionList';
+
+
+
+import CreateTheorie from './components/container/createTheorie';
+import TheorieList from './components/container/TheorieList';
+
+import CreateExercice from './components/container/createExercice';
+import ExerciceList from './components/container/ExerciceList';
+
+import Admin from './components/admin/index'
+
+
+import Login from './components/login/index'
+import Register from './components/register/index'
+
+
 
 
 //import Perso from "./components/introduction/perso/index"
@@ -9,7 +32,7 @@ import MoveOffset from "./components/keyevent/MoveOffset"
 import Menu from "./components/menu/index"
 import './App.css';
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import store,{history} from './redux/store'
 class App extends React.Component {
 
 constructor(props){
@@ -76,8 +99,8 @@ render(){
   return (
     <div>
 
+<Menu/>
 
-    <Menu/>
     <div className="row mt-5">
               <div className="col-md-12">
                   <h2 className="text-left">Google Login Demo</h2>
@@ -114,7 +137,48 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ConnectedRouter history={history}>
+    <> { /* your usual react-router v4/v5 routing */ }
+    <Switch>
+      <Route  exact path="/" render={() => (<div>      <App /></div>)} />
+
+
+
+      <Route  path="/login">
+  <Login/>
+
+      </Route>
+      <Route  path="/admin">
+  <Admin/>
+
+      </Route>
+
+
+                    <Route path="/theories">
+
+                    <CreateTheorie/>
+                     <TheorieList />
+                    </Route>
+
+
+                    <Route path="/login">
+
+                    <Login/>
+
+                    </Route>
+                    <Route path="/register">
+
+                    <Register/>
+
+                    </Route>
+
+    
+
+
+    </Switch>
+  </>
+
+    </ConnectedRouter>
   </Provider>,
   rootElement
 );

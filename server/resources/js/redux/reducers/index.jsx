@@ -7,9 +7,10 @@ import solutions from './solutionReducer';
 
 import exercices from './exerciceReducer';
 import theories from './theorieReducer';
+import { connectRouter } from 'connected-react-router'
 
-export default combineReducers({
-
+const rootReducer = (history) => combineReducers({
+ router: connectRouter(history),
       exercices: exercices,
     solutions: solutions,
 
@@ -17,7 +18,7 @@ export default combineReducers({
     theories: theories
 });
 
-
+export default rootReducer
 /*
 
 const rootReducer = (state = {}, action) => {

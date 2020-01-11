@@ -126,6 +126,7 @@ class Test extends React.Component {
 
 if(editor.getValue().includes(this.state.solution)){
   console.log('ok')
+  alert('vous avez trouvez la solution')
 }else{
 
 console.log( this.state.solution+"</br>"+editor.getValue())

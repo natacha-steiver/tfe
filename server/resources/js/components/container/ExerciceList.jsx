@@ -36,8 +36,8 @@ const mapDispatchToProps = dispatch => {
     onDelete: id => {
       dispatch(deleteExercice(id))
     },
-    onUpdate: (id,type,ennonce) => {
-      dispatch(updateExercice(id,type,ennonce))
+    onUpdate: (id,type,ennonce,titre) => {
+      dispatch(updateExercice(id,type,ennonce,titre))
     }
   };
 };

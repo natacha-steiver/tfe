@@ -3,8 +3,19 @@ const Theorie = use('App/Models/theories');
 class theoriesController {
 async index({response}){
 
+  try{
     let theorie = await Theorie.all()
+
     return response.json(theorie)
+
+  }
+
+    catch (e) {
+
+      console.log(e)
+
+      return response.json({message: 'You are not authorized to perform this action'})
+    }
   }
 
 
@@ -14,12 +25,14 @@ async index({response}){
     const theoTexte = request.post('texte')
     const theoImage= request.post('image')
     const theoVideo = request.post('video')
+    const theoLangage = request.post('langage')
 
     const theorie = new Theorie()
     theorie.titre = theoTitre.titre
     theorie.texte = theoTexte.texte
     theorie.image = theoImage.image
     theorie.video = theoVideo.video
+    theorie.langage = theoLangage.langage
 const theorieLast=  await Theorie
     .fetch()
 
@@ -44,15 +57,18 @@ const theorieLast=  await Theorie
               const theoTexte = request.post('texte')
               const theoImage= request.post('image')
               const theoVideo = request.post('video')
+              const theoLangage = request.post('langage')
 
 
-          const theorie= await Theorie.where({_id:params.id}).update({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo})
+
+          const theorie= await Theorie.where({_id:params.id}).update({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo,langage:theoLangage})
           theorie.titre = theoTitre.titre
           theorie.texte = theoTexte.texte
           theorie.image = theoImage.image
           theorie.video = theoVideo.video
+          theorie.langage = theoLangage.langage
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo})
+        return response.status(200).json({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo,langage:theoLangage})
 
         } catch (e) {
           console.log(e)

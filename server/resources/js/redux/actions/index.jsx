@@ -29,57 +29,19 @@ import {
  } from  "../constantes/index";
 
 import axios from 'axios';
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTEyM2E0YWQzMGFhZmE4MjFmOWEzMGIiLCJpYXQiOjE1NzgyNTI4NzR9.P4ceTZ_QdYavhgF2Ik_xY9ZD63HosjdnqSC3CcWrKPc
-/*
 
-
-axios.post('api/auth/register')
-.then(response => {
-alert(JSON.stringify(response.data))
-})
-.catch(error => {
-  alert('error')
-  throw(error);
-});
-
- */
-//const token = JSON.parse(sessionStorage.getItem('user-token'));
-const token2 =  JSON.parse(sessionStorage.getItem('user-token'));
-//undefined
-const token=  JSON.parse(sessionStorage.getItem('token5'));
-if (token) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-}
-//axios.defaults.headers.common['Authorization'] = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"
-
-
-
-
+ axios.defaults.headers.common['Authorization']  =`${localStorage.getItem("tokenn")}`
 //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
 export const createSolution = ({solution,type }) => {
   return (dispatch) => {
     return axios.post(`api/solution/add`, {solution,type},{
-      headers:{'Content-Type':'application/json','Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"}
+      headers:{'Content-Type':'application/json'}
     })
       .then(response => {
 
-/*
-dispatch({
-  type: ADD_SOLUTION,
-  payload: {
-    type: response.data.type,
-    solution: response.data.solution,
-    date: new Date().toLocaleDateString(),
-    _id:"jjjj46554"
-  }
-});
- */
-return reponse=()=>{
-
          dispatch(createSolutionSuccess(response.data))
-         alert('solution add')
-}
+
       })
       .catch(error => {
         alert('error')
@@ -173,10 +135,12 @@ export const fetchAllSolutions = () => {
     return axios.get('api/solutions',{
       headers:{'Content-Type':'application/json'}
         })
+
       .then(response => {
         dispatch(fetchSolutions(response.data))
       })
-      .catch(error => {
+      .catch((error)=> {
+//error 401
         throw(error);
       });
   };
@@ -185,9 +149,9 @@ export const fetchAllSolutions = () => {
 
 //------------------------------------------EXERCICES-------------------------------
 //-------------------ADD-------------------
-export const createExercice = ({ennonce,type }) => {
+export const createExercice = ({ennonce,type,titre }) => {
   return (dispatch) => {
-    return axios.post(`api/exercice/add`, {ennonce,type},{
+    return axios.post(`api/exercice/add`, {ennonce,type,titre},{
       headers:{'Content-Type':'application/json'}
     })
       .then(response => {
@@ -205,6 +169,9 @@ export const createExerciceSuccess =  (data) => {
   console.log(data.all.map(item=>(
       item._id
     )).toString()+'id add')
+
+
+
   return {
     type: ADD_EXERCICE,
     payload: {
@@ -217,18 +184,21 @@ export const createExerciceSuccess =  (data) => {
       type:data.all.map(item=>(
           item.type
         )).toString(),
+      titre:data.all.map(item=>(
+            item.titre
+          )).toString(),
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
-export const updateExercice = (id,ennonce,type)=>{
+export const updateExercice = (id,ennonce,type,titre)=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type},{
+      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre},{
         headers:{'Content-Type':'application/json'}
       })
       .then(response => {
@@ -249,6 +219,7 @@ export const updateExerciceSuccess =  (data) => {
       _id: data.id,
       ennonce: data.ennonce,
       type: data.type,
+      titre: data.titre,
       date: new Date().toLocaleDateString()
     }
   }
@@ -300,22 +271,11 @@ export const fetchAllExercices = () => {
 
 //------------------------------------------THEORIES-------------------------------
 //-------------------ADD-------------------
-export const createTheorie = ({titre,texte,image,video }) => {
+export const createTheorie = ({titre,texte,image,video,langage }) => {
   return (dispatch) => {
-    return axios.post(`api/theorie/add`, {titre,texte,image,video })
+    return axios.post(`api/theorie/add`, {titre,texte,image,video,langage })
       .then(response => {
 
-/*
-dispatch({
-  type: ADD_SOLUTION,
-  payload: {
-    type: response.data.type,
-    solution: response.data.solution,
-    date: new Date().toLocaleDateString(),
-    _id:"jjjj46554"
-  }
-});
- */
         dispatch(createTheorieSuccess(response.data))
       })
       .catch(error => {
@@ -347,18 +307,21 @@ export const createTheorieSuccess =  (data) => {
       video:data.all.map(item=>(
               item.video
             )).toString(),
+      langage:data.all.map(item=>(
+                    item.langage
+                  )).toString(),
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
-export const updateTheorie = (id,titre,texte,image,video )=>{
+export const updateTheorie = (id,titre,texte,image,video,langage )=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video})
+      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video,langage:langage})
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateTheorieSuccess(response.data))
@@ -379,6 +342,7 @@ export const updateTheorieSuccess =  (data) => {
       texte: data.texte,
       image:data.image,
       video:data.video,
+      langage:data.langage,
       date: new Date().toLocaleDateString()
     }
   }
@@ -415,10 +379,12 @@ export const fetchTheories = (theories) => {
 export const fetchAllTheories = () => {
   return (dispatch) => {
     return axios.get('api/theories')
+
       .then(response => {
         dispatch(fetchTheories(response.data))
       })
       .catch(error => {
+        alert('connectez-vous pour avoir accès.')
         throw(error);
       });
   };

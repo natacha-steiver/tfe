@@ -19,7 +19,7 @@ let tokens=  await auth.authenticator('admin').listTokens()
           let token = await auth.authenticator('admin').generate(user)
 
           Object.assign(user, token)
-  auth.authenticator('admin').withRefreshToken()
+
           return response.json(user)
 
 
@@ -34,11 +34,19 @@ let tokens=  await auth.authenticator('admin').listTokens()
               let user = await Administrateur.findBy('email', email)
               let token = await auth.authenticator('admin').generate(user)
 
-              Object.assign(user, token)
-  auth.authenticator('admin').withRefreshToken()
-              //return response.json(admin)
 
-              return response.json(user)
+
+  Object.assign(user,token)
+
+
+request.request.headers["Authorization"] = "Bearer".concat(" ",user.token)
+const cook=request.request.headers["Authorization"]
+const cooki=JSON.stringify(cook)
+response.cookie("tokenTxt",cooki,{  path: '/' })
+//probleme cookie
+const tokenSecure = request.cookie('tokenTxt')
+const cookie=JSON.stringify(tokenSecure)
+              return response.json({user:user,auth:request.request.headers["Authorization"],resp:response.cookie("tokenTxt",cooki,{  path: '/' }),token:request.cookie('tokenTxt')})
 
             }
 
@@ -46,8 +54,9 @@ let tokens=  await auth.authenticator('admin').listTokens()
           }
           catch (e) {
             console.log(e)
+
             return response.json({message: 'You are not registered!'})
-            alert('session expirée, veuillez vous reconnecter')
+
           }
         }
 

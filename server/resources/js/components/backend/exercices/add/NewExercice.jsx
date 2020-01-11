@@ -1,57 +1,40 @@
-// NewPost.js
+// NewExercice.js
 
 import React,{useState} from 'react';
 import store  from "../../../../redux/store";
 import { ADD_EXERCICE } from "../../../../redux/constantes/index";
-class NewExercice extends React.Component {
-
-constructor(props){
-  super(props)
-  this.state = {
-    _id:"hhjhj",
-    type: 'type',
-    ennonce: 'ennonce'
-  }
-  this.handleSubmit=this.handleSubmit.bind(this)
-  this.handleInputChange=this.handleInputChange.bind(this)
-  this.handleReset=this.handleReset.bind(this)
-}
-
-
-  handleInputChange(e){
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  handleSubmit(e){
-    e.preventDefault();
+export default ({ exercice: { type, ennonce,titre, _id }, onAddExercice}) => {
 
 
 
-      this.handleReset();
+  const [typeNew, setType] = useState('');
+  const [ennonceNew, setEnnonce] = useState('');
+  const [titreNew, setTitre] = useState('');
 
-  };
 
-  handleReset(){
-    this.setState({
-      type: '',
-      ennonce: ''
-    });
-  };
 
-  render() {
+
     return (
       <div>
-          <form method="POST" onSubmit={ ()=>{  this.props.onAddExercice(this.state)}}>
+          <form method="POST">
           <div className="form-group">
               <input
               type="text"
               placeholder="Type"
               className="form-control"
               name="type"
-              onChange={ this.handleInputChange }
+              onChange={event => setType(event.target.value)}
               defaultValue={ this.state.type }
+            />
+          </div>
+          <div className="form-group">
+              <input
+              type="text"
+              placeholder="titre"
+              className="form-control"
+              name="titre"
+              onChange={event => setTitre(event.target.value)}
+              defaultValue={ this.state.titre }
             />
           </div>
           <div className="form-group">
@@ -61,12 +44,12 @@ constructor(props){
               placeholder="ennonce"
               className="form-control"
               name="ennonce"
-              onChange={ this.handleInputChange }
+              onChange={event => setEnnonce(event.target.value)}
               defaultValue={ this.state.ennonce }>
             </textarea>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">Add Exercice</button>
+            <button type="button" className="btn btn-primary" onClick={ ()=>{  this.props.onAddExercice(typeNew,ennonceNew,titreNew)}} >Add Exercice</button>
             <button type="button" className="btn btn-warning" onClick={ this.handleReset }>
               Reset
             </button>
@@ -75,7 +58,5 @@ constructor(props){
         </form>
       </div>
     );
-  }
-}
 
-export default NewExercice;
+}
