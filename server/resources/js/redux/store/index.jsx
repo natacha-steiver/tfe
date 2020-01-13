@@ -20,14 +20,13 @@ const store = createStore(
 );
 
 
-store.dispatch(fetchAllTheories())
 
+setTimeout(function(){
+
+  store.dispatch(fetchAllTheories())
   store.dispatch(fetchAllSolutions())
   store.dispatch(fetchAllExercices())
-
-
-
-
+}, 65000);
 
 
 

@@ -19,7 +19,7 @@ module.exports = {
   | Available Serializers - lucid, database
   |
   */
-  authenticator: 'jwt',
+  authenticator: 'session',
 
   /*
   |--------------------------------------------------------------------------
@@ -62,7 +62,12 @@ module.exports = {
      model: 'App/Models/User',
      scheme: 'session',
      uid: 'email',
-     password: 'password'
+     password: 'password',
+     expiry: '6400s',
+     options: {
+        secret: 'self::app.appKey',
+        httpOnly:true
+     }
    },
 
    basic: {

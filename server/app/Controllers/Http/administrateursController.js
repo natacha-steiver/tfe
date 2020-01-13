@@ -31,22 +31,25 @@ let tokens=  await auth.authenticator('admin').listTokens()
 
           try {
             if (await auth.authenticator('admin').attempt(email, password)) {
-              let user = await Administrateur.findBy('email', email)
-              let token = await auth.authenticator('admin').generate(user)
 
 
+                let user = await Administrateur.findBy('email', email)
+                let token = await auth.authenticator('admin').generate(user)
+
+                //const cook= request.request.headers["Authorization"]
+          //   const cooki= token
+          //      await response.plainCookie("tokenTxt",cooki,{ path: '/' ,domaine:"localhost",sameSite:true,MaxAge:1600})
+                //probleme cookie
+        //        const tokenSecure = await request.plainCookie('tokenTxt')
+        //        const cookie= tokenSecure
 
   Object.assign(user,token)
 
 
-request.request.headers["Authorization"] = "Bearer".concat(" ",user.token)
-const cook=request.request.headers["Authorization"]
-const cooki=JSON.stringify(cook)
-response.cookie("tokenTxt",cooki,{  path: '/' })
-//probleme cookie
-const tokenSecure = request.cookie('tokenTxt')
-const cookie=JSON.stringify(tokenSecure)
-              return response.json({user:user,auth:request.request.headers["Authorization"],resp:response.cookie("tokenTxt",cooki,{  path: '/' }),token:request.cookie('tokenTxt')})
+   request.request.headers["Authorization"] = "Bearer".concat(" ",user.token)
+
+
+              return response.json({user:user,auth:request.request.headers["Authorization"]})
 
             }
 

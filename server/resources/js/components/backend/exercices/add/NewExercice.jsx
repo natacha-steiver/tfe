@@ -3,7 +3,9 @@
 import React,{useState} from 'react';
 import store  from "../../../../redux/store";
 import { ADD_EXERCICE } from "../../../../redux/constantes/index";
-export default ({ exercice: { type, ennonce,titre, _id }, onAddExercice}) => {
+import { FETCH_EXERCICE } from "../../../../redux/constantes/index";
+
+export default ({ exercice: { type, ennonce,titre, _id }, onAddExercice,onFetch}) => {
 
 
 
@@ -56,6 +58,9 @@ export default ({ exercice: { type, ennonce,titre, _id }, onAddExercice}) => {
           </div>
 
         </form>
+
+        <button type="button" className="btn btn-primary" onClick={ ()=>{  this.props.onFetch()}} >liste Exercice</button>
+
       </div>
     );
 

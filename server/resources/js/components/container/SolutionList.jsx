@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 import Solution from '../backend/exercices/delete/solution';
 import { deleteSolution } from '../../redux/actions';
 import { updateSolution } from '../../redux/actions';
+import { fetchAllSolutions } from '../../redux/actions';
 
 function SolutionList({ solutions, onDelete,onUpdate }) {
 
   return (
     <div>
+
+      <button className="btn btn-primary" onClick={()=>store.dispatch(fetchAllSolutions())}>list </button>
       {
         solutions.map((solution,index )=> {
         return (

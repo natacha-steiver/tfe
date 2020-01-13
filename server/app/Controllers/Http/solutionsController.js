@@ -2,9 +2,10 @@
 
 const Solution = use('App/Models/solutions')
 class solutionsController {
-async index({response}){
+async index({response,request}){
 
     let solution = await Solution.all()
+
     return response.json(solution)
   }
 

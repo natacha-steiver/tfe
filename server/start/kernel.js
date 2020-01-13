@@ -13,11 +13,15 @@ const Server = use('Server')
 |
 */
 const globalMiddleware = [
+  'App/Middleware/Secure',
   'Adonis/Middleware/BodyParser',
   'Adonis/Middleware/Session',
   'Adonis/Middleware/Shield',
   'Adonis/Middleware/AuthInit',
   'App/Middleware/ConvertEmptyStringsToNull',
+
+
+
 
 ]
 
@@ -39,7 +43,6 @@ const globalMiddleware = [
 |
 */
 const namedMiddleware = {
-  secure:'App/Middleware/Secure',
   auth: 'Adonis/Middleware/Auth',
   guest: 'Adonis/Middleware/AllowGuestOnly'
 }
@@ -55,6 +58,7 @@ const namedMiddleware = {
 |
 */
 const serverMiddleware = [
+
   'Adonis/Middleware/Static',
   'Adonis/Middleware/Cors'
 ]

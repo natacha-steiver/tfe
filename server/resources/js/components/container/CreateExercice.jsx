@@ -7,13 +7,15 @@ import ExerciceAdd from './addEx';
 import { deleteExercice} from '../../redux/actions';
 import { updateExercice} from '../../redux/actions';
 import { createExercice } from '../../redux/actions';
-function NewExercice({onAddExercice }) {
+import { fetchAllExercices } from '../../redux/actions';
+
+function NewExercice({onAddExercice,onFetch }) {
 
   return (
     <div>
 
 
-          <ExerciceAdd  onAddExercice={ onAddExercice } />
+          <ExerciceAdd  onAddExercice={ onAddExercice } onFetch={onFetch} />
 
     </div>
   );
@@ -25,6 +27,10 @@ const mapDispatchToProps = dispatch => {
 
     onAddExercice: (type,ennonce,titre) => {
       dispatch(createExercice(type,ennonce,titre));
+    },
+    onFetch:()=>{
+      dispatch(fetchAllExercices())
+
     }
   };
 };

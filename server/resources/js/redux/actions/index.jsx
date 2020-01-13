@@ -29,22 +29,82 @@ import {
  } from  "../constantes/index";
 
 import axios from 'axios';
+axios.defaults.withCredentials = true
+axios.defaults.xsrfHeaderName = "tokenTxt";
+axios.defaults.xsrfCookieName = "tokenTxt";
 
- axios.defaults.headers.common['Authorization']  =`${localStorage.getItem("tokenn")}`
+/*
+
+function logCookie(cookie) {
+  if (cookie) {
+    console.log(cookie.value);
+  }
+}
+
+function getCookie(tabs) {
+  var getting = browser.cookies.get({
+    url: tabs[0].url,
+    name: "tokenTxt"
+  });
+  getting.then(logCookie);
+}
+
+var getActive = browser.tabs.query({
+  active: true,
+  currentWindow: true
+});
+getActive.then(getCookie);
+axios.defaults.headers.common.Authorization = getting.then(logCookie);
+
+ */
+        // This means that there's a JWT so someone must be logged in.
+
+      //  axios.defaults.headers.common.Authorization = document.cookie
+
+//axios.defaults.headers.common['Authorization']  =`Bearer ${localStorage.getItem("tokenn")}`
+let axiosInstance = axios.create({
+  baseURL: "http://localhost:3333",
+  timeout: 50000,
+});
+axiosInstance.interceptors.request.use(
+  config => {
+
+if(config.headers.tokenTxt!=="undefined"){
+  config.headers['Authorization'] = config.headers.tokenTxt
+
+}
+  return config;
+  },
+  error => Promise.reject(error)
+);
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
 //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
 export const createSolution = ({solution,type }) => {
   return (dispatch) => {
     return axios.post(`api/solution/add`, {solution,type},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     })
+
+
+
+
       .then(response => {
 
-         dispatch(createSolutionSuccess(response.data))
+         dispatch(createSolutionSuccess(response.data.solution))
 
       })
       .catch(error => {
-        alert('error')
+        console.log(error)
         throw(error);
       });
   };
@@ -76,7 +136,7 @@ export const updateSolution = (id,solution,type)=>{
 
     return (dispatch) => {
       return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type},{
-        headers:{'Content-Type':'application/json'}
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
@@ -113,7 +173,7 @@ export const deleteSolutionSuccess = _id => {
 export const deleteSolution = id => {
   return (dispatch) => {
     return axios.delete(`api/solution/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     }).then(response => {
         dispatch(deleteSolutionSuccess(id))
       })
@@ -130,17 +190,21 @@ export const fetchSolutions = (solutions) => {
   }
 };
 
+//"Authorization":"Bearer "+readCookie('tokenTxt').split('%')
 export const fetchAllSolutions = () => {
   return (dispatch) => {
     return axios.get('api/solutions',{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
         })
 
-      .then(response => {
-        dispatch(fetchSolutions(response.data))
+      .then(res => {
+        dispatch(fetchSolutions(res.data))
       })
-      .catch((error)=> {
+      .catch((error,res)=> {
 //error 401
+
+//  console.log(res.config.header)
+
         throw(error);
       });
   };
@@ -152,7 +216,7 @@ export const fetchAllSolutions = () => {
 export const createExercice = ({ennonce,type,titre }) => {
   return (dispatch) => {
     return axios.post(`api/exercice/add`, {ennonce,type,titre},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     })
       .then(response => {
 
@@ -199,7 +263,7 @@ export const updateExercice = (id,ennonce,type,titre)=>{
 
     return (dispatch) => {
       return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre},{
-        headers:{'Content-Type':'application/json'}
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
@@ -237,7 +301,7 @@ export const deleteExerciceSuccess = _id => {
 export const deleteExercice = id => {
   return (dispatch) => {
     return axios.delete(`api/exercice/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     }).then(response => {
         dispatch(deleteExerciceSuccess(id))
       })
@@ -257,7 +321,7 @@ export const fetchExercices = (exercices) => {
 export const fetchAllExercices = () => {
   return (dispatch) => {
     return axios.get('api/exercices',{
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
         })
       .then(response => {
         dispatch(fetchExercices(response.data))
@@ -321,7 +385,9 @@ export const updateTheorie = (id,titre,texte,image,video,langage )=>{
 
 
     return (dispatch) => {
-      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video,langage:langage})
+      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video,langage:langage},{
+        headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')
+      }})
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateTheorieSuccess(response.data))
@@ -359,7 +425,8 @@ export const deleteTheorieSuccess = _id => {
 
 export const deleteTheorie = id => {
   return (dispatch) => {
-    return axios.delete(`api/theorie/${id}`,{id:id})
+    return axios.delete(`api/theorie/${id}`,{id:id},{headers:{
+    "Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}})
     .then(response => {
         dispatch(deleteTheorieSuccess(id))
       })
@@ -378,7 +445,7 @@ export const fetchTheories = (theories) => {
 
 export const fetchAllTheories = () => {
   return (dispatch) => {
-    return axios.get('api/theories')
+    return axios.get('api/theories',{headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}})
 
       .then(response => {
         dispatch(fetchTheories(response.data))

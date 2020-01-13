@@ -85288,20 +85288,54 @@ var register = function register(email, password) {
     console.log(res);
   });
 };
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.xsrfHeaderName = "tokenTxt";
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.xsrfCookieName = "tokenTxt";
+var axiosInstances = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+  baseURL: "http://localhost:3333",
+  timeout: 50000
+});
 var login = function login(email, password) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("api/auth/login", {
+  var resp = axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("api/auth/login", {
     email: email,
     password: password
   }, {
     headers: {
       'Content-Type': 'application/json'
     }
+  }, {
+    withCredentials: true
   }).then(function (res) {
-    //sessionStorage.setItem('test',JSON.stringify(res.data.token))
-    window.location.href = '/admin';
-    console.log(res.data.auth);
-    localStorage.setItem("tokenn", res.data.auth);
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = "".concat(localStorage.getItem("tokenn"));
+    console.log(JSON.stringify(res)); //sessionStorage.setItem('test',JSON.stringify(res.data.token))
+    //window.location.href = '/admin';
+
+    console.log(res.data.auth); //cookie split
+
+    var tokenC = res.config.headers.tokenTxt.replace('j:{"type":"bearer","token":', '').split(",", 1, res.config.headers.tokenTxt.length - 1); //var tokenC=res.config.headers.tokenTxt
+
+    localStorage.setItem('tokenc', tokenC);
+    localStorage.setItem('tokenD', res.config.headers.tokenTxt);
+    localStorage.setItem("tokenn", res.data.user.token); //document.cookie =axios.defaults.headers['xsrfCookieName']
+    //localStorage.setItem("n",JSON.stringify(document.cookie))
+
+    localStorage.setItem("tokn", res.data.user.token); //axios.defaults.headers.common['Authorization']  =`Bearer ${tokenC}`
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = "Bearer " + res.data.user.token; //console.log(res.config.headers)
+
+    if (res.config.headers.tokenTxt == "undefined" || res.config.headers.tokenTxt == null || res.config.headers.tokenTxt == "") {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("api/auth/login", {
+        email: email,
+        password: password
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer " + res.data.user.token
+        }
+      }, {
+        withCredentials: true
+      }).then(function (res) {
+        console.log(res.config.headers);
+      });
+    }
     /*
     
     return axios.get('api/solutions',{
@@ -85309,6 +85343,7 @@ var login = function login(email, password) {
         })
      */
     //var token= res.data
+
   })["catch"](function (error) {
     alert(error + " Problème de connexion en cours... mot de passe et/ou login invalide");
   });
@@ -86963,11 +86998,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function ExerciceList(_ref) {
   var exercices = _ref.exercices,
       onDelete = _ref.onDelete,
-      onUpdate = _ref.onUpdate;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, exercices.map(function (exercice, index) {
+      onUpdate = _ref.onUpdate,
+      onFetch = _ref.onFetch;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      store.dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])());
+    }
+  }, "liste"), "s", exercices.map(function (exercice, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_backend_exercices_delete_exercice__WEBPACK_IMPORTED_MODULE_2__["default"], {
       exercice: exercice,
       onDelete: onDelete,
@@ -86993,6 +87034,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     onUpdate: function onUpdate(id, type, ennonce, titre) {
       dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["updateExercice"])(id, type, ennonce, titre));
+    },
+    onFetch: function onFetch() {
+      store.dispatch(fetchExercices());
     }
   };
 };
@@ -87022,11 +87066,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function SolutionList(_ref) {
   var solutions = _ref.solutions,
       onDelete = _ref.onDelete,
       onUpdate = _ref.onUpdate;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, solutions.map(function (solution, index) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary",
+    onClick: function onClick() {
+      return store.dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllSolutions"])());
+    }
+  }, "list "), solutions.map(function (solution, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_backend_exercices_delete_solution__WEBPACK_IMPORTED_MODULE_2__["default"], {
       solution: solution,
       onDelete: onDelete,
@@ -87132,6 +87182,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _redux_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../redux/store */ "./resources/js/redux/store/index.jsx");
 /* harmony import */ var _redux_constantes_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../redux/constantes/index */ "./resources/js/redux/constantes/index.jsx");
+/* harmony import */ var _redux_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redux/actions */ "./resources/js/redux/actions/index.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -87139,6 +87190,8 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -87153,7 +87206,8 @@ var styles = {
 };
 window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var onAddExercice = _ref.onAddExercice;
+  var onAddExercice = _ref.onAddExercice,
+      onFetch = _ref.onFetch;
   //console.log(exercice)
   var ennonce = "ennonce";
   var type = "type";
@@ -87208,10 +87262,15 @@ window.store = _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"];
     onChange: function onChange(event) {
       return setTitre(event.target.value);
     }
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "submit",
     className: "btn btn-primary"
-  }, "Add Post"));
+  }, "Add Post")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary",
+    onClick: function onClick() {
+      return _redux_store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])());
+    }
+  }, "list "));
 });
 
 /***/ }),
@@ -87239,10 +87298,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function NewExercice(_ref) {
-  var onAddExercice = _ref.onAddExercice;
+  var onAddExercice = _ref.onAddExercice,
+      onFetch = _ref.onFetch;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_addEx__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    onAddExercice: onAddExercice
+    onAddExercice: onAddExercice,
+    onFetch: onFetch
   }));
 }
 
@@ -87250,6 +87312,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onAddExercice: function onAddExercice(type, ennonce, titre) {
       dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["createExercice"])(type, ennonce, titre));
+    },
+    onFetch: function onFetch() {
+      dispatch(Object(_redux_actions__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])());
     }
   };
 };
@@ -88547,8 +88612,69 @@ __webpack_require__.r(__webpack_exports__);
 // src/js/actions/index.js
 
 
-axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['Authorization'] = "".concat(localStorage.getItem("tokenn")); //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.withCredentials = true;
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.xsrfHeaderName = "tokenTxt";
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.xsrfCookieName = "tokenTxt";
+/*
+
+function logCookie(cookie) {
+  if (cookie) {
+    console.log(cookie.value);
+  }
+}
+
+function getCookie(tabs) {
+  var getting = browser.cookies.get({
+    url: tabs[0].url,
+    name: "tokenTxt"
+  });
+  getting.then(logCookie);
+}
+
+var getActive = browser.tabs.query({
+  active: true,
+  currentWindow: true
+});
+getActive.then(getCookie);
+axios.defaults.headers.common.Authorization = getting.then(logCookie);
+
+ */
+// This means that there's a JWT so someone must be logged in.
+//  axios.defaults.headers.common.Authorization = document.cookie
+//axios.defaults.headers.common['Authorization']  =`Bearer ${localStorage.getItem("tokenn")}`
+
+var axiosInstance = axios__WEBPACK_IMPORTED_MODULE_1___default.a.create({
+  baseURL: "http://localhost:3333",
+  timeout: 50000
+});
+axiosInstance.interceptors.request.use(function (config) {
+  if (config.headers.tokenTxt !== "undefined") {
+    config.headers['Authorization'] = config.headers.tokenTxt;
+  }
+
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1, c.length);
+    }
+
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+
+  return null;
+} //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
+
 
 var createSolution = function createSolution(_ref) {
   var solution = _ref.solution,
@@ -88559,12 +88685,13 @@ var createSolution = function createSolution(_ref) {
       type: type
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
-      dispatch(createSolutionSuccess(response.data));
+      dispatch(createSolutionSuccess(response.data.solution));
     })["catch"](function (error) {
-      alert('error');
+      console.log(error);
       throw error;
     });
   };
@@ -88595,7 +88722,8 @@ var updateSolution = function updateSolution(id, solution, type) {
       type: type
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       console.log(JSON.stringify(response) + "reponseok");
@@ -88632,7 +88760,8 @@ var deleteSolution = function deleteSolution(id) {
       id: id
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       dispatch(deleteSolutionSuccess(id));
@@ -88647,17 +88776,20 @@ var fetchSolutions = function fetchSolutions(solutions) {
     type: _constantes_index__WEBPACK_IMPORTED_MODULE_0__["FETCH_SOLUTION"],
     solutions: solutions
   };
-};
+}; //"Authorization":"Bearer "+readCookie('tokenTxt').split('%')
+
 var fetchAllSolutions = function fetchAllSolutions() {
   return function (dispatch) {
     return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/solutions', {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
-    }).then(function (response) {
-      dispatch(fetchSolutions(response.data));
-    })["catch"](function (error) {
+    }).then(function (res) {
+      dispatch(fetchSolutions(res.data));
+    })["catch"](function (error, res) {
       //error 401
+      //  console.log(res.config.header)
       throw error;
     });
   };
@@ -88675,7 +88807,8 @@ var createExercice = function createExercice(_ref2) {
       titre: titre
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       dispatch(createExerciceSuccess(response.data));
@@ -88718,7 +88851,8 @@ var updateExercice = function updateExercice(id, ennonce, type, titre) {
       titre: titre
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       console.log(JSON.stringify(response) + "reponseok");
@@ -88756,7 +88890,8 @@ var deleteExercice = function deleteExercice(id) {
       id: id
     }, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       dispatch(deleteExerciceSuccess(id));
@@ -88776,7 +88911,8 @@ var fetchAllExercices = function fetchAllExercices() {
   return function (dispatch) {
     return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/exercices', {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
       }
     }).then(function (response) {
       dispatch(fetchExercices(response.data));
@@ -88847,6 +88983,10 @@ var updateTheorie = function updateTheorie(id, titre, texte, image, video, langa
       image: image,
       video: video,
       langage: langage
+    }, {
+      headers: {
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
+      }
     }).then(function (response) {
       console.log(JSON.stringify(response) + "reponseok");
       dispatch(updateTheorieSuccess(response.data));
@@ -88883,6 +89023,10 @@ var deleteTheorie = function deleteTheorie(id) {
   return function (dispatch) {
     return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("api/theorie/".concat(id), {
       id: id
+    }, {
+      headers: {
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
+      }
     }).then(function (response) {
       dispatch(deleteTheorieSuccess(id));
     })["catch"](function (error) {
@@ -88899,7 +89043,11 @@ var fetchTheories = function fetchTheories(theories) {
 };
 var fetchAllTheories = function fetchAllTheories() {
   return function (dispatch) {
-    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/theories').then(function (response) {
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/theories', {
+      headers: {
+        "Authorization": "Bearer " + readCookie('tokenTxt').split(/%[0-55][0-55]/, 8).reverse().join('').replace(/%/, ' ').split(' ', 1).join('')
+      }
+    }).then(function (response) {
       dispatch(fetchTheories(response.data));
     })["catch"](function (error) {
       alert('connectez-vous pour avoir accès.');
@@ -89219,9 +89367,11 @@ var history = Object(history__WEBPACK_IMPORTED_MODULE_4__["createBrowserHistory"
   basename: '/'
 });
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(_reducers_index__WEBPACK_IMPORTED_MODULE_2__["default"])(history), composeEnhancer(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(Object(connected_react_router__WEBPACK_IMPORTED_MODULE_5__["routerMiddleware"])(history), redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])));
-store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllTheories"])());
-store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllSolutions"])());
-store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])());
+setTimeout(function () {
+  store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllTheories"])());
+  store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllSolutions"])());
+  store.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_3__["fetchAllExercices"])());
+}, 65000);
 var unsubscribe = store.subscribe(function () {
   return console.log(store.getState());
 });
@@ -89236,8 +89386,8 @@ var unsubscribe = store.subscribe(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projets\tfe4\final\serverold\resources\js\app.jsx */"./resources/js/app.jsx");
-module.exports = __webpack_require__(/*! D:\projets\tfe4\final\serverold\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! D:\projets\tfe4\final\server\resources\js\app.jsx */"./resources/js/app.jsx");
+module.exports = __webpack_require__(/*! D:\projets\tfe4\final\server\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
