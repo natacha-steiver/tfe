@@ -31,10 +31,10 @@ Route.group(
     Route.put('exercice/:id','exercicesController.update')
     Route.delete('exercice/:id','exercicesController.delete')
     //backend solution
-    Route.get('solution/:id','solutionsController.show')
-    Route.post('solution/add','solutionsController.store').as('solution.store')
-    Route.put('solution/:id','solutionsController.update')
-    Route.delete('solution/:id','solutionsController.delete')
+    Route.get('solution/:id','solutionsController.show').as('solution.store').middleware(['auth:admin'])
+    Route.post('solution/add','solutionsController.store').as('solution.store').middleware(['auth:admin'])
+    Route.put('solution/:id','solutionsController.update').as('solution.store').middleware(['auth:admin'])
+    Route.delete('solution/:id','solutionsController.delete').as('solution.store').middleware(['auth:admin'])
     //backend utilisateurs(user redux)
     // /users register all
     // register
@@ -61,13 +61,13 @@ Route.group(
       Route.get('auth/list/token', 'administrateursController.listToken')
       Route.get('auth/delete/token', 'administrateursController.deleteToken')
       Route.get('auth/register', 'administrateursController.register').middleware(['auth:admin'])
-      Route.post('auth/register', 'administrateursController.register').as('administrateur.register').middleware(['auth:admin'])
+      Route.post('auth/register', 'administrateursController.register').as('administrateur.register')
       Route.get('auth/login', 'administrateursController.login')
       Route.post('auth/login', 'administrateursController.login').as('administrateur.login')
 
 
   }
-).prefix('api')
+).prefix('api').middleware('secure')
 
 
     Route.any('*', ({ view }) => view.render('app'))

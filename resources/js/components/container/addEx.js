@@ -3,7 +3,9 @@
 import React, { useState }  from 'react';
 import store from "../../redux/store"
 
-import { ADD_SOLUTION } from "../../redux/constantes/index";
+import { ADD_EXERCICE } from "../../redux/constantes/index";
+import {FETCH_EXERCICE} from "../../redux/constantes/index";
+import { fetchAllExercices } from '../../redux/actions';
 
 const styles = {
   borderBottom: '2px solid #eee',
@@ -14,7 +16,7 @@ const styles = {
   borderRadius: '7px'
 };
 window.store=store;
-export default ({onAddExercice} ) => {
+export default ({onAddExercice,onFetch} ) => {
   //console.log(exercice)
 const ennonce="ennonce";
 const type="type";
@@ -37,13 +39,14 @@ const titre="titre";
     <label htmlFor="">Titre:</label>
     <input type="text" name="titre"  placeholder={titre}    onChange={event => setTitre(event.target.value)}/>
 
+      <button type="submit" className="btn btn-primary">Add Post</button>
       </form>
 
 
 
 
 
-  <button type="submit" className="btn btn-primary">Add Post</button>
+  <button className="btn btn-primary" onClick={()=>store.dispatch(fetchAllExercices())}>list </button>
 
     </div>
   );

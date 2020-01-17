@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+axios.defaults.withCredentials = true
+import store,{history} from './redux/store'
 export const getList = ()=>{
 
 
@@ -112,26 +113,58 @@ return axios
       })
   .then(res =>{
   console.log(res)
+
   })
 
 }
-
-
+axios.defaults.xsrfHeaderName = "tokenTxt";
+axios.defaults.xsrfCookieName= "tokenTxt";
+let axiosInstances = axios.create({
+  baseURL: "http://localhost:3333",
+  timeout: 50000,
+});
 
 export const login = (email,password)=>{
 
-return axios
+const resp= axios
   .post(`api/auth/login`,{email:email,password:password},{
-     headers:{'Content-Type':'application/json' }
-
-      })
+     headers:{'Content-Type':'application/json',tokenTxt:'ooooo' }    },{withCredentials:true})
   .then(res =>{
-
+    axios.defaults.withCredentials = true
+    axios.defaults.xsrfHeaderName = "tokenTxt";
+    axios.defaults.xsrfCookieName = "tokenTxt";
+console.log(JSON.stringify(res) )
 //sessionStorage.setItem('test',JSON.stringify(res.data.token))
-window.location.href = '/admin';
+store.dispatch(fetchAllTheories())
+store.dispatch(fetchAllSolutions())
+store.dispatch(fetchAllExercices())
 console.log(res.data.auth)
-localStorage.setItem("tokenn",res.data.auth)
-return axios.defaults.headers.common['Authorization']  =`${localStorage.getItem("tokenn")}`
+//cookie split
+var tokenC=res.config.headers.tokenTxt.replace('j:{"type":"bearer","token":','').split(",",1,res.config.headers.tokenTxt.length-1)
+//var tokenC=res.config.headers.tokenTxt
+
+localStorage.setItem('tokenc',tokenC)
+localStorage.setItem('tokenD',res.config.headers.tokenTxt)
+
+localStorage.setItem("tokenn",res.data.user.token)
+//document.cookie =axios.defaults.headers['xsrfCookieName']
+//localStorage.setItem("n",JSON.stringify(document.cookie))
+localStorage.setItem("tokn",res.data.user.token)
+//axios.defaults.headers.common['Authorization']  =`Bearer ${tokenC}`
+ axios.defaults.headers.common['Authorization']  ="Bearer "+res.data.user.token
+//console.log(res.config.headers)
+  console.log(res.config.headers)
+  //window.location.href = '/admin';
+if (res.config.headers.tokenTxt == "undefined" ||  res.config.headers.tokenTxt==null ||  res.config.headers.tokenTxt==""){
+
+  return axios
+    .post(`api/auth/login`,{email:email,password:password},{
+       headers:{'Content-Type':'application/json',"Authorization":"Bearer "+res.data.user.token }    },{withCredentials:true})
+.then(res=>{
+  console.log(res.config.headers)
+
+})
+}
 /*
 
 return axios.get('api/solutions',{

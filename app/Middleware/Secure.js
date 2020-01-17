@@ -9,13 +9,25 @@ class Secure {
    * @param {Request} ctx.request
    * @param {Function} next
    */
-   async handle({ request }, next) {
+   async handle({ request,response}, next) {
+
+
+
      // call next to advance the request
-  const tokenSecure = request.cookie('tokenTxt')
-  localStorage.setItem('old',"jj")
+   //response.plainCookie("tokenTxt",request.request.headers["Authorization"],{  path: '/' })
+    request.plainCookie('tokenTxt')
+
+    request.header('Cookie',request.plainCookie('tokenTxt'))
 
 
      await next();
+  //   response.plainCookie("tokenTxt",request.request.headers["Authorization"],{  path: '/' })
+
+     request.plainCookie('tokenTxt')
+
+       request.header('Cookie',request.plainCookie('tokenTxt'))
+
+
    }
 
   /**

@@ -20,7 +20,10 @@ class Test extends React.Component {
         solution: "",
         mode:"",
         valeurcss:"",
-        click:false
+        valeurhtml:"",
+        valeurjs:"",
+        click:false,
+        valeur:"",
       }
 
     }
@@ -54,14 +57,14 @@ class Test extends React.Component {
         var modefly = modeInput.options[myindex].text.toLowerCase();
 
       //  alert(modefly); // This is giving me the exact mode on the screen
-            this.setState({mode:modefly})
-            console.log(this.state.mode)
+            this.setState({mode:`'text/'${modefly}`},    console.log(this.state.mode +"fct1"))
+
       //  editor.setOption("mode", modefly);// no change in the mode
       //  CodeMirror.autoLoadMode(editor, modefly);//no change in the mode
         //editor.refresh();
          }
   componentDidUpdate(){
-  if(this.state.mode==''){
+  if(this.state.mode=='' ||this.state.mode=="JavaScript"){
       this.selectMode()
   }
       this.test= React.createRef();
@@ -90,7 +93,7 @@ class Test extends React.Component {
   }
 
   const url = getGeneratedPageURL({
-    html: this.state.valeurhtml,
+    html: this.state.valeurhtml ,
     css: this.state.valeurcss,
   js:setTimeout(()=>{
     if(this.state.click){
@@ -111,6 +114,37 @@ class Test extends React.Component {
 
     return (
       <div>
+      <CodeMirror
+
+        value='//css'
+        options={{
+          mode: this.state.mode,
+          gutters: ["CodeMirror-lint-markers"],
+          lint:true,
+          styleActiveLine: true,
+          lineNumbers: true
+        }}
+        style={{width:'100%',height:'50%'}}
+        onChange={(editor, data, value) => {
+
+        console.log(this.state.mode+"affcihe")
+
+
+           if(this.state.mode="CSS" ){
+                this.setState({valeurcss:  editor.getValue()})
+
+              }
+
+      if(this.state.mode="JavaScript" ){
+        this.setState({valeurjs:  editor.getValue()})
+
+      }
+
+      }
+
+      }
+      />
+      <br/>
       <CodeMirror id="js"
 
         value='//crée une fonction pour déplacer ton perso'
@@ -175,30 +209,7 @@ const getJS = jsx => Babel.transform(jsx, {
 
 }
 />
-<CodeMirror
 
-  value='//css'
-  options={{
-    mode: this.state.mode,
-    gutters: ["CodeMirror-lint-markers"],
-    lint:true,
-    styleActiveLine: true,
-    lineNumbers: true
-  }}
-  style={{width:'100%',height:'50%'}}
-  onChange={(editor, data, value) => {
-
-  console.log(this.state.mode)
-
-
-  this.setState({valeurjs:  editor.getValue()})
-
-
-
-}
-
-}
-/>
       <iframe ref={this.test} id="iframe" style={{width:"100%",height:"200px"}}>
 
 
@@ -220,6 +231,7 @@ const getJS = jsx => Babel.transform(jsx, {
 <option value="41">Jinja2</option>
 <option value="42">LiveScript</option>
 <option value="43">mIRC</option>
+<option value="44">CSS</option>
 </select>
 </div>
 </div>

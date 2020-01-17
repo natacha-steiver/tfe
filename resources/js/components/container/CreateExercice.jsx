@@ -3,31 +3,31 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import ExerciceAdd from './addEx';
+//import ExerciceAdd from './addEx';
 import { deleteExercice} from '../../redux/actions';
 import { updateExercice} from '../../redux/actions';
 import { createExercice } from '../../redux/actions';
-function NewExercice({onAddExercice }) {
-
-  return (
-    <div>
+import { fetchAllExercices } from '../../redux/actions';
+// CreateSolution.js
 
 
-          <ExerciceAdd  onAddExercice={ onAddExercice } />
+import NewExercice from '../backend/exercices/add/NewExercice';
 
-    </div>
-  );
-}
 
 const mapDispatchToProps = dispatch => {
 
   return {
 
-    onAddExercice: (type,ennonce,titre) => {
-      dispatch(createExercice(type,ennonce,titre));
+    onAddExercice: (exercice) => {
+      dispatch(createExercice(exercice));
+    },
+    onFetch:()=>{
+      dispatch(fetchAllExercices())
+
     }
   };
 };
+
 export default connect(
   null,
   mapDispatchToProps

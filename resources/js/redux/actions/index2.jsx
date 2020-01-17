@@ -29,6 +29,10 @@ import {
  } from  "../constantes/index";
 
 import axios from 'axios';
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTEyM2E0YWQzMGFhZmE4MjFmOWEzMGIiLCJpYXQiOjE1NzgyNTI4NzR9.P4ceTZ_QdYavhgF2Ik_xY9ZD63HosjdnqSC3CcWrKPc
 
 //const token = JSON.parse(sessionStorage.getItem('user-token'));
@@ -42,12 +46,95 @@ if (token) {
 
 
 
+<<<<<<< HEAD
+========
+axios.defaults.withCredentials = true
+axios.defaults.xsrfHeaderName = "tokenTxt";
+axios.defaults.xsrfCookieName = "tokenTxt";
 
+/*
+
+function logCookie(cookie) {
+  if (cookie) {
+    console.log(cookie.value);
+  }
+}
+
+function getCookie(tabs) {
+  var getting = browser.cookies.get({
+    url: tabs[0].url,
+    name: "tokenTxt"
+  });
+  getting.then(logCookie);
+}
+
+var getActive = browser.tabs.query({
+  active: true,
+  currentWindow: true
+});
+getActive.then(getCookie);
+axios.defaults.headers.common.Authorization = getting.then(logCookie);
+
+ */
+        // This means that there's a JWT so someone must be logged in.
+
+      //  axios.defaults.headers.common.Authorization = document.cookie
+
+//axios.defaults.headers.common['Authorization']  =`Bearer ${localStorage.getItem("tokenn")}`
+let axiosInstance = axios.create({
+  baseURL: "http://localhost:3333",
+  timeout: 50000,
+});
+axiosInstance.interceptors.request.use(
+  config => {
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+
+if(config.headers.tokenTxt!=="undefined"){
+  config.headers['Authorization'] = config.headers.tokenTxt
+
+}
+  return config;
+  },
+  error => Promise.reject(error)
+);
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+=======
+
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
 export const createSolution = ({solution,type }) => {
   return (dispatch) => {
     return axios.post(`api/solution/add`, {solution,type},{
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
+      headers:{'Content-Type':'application/json','Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"}
+    })
+========
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+    })
+
+
+
+
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+      .then(response => {
+
+         dispatch(createSolutionSuccess(response.data.solution))
+
+      })
+      .catch(error => {
+        console.log(error)
+=======
       headers:{'Content-Type':'application/json','Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTE0NzM1ZGYyNTAxNDA2NmI1ZDU1OTUiLCJpYXQiOjE1Nzg0MDEyMzUsImV4cCI6MTU3ODQwMzAzNX0.zl2-8OFR8AhsUUMxhH5Ivr8GcZAQgHw94I43a2-UB-Q"}
     })
       .then(response => {
@@ -66,16 +153,21 @@ dispatch({
         dispatch(createSolutionSuccess(response.data))
       })
       .catch(error => {
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
         throw(error);
       });
   };
 };
 
 export const createSolutionSuccess =  (data) => {
+<<<<<<< HEAD
+
+=======
   console.log(data.all+"testAddReponse")
   console.log(data.all.map(item=>(
       item._id
     )).toString()+'id add')
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
   return {
     type: ADD_SOLUTION,
     payload: {
@@ -100,7 +192,15 @@ export const updateSolution = (id,solution,type)=>{
 
     return (dispatch) => {
       return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type},{
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
         headers:{'Content-Type':'application/json'}
+========
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+        headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
@@ -137,7 +237,15 @@ export const deleteSolutionSuccess = _id => {
 export const deleteSolution = id => {
   return (dispatch) => {
     return axios.delete(`api/solution/${id}`,{id:id},{
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
       headers:{'Content-Type':'application/json'}
+========
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+      headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
     }).then(response => {
         dispatch(deleteSolutionSuccess(id))
       })
@@ -154,6 +262,23 @@ export const fetchSolutions = (solutions) => {
   }
 };
 
+<<<<<<< HEAD
+//"Authorization":"Bearer "+readCookie('tokenTxt').split('%')
+export const fetchAllSolutions = () => {
+  return (dispatch) => {
+    return axios.get('api/solutions',{
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+        })
+
+      .then(res => {
+        dispatch(fetchSolutions(res.data))
+      })
+      .catch((error,res)=> {
+//error 401
+
+//  console.log(res.config.header)
+
+=======
 export const fetchAllSolutions = () => {
   return (dispatch) => {
     return axios.get('api/solutions',{
@@ -163,6 +288,7 @@ export const fetchAllSolutions = () => {
         dispatch(fetchSolutions(response.data))
       })
       .catch(error => {
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
         throw(error);
       });
   };
@@ -171,10 +297,22 @@ export const fetchAllSolutions = () => {
 
 //------------------------------------------EXERCICES-------------------------------
 //-------------------ADD-------------------
+<<<<<<< HEAD
+export const createExercice = ({ennonce,type,titre }) => {
+  return (dispatch) => {
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
+    return axios.post(`api/exercice/add`, {ennonce,type},{
+      headers:{'Content-Type':'application/json'}
+========
+    return axios.post(`api/exercice/add`, {ennonce,type,titre},{
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
 export const createExercice = ({ennonce,type }) => {
   return (dispatch) => {
     return axios.post(`api/exercice/add`, {ennonce,type},{
       headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
     })
       .then(response => {
 
@@ -191,6 +329,12 @@ export const createExerciceSuccess =  (data) => {
   console.log(data.all.map(item=>(
       item._id
     )).toString()+'id add')
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
   return {
     type: ADD_EXERCICE,
     payload: {
@@ -203,19 +347,39 @@ export const createExerciceSuccess =  (data) => {
       type:data.all.map(item=>(
           item.type
         )).toString(),
+<<<<<<< HEAD
+      titre:data.all.map(item=>(
+            item.titre
+          )).toString(),
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
+<<<<<<< HEAD
+export const updateExercice = (id,ennonce,type,titre)=>{
+=======
 export const updateExercice = (id,ennonce,type)=>{
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 
 
 
     return (dispatch) => {
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
       return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type},{
         headers:{'Content-Type':'application/json'}
+========
+      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre},{
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type},{
+        headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       })
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
@@ -235,6 +399,10 @@ export const updateExerciceSuccess =  (data) => {
       _id: data.id,
       ennonce: data.ennonce,
       type: data.type,
+<<<<<<< HEAD
+      titre: data.titre,
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       date: new Date().toLocaleDateString()
     }
   }
@@ -252,7 +420,11 @@ export const deleteExerciceSuccess = _id => {
 export const deleteExercice = id => {
   return (dispatch) => {
     return axios.delete(`api/exercice/${id}`,{id:id},{
+<<<<<<< HEAD
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+=======
       headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
     }).then(response => {
         dispatch(deleteExerciceSuccess(id))
       })
@@ -272,7 +444,11 @@ export const fetchExercices = (exercices) => {
 export const fetchAllExercices = () => {
   return (dispatch) => {
     return axios.get('api/exercices',{
+<<<<<<< HEAD
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+=======
       headers:{'Content-Type':'application/json'}
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
         })
       .then(response => {
         dispatch(fetchExercices(response.data))
@@ -282,6 +458,10 @@ export const fetchAllExercices = () => {
       });
   };
 };
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 //----------------------------------AUTHENTIFICATION--------------------------------------------
 
 //POST_REGISTER
@@ -400,6 +580,19 @@ export const getLogins = () => {
       });
   };
 };
+<<<<<<< HEAD
+========
+
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+
+//------------------------------------------THEORIES-------------------------------
+//-------------------ADD-------------------
+export const createTheorie = ({titre,texte,image,video,langage }) => {
+  return (dispatch) => {
+    return axios.post(`api/theorie/add`, {titre,texte,image,video,langage })
+      .then(response => {
+
+=======
 
 //------------------------------------------THEORIES-------------------------------
 //-------------------ADD-------------------
@@ -419,6 +612,7 @@ dispatch({
   }
 });
  */
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
         dispatch(createTheorieSuccess(response.data))
       })
       .catch(error => {
@@ -450,18 +644,42 @@ export const createTheorieSuccess =  (data) => {
       video:data.all.map(item=>(
               item.video
             )).toString(),
+<<<<<<< HEAD
+      langage:data.all.map(item=>(
+                    item.langage
+                  )).toString(),
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
 export const updateTheorie = (id,titre,texte,image,video )=>{
+========
+export const updateTheorie = (id,titre,texte,image,video,langage )=>{
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+export const updateTheorie = (id,titre,texte,image,video )=>{
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 
 
 
     return (dispatch) => {
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
       return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video})
+========
+      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video,langage:langage},{
+        headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')
+      }})
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+      return axios.put(`api/theorie/${id}`,{id:id,titre: titre,texte:texte,image:image,video:video})
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       .then(response => {
         console.log(JSON.stringify(response)+"reponseok")
           dispatch(updateTheorieSuccess(response.data))
@@ -482,6 +700,10 @@ export const updateTheorieSuccess =  (data) => {
       texte: data.texte,
       image:data.image,
       video:data.video,
+<<<<<<< HEAD
+      langage:data.langage,
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
       date: new Date().toLocaleDateString()
     }
   }
@@ -498,7 +720,16 @@ export const deleteTheorieSuccess = _id => {
 
 export const deleteTheorie = id => {
   return (dispatch) => {
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
     return axios.delete(`api/theorie/${id}`,{id:id})
+========
+    return axios.delete(`api/theorie/${id}`,{id:id},{headers:{
+    "Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}})
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
+=======
+    return axios.delete(`api/theorie/${id}`,{id:id})
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
     .then(response => {
         dispatch(deleteTheorieSuccess(id))
       })
@@ -517,6 +748,10 @@ export const fetchTheories = (theories) => {
 
 export const fetchAllTheories = () => {
   return (dispatch) => {
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/redux/actions/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
     return axios.get('api/theories')
       .then(response => {
         dispatch(fetchTheories(response.data))
@@ -695,8 +930,20 @@ export const getLoginsUser = () => {
       .then(response => {
               console.log(response.data+"getLogin")
         dispatch(getLoginUser(response.data))
+<<<<<<< HEAD
+========
+    return axios.get('api/theories',{headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}})
+
+      .then(response => {
+        dispatch(fetchTheories(response.data))
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/redux/actions/index.jsx
       })
       .catch(error => {
+        alert('connectez-vous pour avoir accès.')
+=======
+      })
+      .catch(error => {
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
         throw(error);
       });
   };

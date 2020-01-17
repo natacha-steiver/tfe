@@ -20,10 +20,7 @@ const store = createStore(
 );
 
 
-store.dispatch(fetchAllTheories())
 
-  store.dispatch(fetchAllSolutions())
-  store.dispatch(fetchAllExercices())
 
 
 

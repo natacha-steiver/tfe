@@ -4,6 +4,7 @@ import React, { useState }  from 'react';
 import { connect } from 'react-redux';
 import ExerciceFront from './index';
 
+import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
 function ExerciceListe({ exercices}) {
   const [langageNew, setLangage] = useState('');
@@ -30,40 +31,61 @@ function ExerciceListe({ exercices}) {
 
 
 
-      {
-      exercices.filter(ex=>ex.type==langageNew ).map((ex,index )=> {
-        return (
 
-          <div>
+<Router>
 
+<div style={{position:"relative"}}>
 
 
-                 <h2  onClick={()=>{  setTitre(ex.titre)}} style={{cursor:"pointer"}}>
-                  {ex.titre}
-                  </h2>
-          </div>
-            );
-          })}
+          {
+          exercices.filter(exercice=>exercice.type==langageNew ).map((exercice,index )=> {
+            return (
 
-
-
-      {
-      exercices.filter(exercice=>exercice.titre==titreNew ).map((exercice,index )=> {
-        return (
-
-          <div>
-
-
-              <ExerciceFront exercice={ exercice } key={exercice._id} />
+              <div style={{minHeight:"3em"}}>
 
 
 
 
-          </div>
 
-        );
-      })}
 
+
+
+    <ul style={{display:"inline-block",width:"10%",position:"absolute",margin:"1em"}}>
+    <li >
+    <Link to={ `/exercice/${exercice._id}` }>
+    {exercice.titre}
+    </Link>
+    </li>
+    </ul>
+
+
+
+
+
+    <div style={{display:"inline-block",width:"50%",top:"1em",marginLeft:"30%"}}>
+
+                      <Switch>
+
+
+                      <Route exact path={ `/exercice/${exercice._id}` }   >
+    <ExerciceFront  exercice={exercice } key={exercice._id} />
+                      </Route>
+
+
+
+
+                      </Switch>
+    </div>
+
+              </div>
+                );
+              })}
+
+
+    </div>
+
+
+    </Router>
     </div>
   );
 }

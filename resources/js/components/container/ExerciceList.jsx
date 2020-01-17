@@ -5,16 +5,19 @@ import { connect } from 'react-redux';
 import Exercice from '../backend/exercices/delete/exercice';
 import { deleteExercice} from '../../redux/actions';
 import { updateExercice} from '../../redux/actions';
+import { fetchAllExercices} from '../../redux/actions';
 
-function ExerciceList({ exercices, onDelete,onUpdate }) {
+function ExerciceList({ exercices, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
+    <button onClick={()=>{store.dispatch(fetchAllExercices())}}>liste</button>s
       {
       exercices.map((exercice,index )=> {
         return (
 
           <Exercice exercice={ exercice } onDelete={ onDelete } onUpdate={onUpdate} key={exercice._id} />
+
         );
       })}
 
@@ -38,7 +41,11 @@ const mapDispatchToProps = dispatch => {
     },
     onUpdate: (id,type,ennonce,titre) => {
       dispatch(updateExercice(id,type,ennonce,titre))
+    },
+    onFetch:()=>{
+      store.dispatch(fetchExercices())
     }
+
   };
 };
 

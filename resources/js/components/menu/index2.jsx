@@ -2,12 +2,24 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import {getMenu} from '../../ajax';
 import Test from '../test/index';
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/components/menu/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 import Admin from '../admin/index';
 import TheorieListe from '../frontend/apprendre/theorie/menu';
 import ExerciceListe from '../frontend/apprendre/pratique/menu';
 import CreateExercice from '../container/createExercice';
 import ExerciceList from '../container/ExerciceList';
 
+<<<<<<< HEAD
+========
+import Login from '../login/index';
+import TheorieListe from '../frontend/apprendre/theorie/menu';
+import ExerciceListe from '../frontend/apprendre/pratique/menu';
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/components/menu/index.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 
 
 
@@ -75,6 +87,10 @@ render(){
                         }
 
                       </ul>
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/components/menu/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
                       <Link to={ `/admin` }>
                       admin
                       </Link>
@@ -82,14 +98,35 @@ render(){
                       <Link to={ `/apprendre` }>
                       apprendre
                       </Link>
+<<<<<<< HEAD
+========
+                      <Link to={ `/login` }>
+                      login
+                      </Link>
+
+                      <Link to={ `/apprendre` }>
+                      apprendre
+                      </Link>
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/components/menu/index.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
                       <Link to={ `/entrainement` }>
                       s'entrainer
                       </Link>
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/components/menu/index2.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
                       <li>      <Link to={ `/exercices` }>
                             exercices
                             </Link>
                             </li>
+<<<<<<< HEAD
+========
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/components/menu/index.jsx
+=======
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
 
               </ul>
             </nav>
@@ -104,8 +141,18 @@ tester avec admin!!!!!
               <Route path="/js/ex1">
                 <Test/>
               </Route>
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/components/menu/index2.jsx
               <Route exact path="/admin">
                 <Admin/>
+========
+              <Route  path="/login">
+                <Login/>
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/components/menu/index.jsx
+=======
+              <Route exact path="/admin">
+                <Admin/>
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
               </Route>
 
 
@@ -118,9 +165,20 @@ tester avec admin!!!!!
 
               <Route path="/exercices">
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:resources/js/components/menu/index2.jsx
               <CreateExercice/>
                <ExerciceList />
               </Route>
+========
+
+
+>>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261:server/resources/js/components/menu/index.jsx
+=======
+              <CreateExercice/>
+               <ExerciceList />
+              </Route>
+>>>>>>> 6dad353783730e72596bf74ce513cee718ad8261
             </Switch>
           </div>
         </Router>

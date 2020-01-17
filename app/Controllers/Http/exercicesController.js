@@ -26,7 +26,7 @@ try{
     exercice.ennonce =exEnnonce.ennonce
     exercice.titre =exTitre.titre
 const exerciceLast=  await Exercice
-    .all()
+    .fetch()
 
     await exercice.save()
     console.log(response)

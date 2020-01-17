@@ -11,6 +11,7 @@ import Theorie from '../backend/crud/theorie/index'
 import Exercice from '../backend/crud/exercice/index'
 
 
+import '../../../assets/sass/app.min.css'
 
 
 
@@ -38,14 +39,14 @@ class Admin extends Component{
 
 
 return(
-  <div>
+  <div className="main">
   <h2>01 <span> - Administration</span></h2>
 
 
      <HashRouter>
        <div>
-        <header>
-          <h2>A Map of Thrones</h2>
+
+
           <ul>
           <li>
           <Link to="/solutions" >
@@ -73,7 +74,7 @@ return(
 
 
           </ul>
-        </header>
+
 
          <section>
            {routes.map(route => <Route {...route} key={route.path} />)}

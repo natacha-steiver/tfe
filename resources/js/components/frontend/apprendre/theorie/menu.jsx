@@ -66,7 +66,7 @@ function TheorieListe({ theories}) {
 
 
 
-<div style={{display:"inline-block",width:"50%",position:"fixed",top:"1em",marginLeft:"30%"}}>
+<div style={{display:"inline-block",width:"50%",top:"1em",marginLeft:"30%"}}>
 
                   <Switch>
 
