@@ -6,6 +6,8 @@ import {getList} from '../../ajax'
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/javascript-lint'
 import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/python/python'
+
 window.JSHINT = JSHINT
 
 class Test extends React.Component {
@@ -22,6 +24,7 @@ class Test extends React.Component {
         valeurcss:"",
         valeurhtml:"",
         valeurjs:"",
+        valeurpython:"",
         click:false,
         valeur:"",
       }
@@ -57,7 +60,7 @@ class Test extends React.Component {
         var modefly = modeInput.options[myindex].text.toLowerCase();
 
       //  alert(modefly); // This is giving me the exact mode on the screen
-            this.setState({mode:`'text/'${modefly}`},    console.log(this.state.mode +"fct1"))
+            this.setState({mode:modefly},    console.log(this.state.mode +"fct1"))
 
       //  editor.setOption("mode", modefly);// no change in the mode
       //  CodeMirror.autoLoadMode(editor, modefly);//no change in the mode
@@ -68,7 +71,7 @@ class Test extends React.Component {
       this.selectMode()
   }
       this.test= React.createRef();
-    const getGeneratedPageURL = ({ html, css, js }) => {
+    const getGeneratedPageURL = ({ html, css, js,python }) => {
     const getBlobURL = (code, type) => {
       const blob = new Blob([code], { type })
       return URL.createObjectURL(blob)
@@ -76,15 +79,28 @@ class Test extends React.Component {
 
     const cssURL = getBlobURL(css, 'text/css')
     const jsURL = getBlobURL(js, 'text/babel')
+    const pythonURL = getBlobURL(python, 'text/python')
 
     const source = `
       <html>
         <head>
           ${css && `<link rel="stylesheet" type="text/css" href="${cssURL}" />`}
           ${js && `<script type="text/babel" src="${jsURL}"></script>`}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.6/brython.js"></script>
+
+
         </head>
-        <body>
+        <script>
+
+        </script>
+        <body onload="brython()" id="corp">
+          ${python && `<script type="text/python">
+        ${python}
+
+          </script>`}
           ${html || ''}
+          <input id="zone">
+          <button id="mybutton">click !</button>
         </body>
       </html>
     `
@@ -95,6 +111,7 @@ class Test extends React.Component {
   const url = getGeneratedPageURL({
     html: this.state.valeurhtml ,
     css: this.state.valeurcss,
+    python:this.state.valeurpython,
   js:setTimeout(()=>{
     if(this.state.click){
         js:eval(this.state.valeurjs)
@@ -116,9 +133,9 @@ class Test extends React.Component {
       <div>
       <CodeMirror
 
-        value='//css'
+        value='//python'
         options={{
-          mode: this.state.mode,
+          mode: "text/x-python",
           gutters: ["CodeMirror-lint-markers"],
           lint:true,
           styleActiveLine: true,
@@ -130,19 +147,18 @@ class Test extends React.Component {
         console.log(this.state.mode+"affcihe")
 
 
-           if(this.state.mode="CSS" ){
-                this.setState({valeurcss:  editor.getValue()})
+             this.setState({valeurpython:  editor.getValue()})
+console.log(this.state.valeurpython)
+           }
 
-              }
 
-      if(this.state.mode="JavaScript" ){
-        this.setState({valeurjs:  editor.getValue()})
 
-      }
 
-      }
+
 
       }
+
+
       />
       <br/>
       <CodeMirror id="js"
@@ -159,8 +175,7 @@ class Test extends React.Component {
         onChange={(editor, data, value) => {
 
 if(editor.getValue().includes(this.state.solution)){
-  console.log('ok')
-  alert('vous avez trouvez la solution')
+  console.log('vous avez trouvez la solution')
 }else{
 
 console.log( this.state.solution+"</br>"+editor.getValue())
@@ -218,7 +233,7 @@ const getJS = jsx => Babel.transform(jsx, {
 
 <div>
 <select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
-<option value="1">Python</option>
+<option value="1">text/x-cython</option>
 <option value="10">JavaScript</option>
 <option value="33">Asterisk dialplan</option>
 <option value="34">Clojure</option>
