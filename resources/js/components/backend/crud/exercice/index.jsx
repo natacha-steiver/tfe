@@ -8,13 +8,13 @@ import ExerciceList from '../../../container/ExerciceList';
 class Exercice extends Component{
 
 
-    render() {
-return(
-<div>
-<CreateExercice/>
-<ExerciceList/>
+  render() {
+    return(
+      <div>
+      <CreateExercice/>
+      <ExerciceList/>
 
-</div>
+      </div>
     );
   }
 

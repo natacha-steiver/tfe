@@ -1,7 +1,10 @@
-import React,{Component} from 'react'
+import React,{Component,useState } from 'react'
 //import {getList,storeSite} from './ajax'
 
-
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import { HashRouter, Route, NavLink,Link } from 'react-router-dom';
 
@@ -25,72 +28,85 @@ const routes = [
   { path: '/exercices', component:Exercice },
   { path: '/theories', component:Theorie},
 
-  { path: '/register', component:Register }
+  { path: '/register', component:Register },
+
+
+  { path: '/admin#'}
+
+
+];
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+  },
+});
+
+export default function Admin(){
 
 
 
 
- ];
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
 
-class Admin extends Component{
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-
-    render() {
-
-
-return(
-  <div className="main">
-  <h2>01 <span> - Administration</span></h2>
+  return(
+    <div className="main">
 
 
-     <HashRouter>
-       <div>
+    <HashRouter>
+    <div>
+    <Paper className={classes.root}>
 
 
-          <ul>
-          <li>
-          <Link to="/solutions" >
-            solutions
-          </Link>
-          </li>
-          <li>
+    <Tabs
+    value={value}
+    onChange={handleChange}
+    indicatorColor="primary"
+    textColor="primary"
+    centered
+    >
+    <Tab label="admin" component={Link} to="/admin#" />
+    <Tab label="solutions" component={Link} to="/solutions" />
 
-                <Link to="/exercices" >
-                  exercices
-                </Link>
-          </li>
-          <li>
-          <Link to="/theories" >
-            theories
-          </Link>
-          </li>
-          <li>
-          <Link to="/register" >
-          gestion des accès administrateurs
-          </Link>
+    <Tab label="theories" component={Link} to="/theories" />
 
-          </li>
+    <Tab label="exercices" component={Link} to="/exercices" />
+
+
+    <Tab label="gestion des administrateurs" component={Link} to="/register" />
 
 
 
-          </ul>
 
 
-         <section>
-           {routes.map(route => <Route {...route} key={route.path} />)}
-         </section>
-       </div>
-     </HashRouter>
 
-  </div>
-);
+    </Tabs>
+    </Paper>
+
+
+
+
+
+
+
+
+
+
+
+    <section>
+    {routes.map(route => <Route {...route} key={route.path} />)}
+    </section>
+    </div>
+    </HashRouter>
+
+    </div>
+  );
 
 
 
 }
-
-
-
-}
-
-export default Admin

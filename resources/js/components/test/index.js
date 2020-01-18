@@ -27,6 +27,25 @@ class Test extends React.Component {
         valeurpython:"",
         click:false,
         valeur:"",
+        currentLanguage:""
+      }
+
+      const langage =this.props.langage
+      switch (langage) {
+        case "text/python":
+            this.setState({currentLanguage:"text/x-python"},    console.log(this.state.currentLanguage +"current"))
+          break;
+          case "text/javascript":
+              this.setState({currentLanguage:"text/javascript"},    console.log(this.state.currentLanguage +"current"))
+            break;
+            case "text/html":
+                this.setState({currentLanguage:"text/xml"},    console.log(this.state.currentLanguage +"current"))
+              break;
+              case "text/css":
+                  this.setState({currentLanguage:"text/css"},    console.log(this.state.currentLanguage +"current"))
+                break;
+        default:
+console.log('default')
       }
 
     }
@@ -131,35 +150,7 @@ class Test extends React.Component {
 
     return (
       <div>
-      <CodeMirror
 
-        value='//python'
-        options={{
-          mode: "text/x-python",
-          gutters: ["CodeMirror-lint-markers"],
-          lint:true,
-          styleActiveLine: true,
-          lineNumbers: true
-        }}
-        style={{width:'100%',height:'50%'}}
-        onChange={(editor, data, value) => {
-
-        console.log(this.state.mode+"affcihe")
-
-
-             this.setState({valeurpython:  editor.getValue()})
-console.log(this.state.valeurpython)
-           }
-
-
-
-
-
-
-      }
-
-
-      />
       <br/>
       <CodeMirror id="js"
 
@@ -171,7 +162,7 @@ console.log(this.state.valeurpython)
           styleActiveLine: true,
           lineNumbers: true
         }}
-        style={{width:'100%',height:'50%'}}
+        style={{width:'100%',height:'50%',marginTop:"2em"}}
         onChange={(editor, data, value) => {
 
 if(editor.getValue().includes(this.state.solution)){
@@ -210,7 +201,7 @@ const getJS = jsx => Babel.transform(jsx, {
       styleActiveLine: true,
       lineNumbers: true
     }}
-    style={{width:'100%',height:'50%'}}
+    style={{width:'100%',height:'50%',marginTop:"2em"}}
     onChange={(editor, data, value) => {
 
 
@@ -225,30 +216,68 @@ const getJS = jsx => Babel.transform(jsx, {
 }
 />
 
+
+<div>
+<CodeMirror
+
+  value='//python'
+  options={{
+    mode: this.state.mode,
+    gutters: ["CodeMirror-lint-markers"],
+    lint:true,
+    styleActiveLine: true,
+    lineNumbers: true
+  }}
+  style={{width:'100%',height:'50%',marginTop:"2em"}}
+  onChange={(editor, data, value) => {
+
+  console.log(this.state.mode+"affcihe")
+
+
+  const langages =this.state.mode
+  switch (langages) {
+    case "text/x-python":
+this.setState({valeurpython:  editor.getValue()})
+break;
+      case "text/javascript":
+this.setState({valeurjs:  editor.getValue()})
+break;
+        case "text/xml":
+this.setState({valeurhtml:  editor.getValue()})
+break;
+          case "text/css":
+this.setState({valeurcss:  editor.getValue()})
+break;
+    default:
+
+console.log('default')
+     }
+
+
+
+
+
+
+}}
+
+
+/>
+<select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
+<option value="1">text/x-python</option>
+<option value="10">text/javascript</option>
+
+<option value="40">text/xml</option>
+
+<option value="44">text/css</option>
+</select>
+</div>
       <iframe ref={this.test} id="iframe" style={{width:"100%",height:"200px"}}>
 
 
 
       </iframe>
 
-<div>
-<select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
-<option value="1">text/x-cython</option>
-<option value="10">JavaScript</option>
-<option value="33">Asterisk dialplan</option>
-<option value="34">Clojure</option>
-<option value="35">Common Lisp</option>
-<option value="36">D</option>
-<option value="37">ECL</option>
-<option value="38">Go</option>
-<option value="39">Haskell</option>
-<option value="40">HTML</option>
-<option value="41">Jinja2</option>
-<option value="42">LiveScript</option>
-<option value="43">mIRC</option>
-<option value="44">CSS</option>
-</select>
-</div>
+
 </div>
       );
   }

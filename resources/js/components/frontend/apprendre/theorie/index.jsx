@@ -18,13 +18,13 @@ export default ({ theorie: { titre,texte,image,video,langage, _id } }) => {
 
   return (
     <div style={ styles }>
-      <h2>{ titre }</h2>
-      <p>{ texte }</p>
+    <h2>{ titre }</h2>
+    <p>{ texte }</p>
     <img src={image} alt={image}/>
-            <iframe src={video} frameBorder="0"></iframe>
-<p>{ langage}</p>
+    <iframe src={video} frameBorder="0"></iframe>
+    <p>{ langage}</p>
 
-  
+
 
     </div>
   );

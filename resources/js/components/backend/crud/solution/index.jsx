@@ -8,13 +8,14 @@ import SolutionList from '../../../container/SolutionList';
 class Solution extends Component{
 
 
-    render() {
-return(
-<div>
-<CreateSolution/>
-<SolutionList/>
+  render() {
+    return(
+      <div>
+      <h3 className="titre">Solutions</h3>
+      <CreateSolution/>
+      <SolutionList/>
 
-</div>
+      </div>
     );
   }
 

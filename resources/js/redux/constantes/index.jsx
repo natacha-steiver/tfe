@@ -1,5 +1,11 @@
 // src/js/constants/action-types.js
 
+//langages
+export const ADD_LANGAGE = 'ADD_LANGAGE';
+export const DELETE_LANGAGE = 'DELETE_LANGAGE';
+export const FETCH_LANGAGE = 'FETCH_LANGAGE';
+export const UPDATE_LANGAGE = 'UPDATE_LANGAGE';
+
 //solutions
 export const ADD_SOLUTION = 'ADD_SOLUTION';
 export const DELETE_SOLUTION = 'DELETE_SOLUTION';

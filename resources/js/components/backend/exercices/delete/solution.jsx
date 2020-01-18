@@ -2,7 +2,8 @@
 
 import React, { useState }  from 'react';
 import store from "../../../../redux/store"
-
+import Icon from '@mdi/react'
+import {  mdiDeleteForever, mdiCheck  } from '@mdi/js';
 import { UPDATE_SOLUTION } from "../../../../redux/constantes/index";
 const styles = {
   borderBottom: '2px solid #eee',
@@ -32,16 +33,27 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
 
       </form>
 
+      <Icon path={ mdiDeleteForever }    onClick={() => onDelete(_id)} style={{cursor:"pointer"}}
+        title="delete"
+        size={1}
 
-      <button className="btn btn-danger" type="button" onClick={() => onDelete(_id)} >
-        Remove
-      </button>
+
+        color="red"
+      />
 
 
-      <button className="btn btn-danger" type="button" onClick={() => onUpdate(
-    _id,typeNew,solutionNew)} >
-        Update
-      </button>
+            <Icon path={ mdiCheck }   onClick={() => onUpdate(_id,typeNew,solutionNew)} style={{cursor:"pointer"}}
+              title="validate"
+              size={1}
+
+
+              color="green"
+            />
+
+
+
+
+
 
 
     </div>

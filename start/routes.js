@@ -24,17 +24,26 @@ Route.group(
     Route.get('items','itemsController.index')
     Route.get('theories','theoriesController.index').middleware(['auth:admin'])
     Route.get('users','utilisateursController.index').middleware('auth:admin')
+    Route.get('langages','langagesController.index').middleware('auth:admin')
+
 //    Route.get('admins','administrateursController.index').middleware('auth:admin')
     //backend exercices
-    Route.get('exercice/:id','exercicesController.show')
-    Route.post('exercice/add','exercicesController.store').as('exercice.store')
-    Route.put('exercice/:id','exercicesController.update')
-    Route.delete('exercice/:id','exercicesController.delete')
+    Route.get('exercice/:id','exercicesController.show').middleware(['auth:admin'])
+    Route.post('exercice/add','exercicesController.store').as('exercice.store').middleware(['auth:admin'])
+    Route.put('exercice/:id','exercicesController.update').middleware(['auth:admin'])
+    Route.delete('exercice/:id','exercicesController.delete').middleware(['auth:admin'])
     //backend solution
-    Route.get('solution/:id','solutionsController.show').as('solution.store').middleware(['auth:admin'])
+    Route.get('solution/:id','solutionsController.show').middleware(['auth:admin'])
     Route.post('solution/add','solutionsController.store').as('solution.store').middleware(['auth:admin'])
-    Route.put('solution/:id','solutionsController.update').as('solution.store').middleware(['auth:admin'])
-    Route.delete('solution/:id','solutionsController.delete').as('solution.store').middleware(['auth:admin'])
+    Route.put('solution/:id','solutionsController.update').middleware(['auth:admin'])
+    Route.delete('solution/:id','solutionsController.delete').middleware(['auth:admin'])
+
+
+    //backend solution
+    Route.get('langage/:id','langagesController.show').middleware(['auth:admin'])
+    Route.post('langage/add','langagesController.store').middleware(['auth:admin'])
+    Route.put('langage/:id','langagesController.update').middleware(['auth:admin'])
+    Route.delete('langage/:id','langagesController.delete').middleware(['auth:admin'])
     //backend utilisateurs(user redux)
     // /users register all
     // register

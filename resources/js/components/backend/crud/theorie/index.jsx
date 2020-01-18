@@ -8,13 +8,13 @@ import TheorieList from '../../../container/TheorieList';
 class Theorie extends Component{
 
 
-    render() {
-return(
-<div>
-<CreateTheorie/>
-<TheorieList/>
+  render() {
+    return(
+      <div>
+      <CreateTheorie/>
+      <TheorieList/>
 
-</div>
+      </div>
     );
   }
 

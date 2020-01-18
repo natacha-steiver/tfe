@@ -3,16 +3,16 @@
 import React, { useState }  from 'react';
 import store from "../../../../redux/store"
 import Test from "../../../test"
-
+import { fetchAllExercices } from '../../../../redux/actions';
 const styles = {
   borderBottom: '2px solid #eee',
-  background: '#fafafa',
+  background: '#fff',
   margin: '.75rem auto',
   padding: '.6rem 1rem',
   maxWidth: '500px',
   borderRadius: '7px',
   position:"relative",
-  top:"61rem"
+  marginTop:"10em"
 };
 window.store=store;
 export default ({ exercice: { titre,ennonce,type, _id } }) => {
@@ -20,12 +20,12 @@ export default ({ exercice: { titre,ennonce,type, _id } }) => {
 
   return (
     <div style={ styles }>
-      <h2>{ titre }</h2>
-      <p>{ ennonce}</p>
+    <h2>{ titre }</h2>
+    <p>{ ennonce}</p>
 
-<p>{type}</p>
+    <p>{type}</p>
 
-<Test/>
+    <Test langage={`text/${type}`}/>
     </div>
   );
 };

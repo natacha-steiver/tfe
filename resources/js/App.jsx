@@ -44,7 +44,7 @@ function App(props) {
 
 
   return (
-    <div>
+
 <section id="contentMain">
 
 <Menu/>
@@ -54,13 +54,7 @@ function App(props) {
 
 
 
-<ul>
 
-
-{/*faire un bouton sign out google*/}
-<button>Déconnexion</button>
-</ul>
-    </div>
 
     );
 

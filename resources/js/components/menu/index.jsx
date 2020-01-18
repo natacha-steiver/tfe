@@ -44,7 +44,9 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: 'block',
+
+
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -61,7 +63,7 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(4),
 
 
   },
@@ -70,6 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 
   },
+
   hide: {
     display: 'none',
   },
@@ -176,28 +179,64 @@ export default function Menu() {
       </IconButton>
     </div>
     <Divider />
-    <List>
-
-                           <Link to={ `/login` }>
-                           login
-     </Link>
-     <Link to={ `/admin` }>
-     login
-</Link>
+    <List component="nav" className={classes.root} aria-label="Menu principal" id="menuPrincipal">
 
 
-                           <Link to={ `/apprendre` }>
-                           apprendre
-                           </Link>
-                           <Link to={ `/entrainement` }>
-                           s'entrainer
-                           </Link>
+      <ListItem button className="hightlight">
 
 
-                           <li>      <Link to={ `/exercices` }>
-                                 exercices
-                                 </Link>
-                                 </li>
+           <Link to={ `/login` }>
+           <ListItemText primary="login" />
+           </Link>
+
+      </ListItem>
+
+
+      <ListItem button className="hightlight">
+
+      <Link to={ `/admin` }>
+   <ListItemText primary="admin" />
+ </Link>
+
+
+      </ListItem>
+
+
+            <ListItem button className="hightlight">
+
+            <Link to={ `/apprendre` }>
+             <ListItemText primary="apprendre" />
+            </Link>
+
+
+
+      </ListItem>
+
+
+
+
+
+
+
+                        <ListItem button className="hightlight">
+
+                        <Link to={ `/entrainement` }>
+                     <ListItemText primary="S'entrainer" />
+                        </Link>
+
+
+                        </ListItem>
+
+
+                              <ListItem button className="hightlight">
+
+                              <Link to={ `/exercices` }>
+                                   <ListItemText primary="Exercice" />
+                                       </Link>
+
+                              </ListItem>
+
+
 
 
     </List>

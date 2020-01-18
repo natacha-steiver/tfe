@@ -1,17 +1,21 @@
 import React,{Component} from 'react'
-import {register,login} from '../../ajax'
+import {register} from '../../ajax'
+import {login} from '../../redux/store'
+
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
 import Theorie from '../backend/crud/theorie/index'
 import Menu from '../menu'
+import '../../../assets/sass/login.min.css'
+
 //ajout nom dans DB ok
 //
 //
 
-
+import PersonIcon from '@material-ui/icons/Person';
 
       import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-      import { Face, Fingerprint } from '@material-ui/icons'
+import LockSharpIcon from '@material-ui/icons/LockSharp';
       const styles = theme => ({
           margin: {
               margin: theme.spacing(2),
@@ -27,13 +31,13 @@ import Menu from '../menu'
           },
           conteneur:{
             position:"relative",
-            top:"61rem",
-          left:"10%"
+            paddingLeft:"10%"
+
           },
           ressource:{
             position:"relative",
             top:"-10rem",
-            left:"22rem"
+            left:"10%"
           }
       });
 
@@ -59,7 +63,7 @@ render(){
         <div id="login">
 
 
-
+<h3 className="titre">Se connecter</h3>
         <form  onSubmit={this.onSubmit} >
         {
           /*
@@ -84,18 +88,18 @@ render(){
 
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item >
-                                <Face />
+                                <PersonIcon />
                             </Grid>
                             <Grid item md={true} sm={true} xs={true}>
-                                <TextField id="email" name="email" label="Username" type="email" fullWidth autoFocus required />
+                                <TextField id="email" name="email" label="Email" type="email" fullWidth autoFocus required />
                             </Grid>
                         </Grid>
                         <Grid container spacing={8} alignItems="flex-end">
                             <Grid item>
-                                <Fingerprint />
+                                <LockSharpIcon/>
                             </Grid>
                             <Grid item md={true} sm={true} xs={true}>
-                                <TextField id="password" name="password" label="Password" type="password" fullWidth required />
+                                <TextField id="password" name="password" label="Mot de passe" type="password" fullWidth required />
                             </Grid>
                         </Grid>
                         <Grid container alignItems="center" justify="space-between">

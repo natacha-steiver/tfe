@@ -4,11 +4,48 @@
 body,html{
   margin: 0;
   padding: 0;
+  background: #fff;
+}
+.titre{
+  font-size: 1.5em;
+  font-weight: bold;
+  width: 100%;
+  padding-left: 10%;
+  color:orange
 }
 
+#menuPrincipal{
+  a{
+  text-align: center;
+    text-decoration: none;
+    color:#fff;
+width: 100%;
+
+  }
+      background:#000;
+      height: 100%;
+.hightlight{
+  margin:5% 0;
+  &:hover{
+    background-color: orange;
+  }
+}
+}
 .main{
   position: relative;
-  top:61rem;
+  top:52.5rem;
+  ul{
+    padding: 0;
+    margin-bottom: 3em;
+    margin-left: 10%;
+    li{
+      list-style-type: none;
+    }
+    a{
+      text-decoration: none;
+      color:blue;
+    }
+  }
 }
 #contentMain{
   margin-bottom: 1em;
@@ -55,6 +92,7 @@ margin: 0;
   background-size:  cover;
   background-position: 50% 70%;
   min-height:60em;
+  max-height: 60em;
   width: 100%;
 position: relative;
   #titrePrincipal{
