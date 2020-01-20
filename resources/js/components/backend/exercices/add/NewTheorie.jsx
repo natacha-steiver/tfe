@@ -3,6 +3,7 @@
 import React,{useState} from 'react';
 import store  from "../../../../redux/store";
 import { ADD_THEORIE } from "../../../../redux/constantes/index";
+import axios from 'axios';
 class NewTheorie extends React.Component {
 
 constructor(props){
@@ -18,6 +19,8 @@ constructor(props){
   this.handleSubmit=this.handleSubmit.bind(this)
   this.handleInputChange=this.handleInputChange.bind(this)
   this.handleReset=this.handleReset.bind(this)
+  this.getFile=this.getFile.bind(this)
+
 }
 
 
@@ -26,6 +29,22 @@ constructor(props){
       [e.target.name]: e.target.value
     });
   };
+
+
+  getFile() {
+
+       let file = event.target.files[0]
+       this.selectedFile = file
+     }
+
+     uploadFile() {
+        let fd = new FormData()
+        fd.append('image', this.selectedFile, this.selectedFile.name)
+        axios.post('api/theorie/add', fd)
+          .then(res => {
+              console.log(res);
+          })
+    }
 
   handleSubmit(e){
     e.preventDefault();
@@ -49,7 +68,7 @@ constructor(props){
   render() {
     return (
       <div>
-          <form method="POST" onSubmit={ ()=>{  this.props.onAddTheorie(this.state)}} >
+          <form method="POST"  encType="multipart/form-data" >
           <div className="form-group">
               <input
               type="text"
@@ -59,6 +78,7 @@ constructor(props){
               onChange={ this.handleInputChange }
               defaultValue={ this.state.titre }
             />
+            <button type="button" onClick={()=>{this.uploadFile()}}>telecharge</button>
           </div>
           <div className="form-group">
               <input
@@ -82,15 +102,15 @@ constructor(props){
             </textarea>
           </div>
           <div className="form-group">
-            <textarea
+            <input
+            type="file"
               cols="19"
               rows="8"
               placeholder="image"
               className="form-control"
               name="image"
-              onChange={ this.handleInputChange }
-              defaultValue={ this.state.image }>
-            </textarea>
+              onChange={ this.getFile }
+            />
           </div>
           <div className="form-group">
             <textarea
@@ -105,13 +125,15 @@ constructor(props){
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" >Add Theorie</button>
+            <button type="button" className="btn btn-primary" onClick={ ()=>{  this.props.onAddTheorie(this.state); return false;}} >Add Theorie</button>
             <button type="button" className="btn btn-warning" onClick={ this.handleReset }>
               Reset
             </button>
           </div>
 
         </form>
+
+
       </div>
     );
   }

@@ -34,6 +34,7 @@
     "@mdi/js": "^4.7.95",
     "@storybook/react": "^5.3.3",
     "adonis-react-view-provider": "^0.1.61",
+    "cloudinary": "^1.19.0",
     "connected-react-router": "^6.6.1",
     "cookies-js": "^1.2.3",
     "jshint": "^2.10.3",

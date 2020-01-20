@@ -1,5 +1,7 @@
 'use strict'
 const Theorie = use('App/Models/theories');
+const CloudinaryService = use('App/Services/CloudinaryService');
+const Helpers = use('Helpers')
 class theoriesController {
 async index({response}){
 
@@ -23,14 +25,26 @@ async index({response}){
 
     const theoTitre= request.post('titre')
     const theoTexte = request.post('texte')
-    const theoImage= request.post('image')
+    //const theoImage= request.post('image')
     const theoVideo = request.post('video')
     const theoLangage = request.post('langage')
+    const file = request.file('image', {
+       types: ['image'],
+       size: '2mb'
+     })
+
+await file.move(Helpers.tmpPath('images'), {
+name: file.clientName,
+overwrite: true
+})
 
     const theorie = new Theorie()
+
+  //  const cloudinaryResponse = await CloudinaryService.v2.uploader.upload(file.tmpPath, {folder: 'images'});
+  // theorie.image = cloudinaryResponse.secure_url;
     theorie.titre = theoTitre.titre
     theorie.texte = theoTexte.texte
-    theorie.image = theoImage.image
+    theorie.image = file
     theorie.video = theoVideo.video
     theorie.langage = theoLangage.langage
 const theorieLast=  await Theorie
@@ -38,7 +52,7 @@ const theorieLast=  await Theorie
 
     await theorie.save()
     console.log(response)
-    return response.status(201).json({all:theorieLast})
+    return response.status(201).json({all:theorieLast,file:file})
   }
 
   async show ({params,response}) {
