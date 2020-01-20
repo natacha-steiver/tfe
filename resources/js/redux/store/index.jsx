@@ -1,8 +1,12 @@
 import { createStore,compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import axios from 'axios';
-axios.defaults.withCredentials = true
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2"; // ADDED
 
+axios.defaults.withCredentials = true
+import { persistStore, persistCombineReducers,persistReducer } from 'redux-persist'
+import { CookieStorage } from 'redux-persist-cookie-storage'
+import Cookies from 'cookies-js'
 import rootReducer from "../reducers/index";
 import { fetchAllSolutions } from '../actions/index';
 import { fetchAllExercices } from '../actions/index';
@@ -10,15 +14,22 @@ import { fetchAllTheories } from '../actions/index';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 //import { fetchAllAuthentification } from '../actions/index';
-
+import logger from 'redux-logger';
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const persistConfig = {
+  key: "root",
+  storage: new CookieStorage(Cookies/*, options */),
+  stateReconciler: autoMergeLevel2, // ADDED
+  timeout:500
+}
 
 export const history = createBrowserHistory({
   basename: '/',
 })
-const store = createStore(
-  rootReducer(history),
-  composeEnhancer(applyMiddleware( routerMiddleware(history),thunk)),
+const persistedReducer = persistReducer(persistConfig,   rootReducer(history));
+export const store = createStore(
+persistedReducer,
+  composeEnhancer(applyMiddleware( routerMiddleware(history),thunk,logger)),
 );
 
   export const login = (email,password)=>{
@@ -102,9 +113,26 @@ store.dispatch(fetchAllExercices())
 
 
 
-
+export const persistor = persistStore(store, window.PRELOADED_STATE)
 
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 );
-export default store;
+
+export default () => {
+  let store = createStore(
+    rootReducer(history),
+    composeEnhancer(applyMiddleware( routerMiddleware(history),thunk)),
+  );
+let persistor = persistStore(store, window.PRELOADED_STATE)
+if (module.hot) {
+  module.hot.accept('../reducers/index', () => {
+    // This fetch the new state of the above reducers.
+    const nextRootReducer = require('../reducers/index').default
+    store.replaceReducer(
+      persistReducer(persistConfig, nextRootReducer)
+    )
+  })
+}
+  return { store, persistor }
+}

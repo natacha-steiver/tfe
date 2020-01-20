@@ -49,7 +49,7 @@ constructor(props){
   render() {
     return (
       <div>
-          <form method="POST" onSubmit={ ()=>{  this.props.onAddTheorie(this.state)}}>
+          <form method="POST" onSubmit={ ()=>{  this.props.onAddTheorie(this.state)}} >
           <div className="form-group">
               <input
               type="text"
@@ -105,7 +105,7 @@ constructor(props){
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">Add Theorie</button>
+            <button type="submit" className="btn btn-primary" >Add Theorie</button>
             <button type="button" className="btn btn-warning" onClick={ this.handleReset }>
               Reset
             </button>

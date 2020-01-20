@@ -12,7 +12,7 @@ function TheorieListe({ theories}) {
   const [titreNew, setTitre] = useState('');
   {/* récupérer redux langages!*/}
   const langages=[{langage:"html"},{langage:"javascript"}]
-  
+
   return (
     <div style={{position:"relative"}}>
 
@@ -122,7 +122,7 @@ function TheorieListe({ theories}) {
 
 
         onFetch:()=>{
-          dispatch(fetchAllExercices())
+          dispatch(fetchAllTheories())
 
         }
       };

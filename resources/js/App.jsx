@@ -26,6 +26,9 @@ import Login from './components/login/index'
 import Register from './components/register/index'
 
 
+import TheorieListe from './components/frontend/apprendre/pratique/menu';
+import ExerciceListe from './components/frontend/apprendre/theorie/menu';
+
 
 
 //import Perso from "./components/introduction/perso/index"
@@ -34,10 +37,16 @@ import MoveOffset from "./components/keyevent/MoveOffset"
 import Menu from "./components/menu/index"
 import './App.css';
 import { Provider } from 'react-redux'
-import store,{history} from './redux/store'
+import {store,persistor,history} from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react';
+
 import { fetchAllSolutions } from './redux/actions/index';
 import { fetchAllExercices } from './redux/actions/index';
 import { fetchAllTheories } from './redux/actions/index';
+
+
+import { persistStore, persistCombineReducers } from 'redux-persist'
+
 function App(props) {
 
 
@@ -65,6 +74,7 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <Provider store={store}>
+    <PersistGate loading={null} persistor={persistStore(store)}>
     <ConnectedRouter history={history}>
     <> { /* your usual react-router v4/v5 routing */ }
     <Switch>
@@ -82,13 +92,12 @@ ReactDOM.render(
       </Route>
 
 
-                    <Route path="/theories">
-
-                    <CreateTheorie/>
-                     <TheorieList />
-                    </Route>
-
-
+      <Route path="/apprendre">
+        <TheorieListe />
+      </Route>
+      <Route path="/entrainement">
+        <ExerciceListe />
+      </Route>
                     <Route path="/login">
 
                     <Login/>
@@ -107,6 +116,7 @@ ReactDOM.render(
   </>
 
     </ConnectedRouter>
+  </PersistGate>
   </Provider>,
   rootElement
 );

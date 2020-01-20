@@ -3,7 +3,7 @@
 import { ADD_EXERCICE,DELETE_EXERCICE,FETCH_EXERCICE,UPDATE_EXERCICE } from "../constantes/index";
 
 
-export default function exerciceReducer(state = [{_id:"_id",type:"type",ennonce:"ennonce"}], action) {
+export default function exerciceReducer(state = [], action) {
   switch (action.type) {
     case ADD_EXERCICE:
     return [...state,action.payload];

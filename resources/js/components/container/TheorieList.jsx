@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 import Theorie from '../backend/exercices/delete/theorie';
 import { deleteTheorie} from '../../redux/actions';
 import { updateTheorie} from '../../redux/actions';
+import { fetchAllTheories} from '../../redux/actions';
 
-function TheorieList({ theories, onDelete,onUpdate }) {
+function TheorieList({ theories, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
+    <button onClick={()=>{onFetch()}}>liste</button>s
+
       {
       theories.map((theorie,index )=> {
         return (
@@ -38,7 +41,11 @@ const mapDispatchToProps = dispatch => {
     },
     onUpdate: (id,titre,texte,image,video,langage) => {
       dispatch(updateTheorie(id,titre,texte,image,video,langage))
+    },
+    onFetch: () => {
+      dispatch(fetchAllTheories())
     }
+
   };
 };
 

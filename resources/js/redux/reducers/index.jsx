@@ -5,10 +5,14 @@ import { combineReducers } from 'redux';
 
 import solutions from './solutionReducer';
 import langages from './langageReducer';
-
+import { persistReducer } from "redux-persist";
 import exercices from './exerciceReducer';
 import theories from './theorieReducer';
 import { connectRouter } from 'connected-react-router'
+import { persistStore, persistCombineReducers } from 'redux-persist'
+import { CookieStorage } from 'redux-persist-cookie-storage'
+import Cookies from 'cookies-js'
+
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),

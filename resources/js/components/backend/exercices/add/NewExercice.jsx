@@ -74,7 +74,7 @@ constructor(props){
             </textarea>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">Add Exercice</button>
+            <button type="submit" className="btn btn-primary" >Add Exercice</button>
             <button type="button" className="btn btn-warning" onClick={ this.handleReset }>
               Reset
             </button>

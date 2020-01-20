@@ -2,6 +2,10 @@
 
 
 import {
+  ADD_LANGAGE,
+  DELETE_LANGAGE,
+  FETCH_LANGAGE,
+  UPDATE_LANGAGE,
   ADD_SOLUTION,
   DELETE_SOLUTION,
   FETCH_SOLUTION,
@@ -71,6 +75,10 @@ axiosInstance.interceptors.request.use(
 
 if(config.headers.tokenTxt!=="undefined"){
   config.headers['Authorization'] = config.headers.tokenTxt
+
+}
+else{
+  config.headers['Authorization'] = "Bearer config.headers.tokenTxt"
 
 }
   return config;
@@ -172,9 +180,12 @@ export const deleteSolutionSuccess = _id => {
 
 export const deleteSolution = id => {
   return (dispatch) => {
-    return axios.delete(`api/solution/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
-    }).then(response => {
+    return axios({
+        method: 'delete',
+        url: `api/solution/${id}`,
+        data:{id:id},
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+}).then(response => {
         dispatch(deleteSolutionSuccess(id))
       })
       .catch(error => {
@@ -300,9 +311,12 @@ export const deleteExerciceSuccess = _id => {
 
 export const deleteExercice = id => {
   return (dispatch) => {
-    return axios.delete(`api/exercice/${id}`,{id:id},{
-      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
-    }).then(response => {
+    return axios({
+        method: 'delete',
+        url: `api/exercice/${id}`,
+        data:{id:id},
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+}).then(response => {
         dispatch(deleteExerciceSuccess(id))
       })
       .catch(error => {
@@ -425,9 +439,12 @@ export const deleteTheorieSuccess = _id => {
 
 export const deleteTheorie = id => {
   return (dispatch) => {
-    return axios.delete(`api/theorie/${id}`,{id:id},{headers:{
-    "Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}})
-    .then(response => {
+    return axios({
+        method: 'delete',
+        url: `api/delete/${id}`,
+        data:{id:id},
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+}).then(response => {
         dispatch(deleteTheorieSuccess(id))
       })
       .catch(error => {
@@ -452,6 +469,135 @@ export const fetchAllTheories = () => {
       })
       .catch(error => {
         alert('connectez-vous pour avoir accès.')
+        throw(error);
+      });
+  };
+};
+
+
+
+
+//------------------------------------------Langages-------------------------------
+//-------------------ADD-------------------
+export const createLangage = ({langage,image }) => {
+  return (dispatch) => {
+    return axios.post(`api/langage/add`, {langage,image },{
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+    })
+
+
+
+
+      .then(response => {
+
+         dispatch(createLangageSuccess(response.data))
+
+      })
+      .catch(error => {
+        console.log(error)
+        throw(error);
+      });
+  };
+};
+
+export const createLangageSuccess =  (data) => {
+
+  return {
+    type: ADD_LANGAGE,
+    payload: {
+      _id: data.all.map(item=>(
+          item._id
+        )).toString(),
+      langage: data.all.map(item=>(
+          item.langage
+        )).toString(),
+      image:data.all.map(item=>(
+          item.image
+        )).toString(),
+      date: new Date().toLocaleDateString()
+    }
+  }
+};
+
+//-------------------UPDATE-------------------
+export const updateLangage = (id,langage,image)=>{
+
+
+
+    return (dispatch) => {
+      return axios.put(`api/langage/${id}`,{id:id,langage: langage,image:image},{
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+      })
+      .then(response => {
+        console.log(JSON.stringify(response)+"reponseok")
+          dispatch(updateLangageSuccess(response.data))
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+}
+
+export const updateLangageSuccess =  (data) => {
+  console.log("put"+JSON.stringify(data.id))
+  return {
+    type: UPDATE_LANGAGE,
+    payload: {
+      _id: data.id,
+      langage: data.langage,
+      image: data.image,
+      date: new Date().toLocaleDateString()
+    }
+  }
+};
+//--------------DELETE---------------------------
+export const deleteLangageSuccess = _id => {
+  return {
+    type: DELETE_LANGAGE,
+    payload: {
+      _id
+    }
+  }
+}
+
+export const deleteLangage = id => {
+  return (dispatch) => {
+    return axios({
+        method: 'delete',
+        url: `api/langage/${id}`,
+        data:{id:id},
+        headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+}).then(response => {
+        dispatch(deleteLangageSuccess(id))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+//--------------GET ALL---------------------------
+export const fetchLangages = (langages) => {
+  return {
+    type: FETCH_LANGAGE,
+    langages
+  }
+};
+
+//"Authorization":"Bearer "+readCookie('tokenTxt').split('%')
+export const fetchAllLangages = () => {
+  return (dispatch) => {
+    return axios.get('api/langages',{
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+        })
+
+      .then(res => {
+        dispatch(fetchLangages(res.data))
+      })
+      .catch((error,res)=> {
+//error 401
+
+//  console.log(res.config.header)
+
         throw(error);
       });
   };

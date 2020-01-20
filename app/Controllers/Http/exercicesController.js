@@ -21,6 +21,7 @@ try{
     const exEnnonce = request.post('ennonce')
     const exTitre = request.post('titre')
 
+
     const exercice = new Exercice()
     exercice.type = exType.type
     exercice.ennonce =exEnnonce.ennonce

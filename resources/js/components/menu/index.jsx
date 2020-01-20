@@ -26,6 +26,8 @@ import Grid from '@material-ui/core/Grid';
 
 import {getMenu} from '../../ajax';
 import Test from '../test/index';
+import Ide from '../frontend/apprendre/ide/index';
+
 import '../../../assets/sass/app.min.css'
 import Login from '../login/index';
 import TheorieListe from '../frontend/apprendre/theorie/menu';
@@ -238,6 +240,16 @@ export default function Menu() {
 
 
 
+                              <ListItem button className="hightlight">
+
+                              <Link to={ `/ide` }>
+                               <ListItemText primary="ide" />
+                              </Link>
+
+
+
+                        </ListItem>
+
 
     </List>
   </Drawer>
@@ -277,7 +289,9 @@ export default function Menu() {
 
 
 
-
+                <Route path="/ide">
+                  <Ide />
+                </Route>
               </Switch>
   </div>
 

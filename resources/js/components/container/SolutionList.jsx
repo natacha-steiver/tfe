@@ -7,12 +7,12 @@ import { deleteSolution } from '../../redux/actions';
 import { updateSolution } from '../../redux/actions';
 import { fetchAllSolutions } from '../../redux/actions';
 
-function SolutionList({ solutions, onDelete,onUpdate }) {
+function SolutionList({ solutions, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
 
-      <button className="btn btn-primary" onClick={()=>store.dispatch(fetchAllSolutions())}>list </button>
+      <button className="btn btn-primary" onClick={()=>onFetch()}>list </button>
       {
         solutions.map((solution,index )=> {
         return (
@@ -41,7 +41,10 @@ const mapDispatchToProps = dispatch => {
     },
     onUpdate: (id,type,solution) => {
       dispatch(updateSolution(id,type,solution))
-    }
+    },
+    onFetch: () => {
+      dispatch(fetchAllSolutions())
+    },
   };
 };
 

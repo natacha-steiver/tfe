@@ -18,7 +18,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import LockSharpIcon from '@material-ui/icons/LockSharp';
       const styles = theme => ({
           margin: {
-              margin: theme.spacing(2),
+              borderBox:"box-sizing"
 
           },
           padding: {
@@ -37,7 +37,7 @@ import LockSharpIcon from '@material-ui/icons/LockSharp';
           ressource:{
             position:"relative",
             top:"-10rem",
-            left:"10%"
+            paddingLeft:"10%"
           }
       });
 
@@ -77,13 +77,17 @@ render(){
            */
         }
 
-        <Grid container spacing={2} alignItems="flex-end" direction="row" className={classes.conteneur}>
+        <Grid container  alignItems="flex-end" direction="row" className={classes.conteneur}>
 
-        <Grid item xs={4}>
+        <Grid item xs={12} lg={4}>
 
 
                 <Paper className={classes.padding} >
                     <div className={classes.margin}>
+
+
+
+
 
 
                         <Grid container spacing={8} alignItems="flex-end">
@@ -126,7 +130,7 @@ render(){
 
         </Grid>
 
-<Grid item xs={8}>
+<Grid item xs={12} lg={8}>
 
 <section className={classes.ressource}>
 <h3>Ressources</h3>

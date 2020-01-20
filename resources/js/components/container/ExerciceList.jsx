@@ -11,7 +11,7 @@ function ExerciceList({ exercices, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
-    <button onClick={()=>{store.dispatch(fetchAllExercices())}}>liste</button>s
+    <button onClick={()=>{onFetch()}}>liste</button>s
       {
       exercices.map((exercice,index )=> {
         return (
@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateExercice(id,type,ennonce,titre))
     },
     onFetch:()=>{
-      store.dispatch(fetchExercices())
+      dispatch(fetchAllExercices())
     }
 
   };

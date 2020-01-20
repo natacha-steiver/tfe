@@ -12,6 +12,7 @@ import { HashRouter, Route, NavLink,Link } from 'react-router-dom';
 import Solution from '../backend/crud/solution/index'
 import Theorie from '../backend/crud/theorie/index'
 import Exercice from '../backend/crud/exercice/index'
+import Langage from '../backend/crud/langage/index'
 
 
 import '../../../assets/sass/app.min.css'
@@ -27,7 +28,7 @@ const routes = [
   { path: '/solutions', component:Solution },
   { path: '/exercices', component:Exercice },
   { path: '/theories', component:Theorie},
-
+  { path: '/langages', component:Langage},
   { path: '/register', component:Register },
 
 
@@ -76,6 +77,7 @@ export default function Admin(){
     <Tab label="theories" component={Link} to="/theories" />
 
     <Tab label="exercices" component={Link} to="/exercices" />
+    <Tab label="langages" component={Link} to="/langages" />
 
 
     <Tab label="gestion des administrateurs" component={Link} to="/register" />
