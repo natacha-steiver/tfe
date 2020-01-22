@@ -41,7 +41,7 @@ function TheorieListe({ theories}) {
 
 
 
-    <Router>
+    <Router basename="/">
 
     <div style={{position:"relative"}}>
     {

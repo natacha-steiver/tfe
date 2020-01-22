@@ -68,6 +68,7 @@ console.log('default')
 
     selectMode(){
         var modeInput = document.getElementById("select");
+
         var myindex  = modeInput.selectedIndex;
         var modefly = modeInput.options[myindex].text.toLowerCase();
 
@@ -79,8 +80,10 @@ console.log('default')
         //editor.refresh();
          }
   componentDidUpdate(){
+    if(this.state.mode=='' ){
+        this.selectMode()
+    }
 
-      this.selectMode()
 
       this.test= React.createRef();
     const getGeneratedPageURL = ({ html, css, js,python }) => {
@@ -113,6 +116,7 @@ console.log('default')
           ${html || ''}
           <input id="zone">
           <button id="mybutton">click !</button>
+
         </body>
       </html>
     `
@@ -143,19 +147,20 @@ console.log('default')
 
     return (
       <div style={{position:"relative",top:"55rem"}}>
+      <h2 className="titre">IDE - testez vos codes librement</h2>
       <button onClick={()=>{this.setState({htmlclick:false,langagechoose:false,resultat:false,jsclick:true})}}>React/JS</button>
       <button onClick={()=>{this.setState({jsclick:false,langagechoose:false,resultat:false,htmlclick:true})}}>HTML</button>
 
       <button onClick={()=>{this.setState({htmlclick:false,jsclick:false,resultat:false,langagechoose:true})}}>ton langage</button>
 
       <button onClick={()=>{this.setState({htmlclick:false,jsclick:false,langagechoose:false,resultat:true})}}>Résultat</button>
-<h2 className="titre">IDE - testez vos codes librement</h2>
+
       <br/>
 {this.state.jsclick &&
   <div>
   <CodeMirror id="js"
 
-    value='//React ou javascript'
+    value="//React + jsx ( rend le composant avec document.getElementById('test'))"
     options={{
       mode: 'text/jsx',
       gutters: ["CodeMirror-lint-markers"],
@@ -273,19 +278,19 @@ plugins: ["transform-react-jsx"]
      this.setState({click: false})
   },2000)
 }}>compile</button>
+
+  </div>
+}
+
   <select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
   <option value="1">text/x-python</option>
   <option value="10">text/javascript</option>
 
   <option value="40">text/xml</option>
 
-  <option value="44">text/css</option>
+  <option value="44" >text/css</option>
   </select>
-  </div>
-}
-
-
-
+  <div id="test"></div>
   <iframe ref={this.test} id="iframe" style={{width:"100%",height:"30rem"}}>
 
 

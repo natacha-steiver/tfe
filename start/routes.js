@@ -24,6 +24,8 @@ Route.group(
     Route.get('items','itemsController.index')
     Route.get('theories','theoriesController.index').middleware(['auth:admin'])
     Route.get('users','utilisateursController.index').middleware('auth:admin')
+    Route.get('admins','administrateursController.index').middleware('auth:admin')
+
     Route.get('langages','langagesController.index').middleware('auth:admin')
 
 //    Route.get('admins','administrateursController.index').middleware('auth:admin')
@@ -70,9 +72,9 @@ Route.group(
       Route.get('auth/list/token', 'administrateursController.listToken')
       Route.get('auth/delete/token', 'administrateursController.deleteToken')
       Route.get('auth/register', 'administrateursController.register').middleware(['auth:admin'])
-      Route.post('auth/register', 'administrateursController.register').as('administrateur.register')
-      Route.get('auth/login', 'administrateursController.login')
       Route.post('auth/login', 'administrateursController.login').as('administrateur.login')
+      Route.put('auth/:id','administrateursController.updateAdmin')
+      Route.delete('auth/:id','administrateursController.deleteAdmin')
 
 
   }

@@ -18,6 +18,6 @@ export default function exerciceReducer(state = [], action) {
     case FETCH_EXERCICE:
     return action.exercices;
     default:
-    return state;
+    return  state;
   }
 }

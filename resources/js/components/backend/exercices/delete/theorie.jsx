@@ -25,8 +25,8 @@ export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,on
     <div style={ styles }>
       <h2>{ titre }</h2>
       <p>{ texte }</p>
-    <img src={image} alt={image}/>
-            <iframe src={video} frameBorder="0"></iframe>
+    <img src={`images/${image.clientName}`} alt={image}/>
+            <iframe src={`videos/${video.clientName}`}frameBorder="0"></iframe>
 <p>{ langage}</p>
 
       <form >

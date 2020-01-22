@@ -101,6 +101,20 @@ export const getMenu = ()=>{
 
 
 //------------------AUTH--------------
+export const registerUser = (email,password)=>{
+
+return axios
+  .post(`api/user/register`,{email:email,password:password},{
+    headers:{'Content-Type':'application/json'}
+  // headers:{'Content-Type':'application/json'}
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI1ZTBlMWFlNWIyYTA3OGY2MzBlZTQ2YzMiLCJpYXQiOjE1Nzc5ODU2NTF9.bZVYTE2NTn9Djo_UulfHZKBsLhIKtsYZ2tzge5H9ehM
+      })
+  .then(res =>{
+  console.log(res)
+
+  })
+
+}
 
 
 export const register = (email,password)=>{
@@ -136,4 +150,64 @@ export const getUser = ()=>{
     })
 }
 
-//axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
+export const deleteUser = (id)=>{
+
+return axios
+  .delete(`api/user/${id}`,{id:id},{
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res =>{
+  console.log(res)
+  })
+
+}
+
+
+export const updateUser = (id,email,password)=>{
+
+return axios
+  .delete(`api/user/${id}`,{id:id,email: email,password:password},{
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res =>{
+  console.log(res)
+  })
+
+}
+//--------------Admin------------------------
+
+export const getAdmin = ()=>{
+  return axios
+    .get(`api/admins`,{
+      headers:{'Content-Type':'application/json'}
+        })
+    .then(res =>{
+    console.log(res)
+    })
+}
+
+
+export const deleteAdmin = (id)=>{
+
+return axios
+  .delete(`api/auth/${id}`,{id:id},{
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res =>{
+  console.log(res)
+  })
+
+}
+
+
+export const updateAdmin = (id,email,password)=>{
+
+return axios
+  .delete(`api/auth/${id}`,{id:id,email: email,password:password},{
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res =>{
+  console.log(res)
+  })
+
+}

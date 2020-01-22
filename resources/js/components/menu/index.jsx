@@ -162,7 +162,7 @@ export default function Menu() {
         </Toolbar>
       </AppBar>
 
-      <Router>
+      <Router basename="/">
   <div>
   <h2 id="titrePrincipal">Conçevez votre propre app</h2>
 

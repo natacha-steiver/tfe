@@ -12,8 +12,8 @@ constructor(props){
     _id:"hhjhj",
     titre: 'titre',
     texte: 'texte',
-    image:'image',
-    video:'video',
+    image:[],
+    video:[],
     langage:'langage'
   }
   this.handleSubmit=this.handleSubmit.bind(this)
@@ -35,12 +35,25 @@ constructor(props){
 
        let file = event.target.files[0]
        this.selectedFile = file
+       let fileV = event.target.files[1]
+       this.selectedFileV= fileV
      }
 
      uploadFile() {
-        let fd = new FormData()
-        fd.append('image', this.selectedFile, this.selectedFile.name)
-        axios.post('api/theorie/add', fd)
+      //  let fd = new FormData()
+      //  fd.append('image', this.selectedFile, this.selectedFile.name)
+      //  fd.append('video', this.selectedFileV)
+      //
+       let data = new FormData()
+      let input_image = document.getElementById('image')
+      let input_video= document.getElementById('video')
+      Array.from(input_image.files).forEach((f) => {
+          data.append('image', f)
+      })
+      Array.from(input_video.files).forEach((f) => {
+          data.append('video', f)
+      })
+        axios.post('api/theorie/add', data)
           .then(res => {
               console.log(res);
           })
@@ -78,6 +91,7 @@ constructor(props){
               onChange={ this.handleInputChange }
               defaultValue={ this.state.titre }
             />
+
             <button type="button" onClick={()=>{this.uploadFile()}}>telecharge</button>
           </div>
           <div className="form-group">
@@ -106,23 +120,28 @@ constructor(props){
             type="file"
               cols="19"
               rows="8"
+              id="image"
               placeholder="image"
               className="form-control"
-              name="image"
+              name="file[]"
+              multiple={true}
               onChange={ this.getFile }
             />
           </div>
           <div className="form-group">
-            <textarea
+            <input
+            type="file"
               cols="19"
               rows="8"
+              id="video"
               placeholder="video"
               className="form-control"
-              name="video"
-              onChange={ this.handleInputChange }
-              defaultValue={ this.state.video}>
-            </textarea>
+              name="file[]"
+              multiple={true}
+              onChange={ this.getFile }
+            />
           </div>
+
 
           <div className="form-group">
             <button type="button" className="btn btn-primary" onClick={ ()=>{  this.props.onAddTheorie(this.state); return false;}} >Add Theorie</button>

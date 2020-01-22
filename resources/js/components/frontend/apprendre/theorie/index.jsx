@@ -20,8 +20,8 @@ export default ({ theorie: { titre,texte,image,video,langage, _id } }) => {
     <div style={ styles }>
     <h2>{ titre }</h2>
     <p>{ texte }</p>
-    <img src={image} alt={image}/>
-    <iframe src={video} frameBorder="0"></iframe>
+    <img src={`http://localhost:3333/images/${image.clientName}`} alt={image}/>
+            <iframe src={`http://localhost:3333/videos/${video.clientName}`}frameBorder="0"></iframe>
     <p>{ langage}</p>
 
 

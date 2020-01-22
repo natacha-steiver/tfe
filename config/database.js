@@ -28,6 +28,10 @@ module.exports = {
       username: Env.get('DB_USER', 'admin'),
       password: Env.get('DB_PASSWORD', 'admin'),
       database: Env.get('DB_DATABASE', 'tfe'),
+      auth: {
+      source: Env.get('DB_AUTH_SOURCE', ''),
+      mechanism: Env.get('DB_AUTH_MECHANISM', '')
+    },
     options:{
         useUnifiedTopology: true,
     }

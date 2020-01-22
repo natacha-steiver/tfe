@@ -17,7 +17,7 @@ async index({response,request}){
 
     const exercice = new Solution()
     exercice.type = exType.type
-    exercice.solution =exSolution.solution
+    exercice.solution =[[exSolution.solution.split('*')]]
 const exerciceLast=  await Solution
     .fetch()
 //db.tfe.getCollection("solutions").find().sort({"_id":-1}).limit(1)

@@ -18,6 +18,6 @@ export default function theorieReducer(state = [], action) {
     case FETCH_THEORIE:
     return action.theories;
     default:
-    return state;
+    return  state;
   }
 }

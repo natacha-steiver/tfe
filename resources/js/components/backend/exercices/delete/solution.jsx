@@ -22,11 +22,36 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
   return (
     <div style={ styles }>
       <h2>{ type }</h2>
-      <p>{ solution }</p>
+      <h2>Solutions:</h2>
+{
+    solution.map((solution,index)=>{
+    return(
+        <p key={solution._id}>{solution.toString()}</p>
+    )
+  })
+}
 
       <form >
-    <label htmlFor="">Solution:</label>
-    <input type="text" name="solution"  placeholder={solution}  onChange={event => setSolution(event.target.value)}/>
+
+
+<p>!!! Séparez les solutions par le caractère *</p>
+<label htmlFor="">Solution:</label>
+
+    <textarea
+      cols="19"
+      rows="8"
+      placeholder="Solution"
+      className="form-control"
+      name="solution"
+       onChange={event => setSolution(event.target.value)}
+      defaultValue={
+          solution.map((solution,index)=>{
+          return(
+              solution.toString()
+          )
+        })
+      }>
+    </textarea>
     <label htmlFor="">Type:</label>
     <input type="text" name="type"  placeholder={type}    onChange={event => setType(event.target.value)}/>
 

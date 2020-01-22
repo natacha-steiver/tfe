@@ -2,6 +2,7 @@
 const Theorie = use('App/Models/theories');
 const CloudinaryService = use('App/Services/CloudinaryService');
 const Helpers = use('Helpers')
+const fs = require('fs');
 class theoriesController {
 async index({response}){
 
@@ -22,37 +23,75 @@ async index({response}){
 
 
   async store({request,auth,response}){
+try{
 
-    const theoTitre= request.post('titre')
-    const theoTexte = request.post('texte')
-    //const theoImage= request.post('image')
-    const theoVideo = request.post('video')
-    const theoLangage = request.post('langage')
-    const file = request.file('image', {
-       types: ['image'],
-       size: '2mb'
-     })
+      const theoTitre= request.post('titre')
+      const theoTexte = request.post('texte')
+      //const theoImage= request.post('image')
+      const theoVideo = request.post('video')
+      const theoLangage = request.post('langage')
+      const file = request.file('image', {
+         types: ['image'],
+         size: '2mb'
+       })
+       const video = request.file('video', {
+          types: ['video'],
+          size: '20mb'
+        })
 
-await file.move(Helpers.tmpPath('images'), {
-name: file.clientName,
-overwrite: true
-})
 
-    const theorie = new Theorie()
+               file._files.forEach((el,i)=>{
 
-  //  const cloudinaryResponse = await CloudinaryService.v2.uploader.upload(file.tmpPath, {folder: 'images'});
-  // theorie.image = cloudinaryResponse.secure_url;
-    theorie.titre = theoTitre.titre
-    theorie.texte = theoTexte.texte
-    theorie.image = file
-    theorie.video = theoVideo.video
-    theorie.langage = theoLangage.langage
-const theorieLast=  await Theorie
-    .fetch()
 
-    await theorie.save()
-    console.log(response)
-    return response.status(201).json({all:theorieLast,file:file})
+          if (fs.existsSync("public/images/".concat(el.clientName))) {
+            console.log("exist")
+
+          }else{
+             file.moveAll(Helpers.publicPath('images'), {
+            name: file.clientName,
+            overwrite: true
+            })
+
+          }
+               })
+
+               video._files.forEach((el,i)=>{
+
+
+              if (fs.existsSync("public/videos/".concat(video.clientName))) {
+                console.log("exist")
+              }else{
+                 video.moveAll(Helpers.publicPath('videos'), {
+                name: video.clientName,
+                overwrite: true
+                })
+              }
+               })
+
+
+
+
+
+
+      const theorie = new Theorie()
+
+    //  const cloudinaryResponse = await CloudinaryService.v2.uploader.upload(file.tmpPath, {folder: 'images'});
+    // theorie.image = cloudinaryResponse.secure_url;
+      theorie.titre = theoTitre.titre
+      theorie.texte = theoTexte.texte
+      theorie.image = file
+      theorie.video = video
+      theorie.langage = theoLangage.langage
+  const theorieLast=  await Theorie
+      .fetch()
+
+      await theorie.save()
+      console.log(response)
+      return response.status(201).json({all:theorieLast,file:file,video:video,path:path,path2:path2})
+}catch(e){
+console.log('error')
+
+}
   }
 
   async show ({params,response}) {
