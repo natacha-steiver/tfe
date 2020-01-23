@@ -23,21 +23,24 @@ async index({response}){
 
 
   async store({request,auth,response}){
-try{
+
 
       const theoTitre= request.post('titre')
       const theoTexte = request.post('texte')
       //const theoImage= request.post('image')
       const theoVideo = request.post('video')
       const theoLangage = request.post('langage')
-      const file = request.file('image', {
-         types: ['image'],
-         size: '2mb'
-       })
-       const video = request.file('video', {
-          types: ['video'],
-          size: '20mb'
-        })
+
+  const file = request.file('image', {
+     types: ['image'],
+     size: '2mb'
+   })
+   const video = request.file('video', {
+      types: ['video'],
+      size: '20mb'
+    })
+
+
 
 
                file._files.forEach((el,i)=>{
@@ -48,7 +51,7 @@ try{
 
           }else{
              file.moveAll(Helpers.publicPath('images'), {
-            name: file.clientName,
+            name: file._files.clientName,
             overwrite: true
             })
 
@@ -73,6 +76,7 @@ try{
 
 
 
+
       const theorie = new Theorie()
 
     //  const cloudinaryResponse = await CloudinaryService.v2.uploader.upload(file.tmpPath, {folder: 'images'});
@@ -87,11 +91,8 @@ try{
 
       await theorie.save()
       console.log(response)
-      return response.status(201).json({all:theorieLast,file:file,video:video,path:path,path2:path2})
-}catch(e){
-console.log('error')
+      return response.status(201).json({all:theorieLast,file:file,video:video})
 
-}
   }
 
   async show ({params,response}) {

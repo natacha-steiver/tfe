@@ -4,34 +4,41 @@ import React,{useState} from 'react';
 import store  from "../../../../redux/store";
 import { ADD_THEORIE } from "../../../../redux/constantes/index";
 import axios from 'axios';
-class NewTheorie extends React.Component {
 
-constructor(props){
-  super(props)
-  this.state = {
-    _id:"hhjhj",
-    titre: 'titre',
-    texte: 'texte',
-    image:[],
-    video:[],
-    langage:'langage'
-  }
-  this.handleSubmit=this.handleSubmit.bind(this)
-  this.handleInputChange=this.handleInputChange.bind(this)
-  this.handleReset=this.handleReset.bind(this)
-  this.getFile=this.getFile.bind(this)
+function NewTheorie(){
 
-}
+  const [titreNew, setTitre] = useState('');
+  const [texteNew, setTexte] = useState('');
+  const [imageNew, setImage] = useState('');
+  const [videoNew, setVideo] = useState('');
+  const [langageNew, setLangage] = useState('');
 
-
+{/*
   handleInputChange(e){
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+console.log('kk')
+let data = new FormData()
+let input_image = document.getElementById('image')
+let input_video= document.getElementById('video')
+
+Array.from(input_image.files).forEach((f) => {
+   data.append('image', f)
+})
+Array.from(input_video.files).forEach((f) => {
+   data.append('video', f)
+})
+data.append(e.target.name,e.target.value)
+
+  this.props.onAddTheorie(data)
+ axios.post('api/theorie/add', data)
+   .then(res => {
+       console.log(res);
+   })
+
   };
+  */}
 
 
-  getFile() {
+  const getFile=()=> {
 
        let file = event.target.files[0]
        this.selectedFile = file
@@ -39,82 +46,39 @@ constructor(props){
        this.selectedFileV= fileV
      }
 
-     uploadFile() {
+    const uploadFile=()=> {
       //  let fd = new FormData()
       //  fd.append('image', this.selectedFile, this.selectedFile.name)
       //  fd.append('video', this.selectedFileV)
       //
-       let data = new FormData()
-      let input_image = document.getElementById('image')
-      let input_video= document.getElementById('video')
-      Array.from(input_image.files).forEach((f) => {
-          data.append('image', f)
-      })
-      Array.from(input_video.files).forEach((f) => {
-          data.append('video', f)
-      })
-        axios.post('api/theorie/add', data)
-          .then(res => {
-              console.log(res);
-          })
+    /*
+    let data = new FormData()
+   let input_image = document.getElementById('image')
+   let input_video= document.getElementById('video')
+   Array.from(input_image.files).forEach((f) => {
+       data.append('image', f)
+   })
+   Array.from(input_video.files).forEach((f) => {
+       data.append('video', f)
+   })
+     axios.post('api/theorie/add', data)
+       .then(res => {
+           console.log(res);
+       })
+     */
+
+
+    console.log('ok')
     }
 
-  handleSubmit(e){
-    e.preventDefault();
 
 
 
-      this.handleReset();
-
-  };
-
-  handleReset(){
-    this.setState({
-      titre: '',
-      texte: '',
-      image:'',
-      video:'',
-      langage:'',
-    });
-  };
-
-  render() {
     return (
       <div>
-          <form method="POST"  encType="multipart/form-data" >
-          <div className="form-group">
-              <input
-              type="text"
-              placeholder="Type"
-              className="form-control"
-              name="titre"
-              onChange={ this.handleInputChange }
-              defaultValue={ this.state.titre }
-            />
 
-            <button type="button" onClick={()=>{this.uploadFile()}}>telecharge</button>
-          </div>
-          <div className="form-group">
-              <input
-              type="text"
-              placeholder="Type"
-              className="form-control"
-              name="langage"
-              onChange={ this.handleInputChange }
-              defaultValue={ this.state.langage }
-            />
-          </div>
-          <div className="form-group">
-            <textarea
-              cols="19"
-              rows="8"
-              placeholder="texte"
-              className="form-control"
-              name="texte"
-              onChange={ this.handleInputChange }
-              defaultValue={ this.state.texte }>
-            </textarea>
-          </div>
+
+          <form method="POST"  encType="multipart/form-data" >
           <div className="form-group">
             <input
             type="file"
@@ -125,7 +89,7 @@ constructor(props){
               className="form-control"
               name="file[]"
               multiple={true}
-              onChange={ this.getFile }
+              onChange={event => setImage(event.target.value)}
             />
           </div>
           <div className="form-group">
@@ -138,16 +102,72 @@ constructor(props){
               className="form-control"
               name="file[]"
               multiple={true}
-              onChange={ this.getFile }
+              onChange={event => setVideo(event.target.value)}
             />
+          </div>
+          <div className="form-group">
+              <input
+              type="text"
+              placeholder="Type"
+              className="form-control"
+              name="titre"
+              id="titre"
+              onChange={event => setTitre(event.target.value)}
+
+            />
+
+            <button type="button" onClick={()=>{this.uploadFile()}}>telecharge</button>
+          </div>
+          <div className="form-group">
+              <input
+              type="text"
+              placeholder="Type"
+              className="form-control"
+              name="langage"
+              id="langage"
+              onChange={event => setLangage(event.target.value)}
+
+
+            />
+          </div>
+          <div className="form-group">
+            <textarea
+              cols="19"
+              rows="8"
+              placeholder="texte"
+              className="form-control"
+              name="texte"
+              id="texte"
+              onChange={event => setTexte(event.target.value)}
+            >
+            </textarea>
           </div>
 
 
           <div className="form-group">
-            <button type="button" className="btn btn-primary" onClick={ ()=>{  this.props.onAddTheorie(this.state); return false;}} >Add Theorie</button>
-            <button type="button" className="btn btn-warning" onClick={ this.handleReset }>
-              Reset
-            </button>
+            <button type="button" className="btn btn-primary" onClick={()=>{
+
+              let data = new FormData()
+             let input_image = document.getElementById('image')
+             let input_video= document.getElementById('video')
+             Array.from(input_image.files).forEach((f) => {
+                 data.append('image', f)
+             })
+             Array.from(input_video.files).forEach((f) => {
+                 data.append('video', f)
+             })
+             data.append('titre',titreNew )
+             data.append('texte',texteNew )
+
+             data.append('langage',langageNew )
+               axios.post('api/theorie/add', data)
+                 .then(res => {
+                     console.log(res);
+                 })
+
+
+          }}  >Add Theorie</button>
+
           </div>
 
         </form>
@@ -156,6 +176,6 @@ constructor(props){
       </div>
     );
   }
-}
+
 
 export default NewTheorie;

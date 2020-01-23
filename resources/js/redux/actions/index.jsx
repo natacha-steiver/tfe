@@ -349,12 +349,13 @@ export const fetchAllExercices = () => {
 
 //------------------------------------------THEORIES-------------------------------
 //-------------------ADD-------------------
-const formData = new FormData();
-formData.append('image', 'image');
-formData.append('attachmentFile', 'attachmentFile');
+
 export const createTheorie = ({titre,texte,image,video,langage }) => {
   return (dispatch) => {
-    return axios.post(`api/theorie/add`, {titre,texte,image,video,langage,formData },{
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('video',video);
+    return axios.post(`api/theorie/add`, {titre,texte,image,video,langage },{
       headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
 })
       .then(response => {
@@ -368,10 +369,10 @@ export const createTheorie = ({titre,texte,image,video,langage }) => {
 };
 
 export const createTheorieSuccess =  (data) => {
-  console.log(data.all+"testAddReponse")
+/*  console.log(data.all+"testAddReponse")
   console.log(data.all.map(item=>(
       item._id
-    )).toString()+'id add')
+    )).toString()+'id add')*/
   return {
     type: ADD_THEORIE,
     payload: {

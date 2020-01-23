@@ -9,8 +9,8 @@ const mapDispatchToProps = dispatch => {
 
   return {
 
-    onAddTheorie: theorie => {
-      dispatch(createTheorie(theorie));
+    onAddTheorie: (titre,texte,image,video,langage) => {
+      dispatch(createTheorie(titre,texte,image,video,langage));
     }
   };
 };
