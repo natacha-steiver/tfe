@@ -25,9 +25,62 @@ export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,on
     <div style={ styles }>
       <h2>{ titre }</h2>
       <p>{ texte }</p>
-    <img src={`images/${image.clientName}`} alt={image}/>
-            <iframe src={`videos/${video.clientName}`}frameBorder="0"></iframe>
-<p>{ langage}</p>
+      <p>{ langage}</p>
+      {
+
+      video != null ? video._files && video._files.map((el,i)=>{
+          return(
+            <li key={i}>
+            <iframe src={`http://localhost:3333/videos/${el.clientName}`}frameBorder="0"></iframe>
+  </li>
+          )
+
+        }): console.log("loop video doesn't exist")
+}
+{
+        video != null  ?
+!video._files &&
+
+
+
+             <iframe src={`http://localhost:3333/videos/${video.clientName}`}frameBorder="0"></iframe>
+
+
+
+         : console.log("video doesn't exist")
+
+}
+
+{
+
+         image != null ?
+image._files &&
+         image._files.map((el,i)=>{
+           return(
+             <li key={i}><img src={`http://localhost:3333/images/${el.clientName}`} alt={image}/></li>
+           )
+
+         }):console.log("image doesn't exist")
+
+}
+
+{
+
+       image !=null  ?
+!image._files &&
+
+    <img src={`http://localhost:3333/images/${image.clientName}`} alt={image}/>
+
+
+       :console.log("image loop doesn't exist")
+      }
+
+
+
+
+
+
+
 
       <form >
     <label htmlFor="">Titre:</label>

@@ -15,16 +15,40 @@ const styles = {
 window.store=store;
 export default ({ theorie: { titre,texte,image,video,langage, _id } }) => {
   //console.log(exercice)
+console.log(image._files.length)
+
+
 
   return (
     <div style={ styles }>
     <h2>{ titre }</h2>
     <p>{ texte }</p>
-    <img src={`http://localhost:3333/images/${image.clientName}`} alt={image}/>
-            <iframe src={`http://localhost:3333/videos/${video.clientName}`}frameBorder="0"></iframe>
+
+
     <p>{ langage}</p>
 
 
+    {
+
+      video._files.map((el,i)=>{
+        return(
+          <li key={i}>
+          <iframe src={`http://localhost:3333/videos/${el.clientName}`}frameBorder="0"></iframe>
+</li>
+        )
+
+      })
+    }
+
+{
+
+  image._files.map((el,i)=>{
+    return(
+      <li key={i}><img src={`http://localhost:3333/images/${el.clientName}`} alt={image}/></li>
+    )
+
+  })
+}
 
     </div>
   );

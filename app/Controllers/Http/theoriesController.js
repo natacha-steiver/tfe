@@ -43,34 +43,65 @@ async index({response}){
 
 
 
-               file._files.forEach((el,i)=>{
+if(file){
+  if(file._files && file._files.length>1){
+    file._files.forEach((el,i)=>{
 
 
-          if (fs.existsSync("public/images/".concat(el.clientName))) {
-            console.log("exist")
+if (fs.existsSync("public/images/".concat(el.clientName))) {
+ console.log("exist")
 
-          }else{
-             file.moveAll(Helpers.publicPath('images'), {
-            name: file._files.clientName,
-            overwrite: true
-            })
+}else{
+  file.moveAll(Helpers.publicPath('images'), {
+ name: file._files.clientName,
+ overwrite: true
+ })
 
-          }
-               })
+}
+    })
+  }else if(file){
+    if (fs.existsSync("public/images/".concat(file.clientName))) {
+      console.log("exist")
 
-               video._files.forEach((el,i)=>{
+    }else{
+       file.move(Helpers.publicPath('images'), {
+      name: file.clientName,
+      overwrite: true
+      })
+
+    }
+  }
+}
 
 
-              if (fs.existsSync("public/videos/".concat(video.clientName))) {
-                console.log("exist")
-              }else{
-                 video.moveAll(Helpers.publicPath('videos'), {
-                name: video.clientName,
-                overwrite: true
-                })
-              }
-               })
 
+if(video){
+
+
+              if(video._files && video._files.length>1){
+                  video._files.forEach((el,i)=>{
+
+
+                 if (fs.existsSync("public/videos/".concat(el.clientName))) {
+                   console.log("exist")
+                 }else{
+                    video.moveAll(Helpers.publicPath('videos'), {
+                   name: video.clientName,
+                   overwrite: true
+                   })
+                 }
+                  })
+                }else if(video){
+                  if (fs.existsSync("public/videos/".concat(video.clientName))) {
+                    console.log("exist")
+                  }else{
+                     video.move(Helpers.publicPath('videos'), {
+                    name: video.clientName,
+                    overwrite: true
+                    })
+                  }
+                }
+}
 
 
 
