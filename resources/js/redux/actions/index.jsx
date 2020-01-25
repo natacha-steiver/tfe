@@ -97,9 +97,9 @@ function readCookie(name) {
 }
 //------------------------------------------SOLUTIONS DES EXERCICES-------------------------------
 //-------------------ADD-------------------
-export const createSolution = ({solution,type }) => {
+export const createSolution = ({solution,type,ref }) => {
   return (dispatch) => {
-    return axios.post(`api/solution/add`, {solution,type},{
+    return axios.post(`api/solution/add`, {solution,type,ref},{
       headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     })
 
@@ -108,7 +108,7 @@ export const createSolution = ({solution,type }) => {
 
       .then(response => {
 
-         dispatch(createSolutionSuccess(response.data.solution))
+         dispatch(createSolutionSuccess(response.data))
 
       })
       .catch(error => {
@@ -132,18 +132,21 @@ export const createSolutionSuccess =  (data) => {
       type:data.all.map(item=>(
           item.type
         )).toString(),
+      ref:data.all.map(item=>(
+            item.ref
+          )).toString(),
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
-export const updateSolution = (id,solution,type)=>{
+export const updateSolution = (id,solution,type,ref)=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type},{
+      return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type,ref:ref},{
         headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
@@ -164,6 +167,7 @@ export const updateSolutionSuccess =  (data) => {
       _id: data.id,
       solution: data.solution,
       type: data.type,
+      ref:data.ref,
       date: new Date().toLocaleDateString()
     }
   }
@@ -224,9 +228,9 @@ export const fetchAllSolutions = () => {
 
 //------------------------------------------EXERCICES-------------------------------
 //-------------------ADD-------------------
-export const createExercice = ({ennonce,type,titre }) => {
+export const createExercice = ({ennonce,type,titre,ref }) => {
   return (dispatch) => {
-    return axios.post(`api/exercice/add`, {ennonce,type,titre},{
+    return axios.post(`api/exercice/add`, {ennonce,type,titre,ref},{
       headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
     })
       .then(response => {
@@ -262,18 +266,21 @@ export const createExerciceSuccess =  (data) => {
       titre:data.all.map(item=>(
             item.titre
           )).toString(),
+      ref:data.all.map(item=>(
+                item.ref
+              )).toString(),
       date: new Date().toLocaleDateString()
     }
   }
 };
 
 //-------------------UPDATE-------------------
-export const updateExercice = (id,ennonce,type,titre)=>{
+export const updateExercice = (id,ennonce,type,titre,ref)=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre},{
+      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre,ref:ref},{
         headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
@@ -295,6 +302,8 @@ export const updateExerciceSuccess =  (data) => {
       ennonce: data.ennonce,
       type: data.type,
       titre: data.titre,
+      ref: data.ref,
+
       date: new Date().toLocaleDateString()
     }
   }

@@ -183,6 +183,8 @@ export const getAdmin = ()=>{
         })
     .then(res =>{
     console.log(res)
+    let data=res.data;
+    return data
     })
 }
 
@@ -203,7 +205,7 @@ return axios
 export const updateAdmin = (id,email,password)=>{
 
 return axios
-  .delete(`api/auth/${id}`,{id:id,email: email,password:password},{
+  .put(`api/auth/${id}`,{id:id,email: email,password:password},{
     headers:{'Content-Type':'application/json'}
   })
   .then(res =>{

@@ -7,7 +7,7 @@ import { deleteSolution } from '../../redux/actions';
 import { updateSolution } from '../../redux/actions';
 import { fetchAllSolutions } from '../../redux/actions';
 
-function SolutionList({ solutions, onDelete,onUpdate,onFetch }) {
+function SolutionList({ solutions, onDelete,onUpdate,onFetch,hash }) {
 
   return (
     <div>
@@ -17,7 +17,7 @@ function SolutionList({ solutions, onDelete,onUpdate,onFetch }) {
         solutions.map((solution,index )=> {
         return (
 
-          <Solution solution={ solution } onDelete={ onDelete } onUpdate={onUpdate} key={solution._id} />
+          <Solution solution={ solution } hash={hash} onDelete={ onDelete } onUpdate={onUpdate} key={solution._id} />
         );
       })}
 
@@ -30,7 +30,8 @@ const mapStateToProps = state => {
 
 
   return {
-    solutions: state.solutions
+    solutions: state.solutions,
+    hash: state.router.location.hash,
   };
 };
 
@@ -45,6 +46,7 @@ const mapDispatchToProps = dispatch => {
     onFetch: () => {
       dispatch(fetchAllSolutions())
     },
+
   };
 };
 

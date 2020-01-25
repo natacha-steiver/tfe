@@ -10,7 +10,8 @@ constructor(props){
   this.state = {
     _id:"hhjhj",
     type: 'type',
-    solution: 'solution'
+    solution: 'solution',
+    ref:'ref'
   }
   this.handleSubmit=this.handleSubmit.bind(this)
   this.handleInputChange=this.handleInputChange.bind(this)
@@ -36,7 +37,8 @@ constructor(props){
   handleReset(){
     this.setState({
       type: '',
-      solution: ''
+      solution: '',
+      ref:''
     });
   };
 
@@ -52,6 +54,16 @@ constructor(props){
               name="type"
               onChange={ this.handleInputChange }
               defaultValue={ this.state.type }
+            />
+          </div>
+          <div className="form-group">
+              <input
+              type="text"
+              placeholder="ref"
+              className="form-control"
+              name="ref"
+              onChange={ this.handleInputChange }
+              defaultValue={ this.state.ref }
             />
           </div>
           <div className="form-group">

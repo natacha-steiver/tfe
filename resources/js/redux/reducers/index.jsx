@@ -12,16 +12,25 @@ import { connectRouter } from 'connected-react-router'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import { CookieStorage } from 'redux-persist-cookie-storage'
 import Cookies from 'cookies-js'
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2"; // ADDED
 
+const rootpersistConfig = {
+  key: "root",
+  version: "-1",
+  debug: true,
 
+  storage: new CookieStorage(Cookies/*, options */),
+  stateReconciler: autoMergeLevel2, // ADDED
+  timeout:500
+}
 const rootReducer = (history) => combineReducers({
-  router: connectRouter(history),
+  router:  connectRouter(history),
   exercices: exercices,
-  solutions: solutions,
-  langages:langages,
+  solutions:  solutions,
+  langages: langages,
 
 
-  theories: theories
+  theories: theories,
 });
 
 export default rootReducer

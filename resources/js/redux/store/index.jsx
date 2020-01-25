@@ -28,6 +28,18 @@ const persistConfig = {
   timeout:500
 }
 
+
+
+  {/*
+setInterval(()=>{
+store.dispatch(fetchAllTheories())
+  store.dispatch(fetchAllSolutions())
+  store.dispatch(fetchAllExercices())
+  store.dispatch(fetchAllLangages())
+},100) */}
+
+
+
 export const history = createBrowserHistory({
   basename: '/',
 })
@@ -196,7 +208,7 @@ store.dispatch(fetchAllExercices())
 
 
 
-export const persistor = persistStore(store, window.PRELOADED_STATE)
+export const persistor = persistStore(store,[{ manualPersist: true }]  )
 
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
@@ -207,7 +219,10 @@ export default () => {
     rootReducer(history),
     composeEnhancer(applyMiddleware( routerMiddleware(history),thunk)),
   );
-let persistor = persistStore(store, window.PRELOADED_STATE)
+
+
+let persistor = persistStore(store, [{ manualPersist: true }])
+store.persistor = persistor
 if (module.hot) {
   module.hot.accept('../reducers/index', () => {
     // This fetch the new state of the above reducers.
@@ -215,7 +230,24 @@ if (module.hot) {
     store.replaceReducer(
       persistReducer(persistConfig, nextRootReducer)
     )
+      store.persistor.persist()
   })
 }
   return { store, persistor }
+}
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+if(readCookie('tokenTxt') !=null){
+  store.dispatch(fetchAllSolutions())
+  store.dispatch(fetchAllExercices())
+  store.dispatch(fetchAllLangages())
+  store.dispatch(fetchAllTheories())
 }

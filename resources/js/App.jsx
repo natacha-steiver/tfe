@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from "react-dom";
+
 import { register } from 'register-service-worker'
 import { Route,Link, Switch,BrowserRouter as Router,withRouter,NavLink } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
@@ -46,7 +46,7 @@ import { fetchAllTheories } from './redux/actions/index';
 
 
 import { persistStore, persistCombineReducers } from 'redux-persist'
-
+import ReactDOM from "react-dom";
 function App(props) {
 
 
@@ -74,7 +74,7 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistStore(store)}>
+    <PersistGate loading={null} persistor={persistor}>
     <ConnectedRouter history={history}>
     <> { /* your usual react-router v4/v5 routing */ }
     <Switch>

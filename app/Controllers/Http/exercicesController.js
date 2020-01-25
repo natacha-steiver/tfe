@@ -20,12 +20,15 @@ try{
     const exType = request.post('type')
     const exEnnonce = request.post('ennonce')
     const exTitre = request.post('titre')
+    const exRef = request.post('ref')
 
 
     const exercice = new Exercice()
     exercice.type = exType.type
     exercice.ennonce =exEnnonce.ennonce
     exercice.titre =exTitre.titre
+    exercice.ref =exRef.ref
+
 const exerciceLast=  await Exercice
     .fetch()
 
@@ -48,15 +51,18 @@ const exerciceLast=  await Exercice
           const exType = request.post('type')
           const exEnnonce = request.post('ennonce')
           const exTitre = request.post('titre')
+          const exRef = request.post('ref')
 
 
 
-          const exercice= await Exercice.where({_id:params.id}).update({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre})
+          const exercice= await Exercice.where({_id:params.id}).update({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre,ref:exRef.ref})
           exercice.type = exType.type
           exercice.ennonce =exEnnonce.ennonce
           exercice.titre =exTitre.titre
+          exercice.ref =exRef.ref
+
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre})
+        return response.status(200).json({id:params.id,type:exType.type,ennonce:exEnnonce.ennonce,titre:exTitre.titre,ref:exRef.ref})
 
         } catch (e) {
           console.log(e)

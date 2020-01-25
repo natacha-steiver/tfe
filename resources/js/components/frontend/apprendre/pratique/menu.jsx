@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import { connect } from 'react-redux';
 import ExerciceFront from './index';
 import { fetchAllExercices } from '../../../../redux/actions';
+
+
 import { Route,Link, Switch,BrowserRouter as Router } from 'react-router-dom';
 
 

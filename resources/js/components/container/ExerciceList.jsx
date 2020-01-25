@@ -11,7 +11,7 @@ function ExerciceList({ exercices, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
-    <button onClick={()=>{onFetch()}}>liste</button>s
+    <button onClick={()=>{onFetch()}}>liste</button>
       {
       exercices.map((exercice,index )=> {
         return (

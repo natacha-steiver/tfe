@@ -15,7 +15,7 @@ const styles = {
   marginTop:"10em"
 };
 window.store=store;
-export default ({ exercice: { titre,ennonce,type, _id } }) => {
+export default ({ exercice: { titre,ennonce,type, ref,_id } }) => {
   //console.log(exercice)
 
   return (
@@ -24,6 +24,7 @@ export default ({ exercice: { titre,ennonce,type, _id } }) => {
     <p>{ ennonce}</p>
 
     <p>{type}</p>
+    <p>{ref}</p>
 
     <Test langage={`text/${type}`}/>
     </div>

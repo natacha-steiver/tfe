@@ -17,7 +17,8 @@ constructor(props){
     _id:"hhjhj",
     type: 'type',
     ennonce: 'solution',
-    titre:'titre'
+    titre:'titre',
+    ref:'ref'
   }
   this.handleSubmit=this.handleSubmit.bind(this)
   this.handleInputChange=this.handleInputChange.bind(this)
@@ -29,6 +30,7 @@ constructor(props){
     this.setState({
       [e.target.name]: e.target.value
     });
+  
   };
 
   handleSubmit(e){
@@ -44,7 +46,8 @@ constructor(props){
     this.setState({
       type: '',
       ennonce: '',
-      titre:""
+      titre:"",
+      ref:""
     });
   };
 
@@ -62,6 +65,16 @@ constructor(props){
               defaultValue={ this.state.type }
             />
           </div>
+          <div>
+          <input
+          type="text"
+          placeholder="Type"
+          className="form-control"
+          name="ref"
+          onChange={ this.handleInputChange }
+          defaultValue={ this.state.ref}
+        />
+      </div>
           <div className="form-group">
             <textarea
               cols="19"

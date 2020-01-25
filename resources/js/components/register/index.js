@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {register} from '../../ajax'
+import {register,getAdmin,updateAdmin,deleteAdmin} from '../../ajax'
 import { Router, Route, browserHistory, IndexRoute} from 'react-router'
 import {withRouter} from 'react-router-dom'
 //ajout nom dans DB ok
@@ -11,18 +11,49 @@ class Register extends Component{
       id: '',
       term: '',
       editDisabled: false,
-      items: []
+      items: [],
+      admins:[],
+      email:'',
+      password:''
     }
     this.onSubmit= this.onSubmit.bind(this)
+    this.handleInputChange=this.handleInputChange.bind(this)
 
 
   }
   componentDidMount(){
-
+this.getAll()
 
 
 
   }
+  componentDidUpdate(){
+this.getAll()
+
+
+
+  }
+  handleInputChange(e){
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+  getAll = () =>{
+    getAdmin().then(
+      data => {
+        this.setState(
+        {
+
+          admins: [...data],
+
+        },    () => {
+              console.log(this.state.admins)
+            }
+        )
+      }
+    )
+  }
+
 
   onSubmit(e){
     e.preventDefault()
@@ -37,9 +68,28 @@ class Register extends Component{
 
 
   render() {
-
+    const data=this.state.admins
     return (
       <div >
+
+      {data.map((value, index) => {
+     return <div key={value._id}>
+       <p> id: {value._id}</p>
+    <p> email: {value.email}</p>
+    <p> password: {value.password}</p>
+    <label htmlFor="">email:</label>
+    <input type="text" name="email"  id="email" placeholder="email"   onChange={ this.handleInputChange }/>
+
+    <label htmlFor="">password:</label>
+    <input type="text" name="password"  id="password" placeholder="password"   onChange={ this.handleInputChange }/>
+    <button type='button' onClick={(e)=>{
+      updateAdmin( value._id,this.state.email,this.state.password)
+    }}>envoie</button>
+<button type="button" onClick={(e)=>{
+  deleteAdmin( value._id)}}>delete</button>
+      </div>
+           })}
+
       <h3>Register</h3>
 
       <form  onSubmit={this.onSubmit} >
@@ -56,11 +106,6 @@ class Register extends Component{
 
 
 
-      <ul>
-
-
-
-      </ul>
 
 
       </div>

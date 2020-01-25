@@ -14,15 +14,19 @@ const styles = {
   borderRadius: '7px'
 };
 window.store=store;
-export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
+export default ({ solution: { type, solution,ref, _id }, onDelete,onUpdate }) => {
   console.log(solution)
 
   const [typeNew, setType] = useState('');
   const [solutionNew, setSolution] = useState('');
+  const [refNew, setRef] = useState('');
+
   return (
     <div style={ styles }>
       <h2>{ type }</h2>
+      <p>{ref}</p>
       <h2>Solutions:</h2>
+
 {
     solution.map((solution,index)=>{
     return(
@@ -55,6 +59,8 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
     <label htmlFor="">Type:</label>
     <input type="text" name="type"  placeholder={type}    onChange={event => setType(event.target.value)}/>
 
+    <label htmlFor="">ref:</label>
+    <input type="text" name="ref"  placeholder={ref}    onChange={event => setRef(event.target.value)}/>
 
       </form>
 
@@ -67,7 +73,7 @@ export default ({ solution: { type, solution, _id }, onDelete,onUpdate }) => {
       />
 
 
-            <Icon path={ mdiCheck }   onClick={() => onUpdate(_id,typeNew,solutionNew)} style={{cursor:"pointer"}}
+            <Icon path={ mdiCheck }   onClick={() => onUpdate(_id,typeNew,solutionNew,refNew)} style={{cursor:"pointer"}}
               title="validate"
               size={1}
 

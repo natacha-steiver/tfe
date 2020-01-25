@@ -160,7 +160,7 @@ console.log('default')
   <div>
   <CodeMirror id="js"
 
-    value="//React + jsx ( rend le composant avec document.getElementById('test'))"
+    value="//React/jsx  ou ES6( rend le composant avec document.getElementById('test'))"
     options={{
       mode: 'text/jsx',
       gutters: ["CodeMirror-lint-markers"],

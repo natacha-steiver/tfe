@@ -14,10 +14,14 @@ async index({response,request}){
 
     const exType = request.post('type')
     const exSolution = request.post('solution')
+    const exRef = request.post('ref')
+
 
     const exercice = new Solution()
     exercice.type = exType.type
     exercice.solution =[[exSolution.solution.split('*')]]
+    exercice.ref =exRef.ref
+
 const exerciceLast=  await Solution
     .fetch()
 //db.tfe.getCollection("solutions").find().sort({"_id":-1}).limit(1)
@@ -39,13 +43,15 @@ const exerciceLast=  await Solution
         try {
           const exType = request.post('type')
           const exSolution = request.post('solution')
+          const exRef = request.post('ref')
 
 
-          const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution})
+          const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution,ref:exRef.ref})
           exercice.type = exType.type
           exercice.solution =exSolution.solution
+          exercice.ref =exRef.ref
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution})
+        return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution,ref:exRef.ref})
 
         } catch (e) {
           console.log(e)

@@ -72,7 +72,7 @@ let tokens=  await auth.authenticator('admin').listTokens()
 
 
         //delete admin/token
-        async deleteadmin({request, auth, response,params}){
+        async deleteAdmin({request, auth, response,params}){
           const user= await Administrateur.where({_id:params.id}).delete({id:params.id})
 
           return response.status(200).json({
@@ -86,7 +86,7 @@ let tokens=  await auth.authenticator('admin').listTokens()
 
 
           //delete admin/token
-          async updateadmin({params,request, auth, response}){
+          async updateAdmin({params,request, auth, response}){
 
                     try {
                       const adminEmail = request.post('email')
