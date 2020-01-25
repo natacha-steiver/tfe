@@ -13,9 +13,9 @@ async index({response,request}){
   async store({request,auth,response}){
 
     const lgImage = request.post('image')
-    const lglangage = request.post('langage')
+    const lgLangage = request.post('langage')
 
-    const langage= new langage()
+    const langage= new Langage()
     langage.image = lgImage.image
     langage.langage =lgLangage.langage
 const langageLast=  await Langage

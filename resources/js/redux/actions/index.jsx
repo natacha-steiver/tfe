@@ -554,7 +554,7 @@ export const updateLangage = (id,langage,image)=>{
 }
 
 export const updateLangageSuccess =  (data) => {
-  console.log("put"+JSON.stringify(data.id))
+  console.log("put"+JSON.stringify(data._id))
   return {
     type: UPDATE_LANGAGE,
     payload: {

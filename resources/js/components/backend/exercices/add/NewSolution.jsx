@@ -45,7 +45,7 @@ constructor(props){
   render() {
     return (
       <div>
-          <form method="POST"  onSubmit={ ()=>{  this.props.onAddSolution(this.state)}} >
+          <form method="POST"  onSubmit={ (e)=>{ e.preventDefault(); this.props.onAddSolution(this.state)}} >
           <div className="form-group">
               <input
               type="text"

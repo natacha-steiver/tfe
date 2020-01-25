@@ -28,7 +28,7 @@ async index({response}){
       const theoTitre= request.post('titre')
       const theoTexte = request.post('texte')
       //const theoImage= request.post('image')
-      const theoVideo = request.post('video')
+      //const theoVideo = request.post('video')
       const theoLangage = request.post('langage')
 
   const file = request.file('image', {
@@ -137,23 +137,97 @@ if(video){
 
 
         try {
-
+//await Theorie.where({_id:params.id}).delete({image:file,video:video})
               const theoTitre= request.post('titre')
               const theoTexte = request.post('texte')
-              const theoImage= request.post('image')
-              const theoVideo = request.post('video')
+            //  const theoImage= request.post('image')
+            //  const theoVideo = request.post('video')
               const theoLangage = request.post('langage')
 
 
+              const files = request.file('images', {
+                 types: ['image'],
+                 size: '2mb'
+               })
+               const videos = request.file('videos', {
+                  types: ['video'],
+                  size: '20mb'
+                })
 
-          const theorie= await Theorie.where({_id:params.id}).update({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo,langage:theoLangage})
+
+
+
+            if(files){
+              if(files._files && files._files.length>1){
+                files._files.forEach((el,i)=>{
+
+
+            if (fs.existsSync("public/images/".concat(el.clientName))) {
+             console.log("exist")
+
+            }else{
+              files.moveAll(Helpers.publicPath('images'), {
+             name: files._files.clientName,
+             overwrite: true
+             })
+
+            }
+                })
+              }else if(files){
+                if (fs.existsSync("public/images/".concat(files.clientName))) {
+                  console.log("exist")
+
+                }else{
+                   files.move(Helpers.publicPath('images'), {
+                  name: files.clientName,
+                  overwrite: true
+                  })
+
+                }
+              }
+            }
+
+
+
+            if(videos){
+
+
+                          if(videos._files && videos._files.length>1){
+                              videos._files.forEach((el,i)=>{
+
+
+                             if (fs.existsSync("public/videos/".concat(el.clientName))) {
+                               console.log("exist")
+                             }else{
+                                videos.moveAll(Helpers.publicPath('videos'), {
+                               name: videos.clientName,
+                               overwrite: true
+                               })
+                             }
+                              })
+                            }else if(videos){
+                              if (fs.existsSync("public/videos/".concat(videos.clientName))) {
+                                console.log("exist")
+                              }else{
+                                 videos.move(Helpers.publicPath('videos'), {
+                                name: videos.clientName,
+                                overwrite: true
+                                })
+                              }
+                            }
+            }
+
+
+
+
+          const theorie= await Theorie.where({_id:params.id}).update({id:params.id,titre:theoTitre.titre,texte:theoTexte.texte,image:files,video:videos,langage:theoLangage.langage})
           theorie.titre = theoTitre.titre
           theorie.texte = theoTexte.texte
-          theorie.image = theoImage.image
-          theorie.video = theoVideo.video
+          theorie.image = files
+          theorie.video = videos
           theorie.langage = theoLangage.langage
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,titre:theoTitre.titre,texte:theoTexte,image:theoImage,video:theoVideo,langage:theoLangage})
+        return response.status(200).json({id:params.id,titre:theoTitre.titre,texte:theoTexte.texte,image:files,video:videos,langage:theoLangage.langage})
 
         } catch (e) {
           console.log(e)

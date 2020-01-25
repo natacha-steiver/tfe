@@ -43,7 +43,7 @@ constructor(props){
   render() {
     return (
       <div>
-          <form method="POST"  onSubmit={ ()=>{  this.props.onAddLangage(this.state)}} >
+          <form method="POST"  onSubmit={ (e)=>{ e.preventDefault(); this.props.onAddLangage(this.state)}} >
           <div className="form-group">
               <input
               type="text"

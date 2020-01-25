@@ -32,7 +32,7 @@ const routes = [
   { path: '/register', component:Register },
 
 
-  { path: '/admin#'}
+
 
 
 ];
@@ -71,7 +71,7 @@ export default function Admin(){
     textColor="primary"
     centered
     >
-    <Tab label="admin" component={Link} to="/admin#" />
+
     <Tab label="solutions" component={Link} to="/solutions" />
 
     <Tab label="theories" component={Link} to="/theories" />

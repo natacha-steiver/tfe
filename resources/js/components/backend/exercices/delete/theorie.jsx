@@ -2,7 +2,7 @@
 
 import React, { useState }  from 'react';
 import store from "../../../../redux/store"
-
+import axios from 'axios';
 import { UPDATE_THEORIE} from "../../../../redux/constantes/index";
 const styles = {
   borderBottom: '2px solid #eee',
@@ -87,10 +87,32 @@ export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,on
             <input type="text" name="titre"  placeholder={titre}  onChange={event => setTitre(event.target.value)}/>
             <label htmlFor="">Texte:</label>
             <input type="text" name="texte"  placeholder={texte}    onChange={event => setTexte(event.target.value)}/>
-            <label htmlFor="">Image:</label>
-            <input type="text" name="image"  placeholder={image}    onChange={event => setImage(event.target.value)}/>
-            <label htmlFor="">Video:</label>
-            <input type="text" name="video"  placeholder={video}    onChange={event => setVideo(event.target.value)}/>
+            <div className="form-group">
+              <input
+              type="file"
+                cols="19"
+                rows="8"
+                id="images"
+                placeholder="images"
+                className="form-control"
+                name="file[]"
+                multiple={true}
+                onChange={event => setImage(event.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <input
+              type="file"
+                cols="19"
+                rows="8"
+                id="videos"
+                placeholder="videos"
+                className="form-control"
+                name="file[]"
+                multiple={true}
+                onChange={event => setVideo(event.target.value)}
+              />
+            </div>
             <label htmlFor="">langage:</label>
             <input type="text" name="langage"  placeholder={langage}    onChange={event => setLangage(event.target.value)}/>
 
@@ -102,8 +124,28 @@ export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,on
             </button>
 
 
-            <button className="btn btn-danger" type="button" onClick={() => onUpdate(
-              _id,titreNew,texteNew,imageNew,videoNew,langageNew)} >
+            <button className="btn btn-danger" type="button"onClick={()=>{
+
+              let data = new FormData()
+             let input_image = document.getElementById('images')
+             let input_video= document.getElementById('videos')
+             Array.from(input_image.files).forEach((f) => {
+                 data.append('images', f)
+             })
+             Array.from(input_video.files).forEach((f) => {
+                 data.append('videos', f)
+             })
+             data.append('titre',titreNew )
+             data.append('texte',texteNew )
+
+             data.append('langage',langageNew )
+               axios.put(`api/theorie/${_id}`, data)
+                 .then(res => {
+                     console.log(res);
+                 })
+
+
+          }} >
               Update
               </button>
 
