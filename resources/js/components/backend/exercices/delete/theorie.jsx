@@ -13,7 +13,7 @@ const styles = {
   borderRadius: '7px'
 };
 window.store=store;
-export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,onUpdate }) => {
+export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,onUpdate,onFetch }) => {
   //console.log(exercice)
 
   const [titreNew, setTitre] = useState('');
@@ -141,8 +141,23 @@ export default ({ theorie: { titre,texte,image,video,langage, _id }, onDelete,on
              data.append('langage',langageNew )
                axios.put(`api/theorie/${_id}`, data)
                  .then(res => {
+                       onFetch()
                      console.log(res);
-                 })
+                     return {
+                       type: UPDATE_THEORIE,
+                       payload: {
+                         _id: res.data.id,
+                         titre: res.data.titre,
+                         texte: res.data.texte,
+                         image:res.data.image,
+                         video:res.data.video,
+                         langage:res.data.langage,
+                         date: new Date().toLocaleDateString()
+                       }
+                 }}).catch(error => {
+                     throw(error);
+                   });
+
 
 
           }} >

@@ -361,9 +361,7 @@ export const fetchAllExercices = () => {
 
 export const createTheorie = ({titre,texte,image,video,langage }) => {
   return (dispatch) => {
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('video',video);
+
     return axios.post(`api/theorie/add`, {titre,texte,image,video,langage },{
       headers:{"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
 })

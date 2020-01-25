@@ -2,10 +2,19 @@
 
 import React,{useState} from 'react';
 import store  from "../../../../redux/store";
-import { ADD_THEORIE } from "../../../../redux/constantes/index";
+import {
+
+  ADD_THEORIE,
+  DELETE_THEORIE,
+  FETCH_THEORIE,
+  UPDATE_THEORIE,
+
+
+
+} from  "../../../../redux/constantes/index";
 import axios from 'axios';
 
-function NewTheorie(){
+function NewTheorie({onFetch}){
 
   const [titreNew, setTitre] = useState('');
   const [texteNew, setTexte] = useState('');
@@ -147,6 +156,8 @@ data.append(e.target.name,e.target.value)
           <div className="form-group">
             <button type="button" className="btn btn-primary" onClick={()=>{
 
+
+
               let data = new FormData()
              let input_image = document.getElementById('image')
              let input_video= document.getElementById('video')
@@ -160,13 +171,51 @@ data.append(e.target.name,e.target.value)
              data.append('texte',texteNew )
 
              data.append('langage',langageNew )
-               axios.post('api/theorie/add', data)
-                 .then(res => {
-                     console.log(res);
-                 })
 
 
-          }}  >Add Theorie</button>
+
+                return axios.post(`api/theorie/add`, data)
+                  .then(response => {
+                    onFetch()
+                    return (
+                {
+                  type: ADD_THEORIE,
+                  payload: {
+                    _id: response.data.all.map(item=>(
+                        item._id
+                      )).toString(),
+                    titre: response.data.all.map(item=>(
+                        item.titre
+                      )).toString(),
+                    texte:response.data.all.map(item=>(
+                        item.texte
+                      )).toString(),
+                    image:response.data.all.map(item=>(
+                          item.image
+                        )).toString(),
+                    video:response.data.all.map(item=>(
+                            item.video
+                          )).toString(),
+                    langage:response.data.all.map(item=>(
+                                  item.langage
+                                )).toString(),
+                    date: new Date().toLocaleDateString()
+                  }
+                },{
+                  type: FETCH_THEORIE,
+                  theories
+                }
+
+              )})
+                  .catch(error => {
+                    throw(error);
+                  });
+              }
+            }
+
+
+
+  >Add Theorie</button>
 
           </div>
 

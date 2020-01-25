@@ -11,19 +11,21 @@ function TheorieList({ theories, onDelete,onUpdate,onFetch }) {
 
   return (
     <div>
-    <button onClick={()=>{onFetch()}}>liste</button>s
-
+    <button onClick={()=>{onFetch()}}>liste</button>
       {
       theories.map((theorie,index )=> {
         return (
 
-          <Theorie theorie={ theorie } onDelete={ onDelete } onUpdate={onUpdate} key={theorie._id} />
+          <Theorie theorie={ theorie } onDelete={ onDelete } onUpdate={onUpdate} onFetch={onFetch} key={theorie._id} />
         );
       })}
 
     </div>
   );
 }
+
+
+
 
 const mapStateToProps = state => {
   {/*utilisé uniquement pour faire le map au dessus et undefined state (solutions correspond au props)*/}
