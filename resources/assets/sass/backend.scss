@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+.formulaireAdd{
+width: 30%;
+border: 1px solid #000;
+padding: 2em;
+margin: 0 2em;
+display: inline-block;
+img:nth-of-type(1){
+  float: right;
+  width: 40%;
+}
+input,textarea{
+  margin-top: 1em;
+  padding: .5em;
+}
+}
+.guide{
+  position: absolute;
+  width: 50%;
+  color:#707092;
+  background: #fbf5f5;
+  padding: 2em;
+  margin: 2em;
+
+  display: inline-block;
+}
+.form{
+  margin-left: 5em;
+}
+
+
+.bandeau{
+color:#000;
+
+}
+.update{
+  position: relative;
+
+  img{
+    width: 20%;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

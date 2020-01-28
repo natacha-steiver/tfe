@@ -1,6 +1,6 @@
 // src/js/reducers/index.js
 
-import { ADD_EXERCICE,DELETE_EXERCICE,FETCH_EXERCICE,UPDATE_EXERCICE } from "../constantes/index";
+import { ADD_EXERCICE,DELETE_EXERCICE,FETCH_EXERCICE,UPDATE_EXERCICE,FETCH_SOLUTION_EX } from "../constantes/index";
 
 
 export default function exerciceReducer(state = [], action) {
@@ -17,6 +17,8 @@ export default function exerciceReducer(state = [], action) {
 
     case FETCH_EXERCICE:
     return action.exercices;
+    case FETCH_SOLUTION_EX:
+    return action.solutionsEx;
     default:
     return  state;
   }

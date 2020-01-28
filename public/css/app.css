@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+li {
+  list-style-type: none;
+}
+
 body,
 html {
   margin: 0;
@@ -59,7 +63,7 @@ html {
 
 #contentMain {
   margin-bottom: 1em;
-  background-image: url(/images/header.jpg?d41d8cd98f00b204e9800998ecf8427e);
+  background-image: url(/images/header.jpg?afdda3c05906e6bf062fa20925d9a42d);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 70%;

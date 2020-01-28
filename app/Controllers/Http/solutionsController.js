@@ -19,7 +19,7 @@ async index({response,request}){
 
     const exercice = new Solution()
     exercice.type = exType.type
-    exercice.solution =[[exSolution.solution.split('*')]]
+    exercice.solution =[exSolution.solution.split('*')]
     exercice.ref =exRef.ref
 
 const exerciceLast=  await Solution
@@ -42,16 +42,16 @@ const exerciceLast=  await Solution
 
         try {
           const exType = request.post('type')
-          const exSolution = request.post('solution')
+          const exSolutions = request.post('solutions')
           const exRef = request.post('ref')
 
 
-          const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:exSolution.solution,ref:exRef.ref})
+          const exercice= await Solution.where({_id:params.id}).update({id:params.id,type:exType.type,solution:[exSolutions.solution.split('*')],ref:exRef.ref})
           exercice.type = exType.type
-          exercice.solution =exSolution.solution
+          exercice.solution =[exSolutions.solution.split('*')]
           exercice.ref =exRef.ref
       console.log(request+"requete")
-        return response.status(200).json({id:params.id,type:exType.type,solution:exSolution.solution,ref:exRef.ref})
+        return response.status(200).json({id:params.id,type:exType.type,solution:exSolutions.solution,ref:exRef.ref})
 
         } catch (e) {
           console.log(e)

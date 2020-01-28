@@ -24,6 +24,7 @@ import Admin from './components/admin/index'
 
 import Login from './components/login/index'
 import Register from './components/register/index'
+import Test from './components/test/index'
 
 
 import TheorieListe from './components/frontend/apprendre/pratique/menu';
@@ -95,7 +96,7 @@ ReactDOM.render(
       <Route path="/apprendre">
         <TheorieListe />
       </Route>
-      <Route path="/entrainement">
+      <Route exact path="/entrainement">
         <ExerciceListe />
       </Route>
                     <Route path="/login">

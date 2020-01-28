@@ -14,6 +14,7 @@ import {
   DELETE_EXERCICE,
   FETCH_EXERCICE,
   UPDATE_EXERCICE,
+  FETCH_SOLUTION_EX,
   ADD_THEORIE,
   DELETE_THEORIE,
   FETCH_THEORIE,
@@ -141,12 +142,12 @@ export const createSolutionSuccess =  (data) => {
 };
 
 //-------------------UPDATE-------------------
-export const updateSolution = (id,solution,type,ref)=>{
+export const updateSolution = (id,type,solution,ref)=>{
 
 
 
     return (dispatch) => {
-      return axios.put(`api/solution/${id}`,{id:id,solution: solution,type:type,ref:ref},{
+      return axios.put(`api/solution/${id}`,{id:id,type:type,solution: solution,ref:ref},{
         headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
@@ -280,7 +281,7 @@ export const updateExercice = (id,ennonce,type,titre,ref)=>{
 
 
     return (dispatch) => {
-      return axios.put(`api/exercice/${id}`,{id:id,ennonce: ennonce,type:type,titre:titre,ref:ref},{
+      return axios.put(`api/exercice/${id}`,{id:id,type:type,ennonce: ennonce,titre:titre,ref:ref},{
         headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
       })
       .then(response => {
@@ -355,6 +356,28 @@ export const fetchAllExercices = () => {
   };
 };
 
+
+
+export const fetchSolutionsEx = (solutionsEx) => {
+  return {
+    type: FETCH_SOLUTION_EX,
+    solutionsEx
+  }
+};
+
+export const fetchAllSolutionsEx = () => {
+  return (dispatch) => {
+    return axios.get('api/solutionsEx',{
+      headers:{'Content-Type':'application/json',"Authorization":"Bearer "+readCookie('tokenTxt').split(/%[0-55][0-55]/,8).reverse().join('').replace(/%/,' ').split(' ',1).join('')}
+        })
+      .then(response => {
+        dispatch(fetchSolutionsEx(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
 
 //------------------------------------------THEORIES-------------------------------
 //-------------------ADD-------------------

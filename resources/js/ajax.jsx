@@ -1,8 +1,9 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true
 import store,{history} from './redux/store'
-export const getList = ()=>{
 
+
+export const getList = ()=>{
 
 return axios
 
@@ -210,6 +211,23 @@ return axios
   })
   .then(res =>{
   console.log(res)
+  })
+
+}
+//-----------------------------------
+
+
+export const solutionsRefEx = ()=>{
+
+return axios
+  .get(`api/solutionsEx`,{
+    headers:{'Content-Type':'application/json'}
+      })
+  .then(res =>{
+    var data = res.data
+
+  console.log(res)
+    return data
   })
 
 }

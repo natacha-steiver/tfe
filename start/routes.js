@@ -19,12 +19,13 @@ const Route = use('Route')
 Route.group(
   ()=> {
 
-    Route.get('solutions','solutionsController.index').middleware('auth:admin')
+    Route.get('solutions','solutionsController.index')
     Route.get('exercices','exercicesController.index').middleware('auth:admin')
     Route.get('items','itemsController.index')
     Route.get('theories','theoriesController.index').middleware(['auth:admin'])
     Route.get('users','utilisateursController.index').middleware('auth:admin')
     Route.get('admins','administrateursController.index').middleware('auth:admin')
+    Route.get('solutionsEx','exercicesController.indexByRefEx')
 
     Route.get('langages','langagesController.index').middleware('auth:admin')
 

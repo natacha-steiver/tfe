@@ -1,6 +1,8 @@
 'use strict'
 
 const Exercice = use('App/Models/exercices')
+const Solution = use('App/Models/solutions')
+
 class exercicesController {
 async index({response}){
 
@@ -13,6 +15,21 @@ try{
   return response.json({message: 'You are not authorized to perform this action'})
 }
   }
+
+
+
+  async indexByRefEx({response}){
+
+  try{
+    let solutionsRef = await Solution.all()
+    let exRef = await Exercice.all()
+
+    return response.json({donnees:{solutionsRef,exRef}}  )
+  } catch (e) {
+
+    return response.json({message: 'You are not authorized to perform this action'})
+  }
+    }
 
 
   async store({request,auth,response}){

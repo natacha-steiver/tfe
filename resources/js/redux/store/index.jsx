@@ -12,6 +12,7 @@ import { fetchAllSolutions } from '../actions/index';
 import { fetchAllExercices } from '../actions/index';
 import { fetchAllTheories } from '../actions/index';
 import { fetchAllLangages } from '../actions/index';
+import { fetchAllSolutionsEx } from '../actions/index';
 
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
@@ -73,6 +74,7 @@ persistedReducer,
   //sessionStorage.setItem('test',JSON.stringify(res.data.token))
   store.dispatch(fetchAllTheories())
   store.dispatch(fetchAllSolutions())
+    store.dispatch(fetchAllSolutionsEx())
   store.dispatch(fetchAllExercices())
   store.dispatch(fetchAllLangages())
 
@@ -151,6 +153,13 @@ store.dispatch(fetchAllTheories())
 store.dispatch(fetchAllSolutions())
 store.dispatch(fetchAllExercices())
 store.dispatch(fetchAllLangages())
+{
+  /*
+
+  store.dispatch(fetchAllSolutionsEx())
+   */
+}
+
 
 console.log(res.data.auth)
 //cookie split
@@ -250,4 +259,11 @@ if(readCookie('tokenTxt') !=null){
   store.dispatch(fetchAllExercices())
   store.dispatch(fetchAllLangages())
   store.dispatch(fetchAllTheories())
+  {
+    /*
+
+    store.dispatch(fetchAllSolutionsEx())
+     */
+  }
+
 }

@@ -1,6 +1,8 @@
 import React, { useState,  forwardRef  } from 'react';
 import ReactDOM from "react-dom";
 
+//import SoluEx from '../backend/exercices/delete/soluEx';
+import SolutionListe from '../frontend/apprendre/pratique/solutionRedux';
 
 
 import { Component, useRef } from "react";
@@ -240,6 +242,17 @@ export default function Menu() {
 
 
 
+
+
+
+                                    <ListItem button className="hightlight">
+
+                                    <Link to={ `/solutionsEx` }>
+                                         <ListItemText primary="SolutionsEx" />
+                                             </Link>
+
+                                    </ListItem>
+
                               <ListItem button className="hightlight">
 
                               <Link to={ `/ide` }>
@@ -283,7 +296,7 @@ export default function Menu() {
                 <Route path="/apprendre">
                   <TheorieListe />
                 </Route>
-                <Route path="/entrainement">
+                <Route exact path="/entrainement">
                   <ExerciceListe />
                 </Route>
 
@@ -292,6 +305,9 @@ export default function Menu() {
                 <Route path="/ide">
                   <Ide />
                 </Route>
+
+
+
               </Switch>
   </div>
 

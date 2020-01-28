@@ -2,12 +2,21 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import {UnControlled as CodeMirror} from 'react-codemirror2'
 import { JSHINT } from 'jshint'
-import {getList} from '../../ajax'
+
 import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/javascript-lint'
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/mode/python/python'
+import 'codemirror/addon/lint/css-lint'
+//import "codemirror/addon/lint/html-lint"
+import 'codemirror/addon/lint/lint.css'
 
+
+
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/mode/xml/xml'
+
+import 'codemirror/mode/css/css'
+import 'codemirror/mode/python/python'
+import "../../../assets/sass/terminal.min.css"
 window.JSHINT = JSHINT
 
 class Test extends React.Component {
@@ -27,68 +36,55 @@ class Test extends React.Component {
         valeurpython:"",
         click:false,
         valeur:"",
-        currentLanguage:""
+        currentLanguage:"",
+        jsclick:false,
+        htmlclick:false,
+        langagechoose:false,
+        resultat:false
       }
 
       const langage =this.props.langage
-      switch (langage) {
-        case "text/python":
-            this.setState({currentLanguage:"text/x-python"},    console.log(this.state.currentLanguage +"current"))
-          break;
-          case "text/javascript":
-              this.setState({currentLanguage:"text/javascript"},    console.log(this.state.currentLanguage +"current"))
-            break;
-            case "text/html":
-                this.setState({currentLanguage:"text/xml"},    console.log(this.state.currentLanguage +"current"))
-              break;
-              case "text/css":
-                  this.setState({currentLanguage:"text/css"},    console.log(this.state.currentLanguage +"current"))
-                break;
-        default:
-console.log('default')
-      }
 
+  this.sendData= this.sendData.bind(this)
     }
-    componentDidMount(){
-      this.getAll()
-    }
+  sendData(){
+    if(this.state.mode=="text/x-python"){
+      this.props.parentCallback(      this.state.mode.replace(/^text\/x-/,"") );
+
+    }else{
+      this.props.parentCallback(         this.state.mode.replace(/^text\//,"")
+);
+
+    }          }
+componentDidMount(){
+this.sendData()
+this.props.parentCallback(this.state.mode.replace('text/',"") );
+}
 
 
+selectMode(){
+    var modeInput = document.getElementById("select");
 
-    getAll = () =>{
-      getList().then(
-        data => {
-          const result=data[0].result.replace(/\\n/g,"<br />").replace(/\\t/g,"&nbsp; ")
-          this.setState(
-          {
+    var myindex  = modeInput.selectedIndex;
+    var modefly = modeInput.options[myindex].text.toLowerCase();
 
-            solution:result,
+  //  alert(modefly); // This is giving me the exact mode on the screen
+        this.setState({mode:modefly},    console.log(this.state.mode +"fct1"))
 
-          },    () => {
-              console.log(this.state.solution)
-
-              }
-          )
-        }
-      )
-    }
-
-    selectMode(){
-        var modeInput = document.getElementById("select");
-        var myindex  = modeInput.selectedIndex;
-        var modefly = modeInput.options[myindex].text.toLowerCase();
-
-      //  alert(modefly); // This is giving me the exact mode on the screen
-            this.setState({mode:modefly},    console.log(this.state.mode +"fct1"))
-
-      //  editor.setOption("mode", modefly);// no change in the mode
-      //  CodeMirror.autoLoadMode(editor, modefly);//no change in the mode
-        //editor.refresh();
-         }
+  //  editor.setOption("mode", modefly);// no change in the mode
+  //  CodeMirror.autoLoadMode(editor, modefly);//no change in the mode
+    //editor.refresh();
+     }
   componentDidUpdate(){
-  if(this.state.mode=='' ||this.state.mode=="JavaScript"){
-      this.selectMode()
-  }
+    if(this.state.mode=='' ){
+        this.selectMode()
+
+
+    }
+
+//console.log(this.state.mode.replace((/^text\/x-/)|(/^text\//),"") )
+this.props.parentCallback(this.state.mode );
+this.sendData()
       this.test= React.createRef();
     const getGeneratedPageURL = ({ html, css, js,python }) => {
     const getBlobURL = (code, type) => {
@@ -120,6 +116,7 @@ console.log('default')
           ${html || ''}
           <input id="zone">
           <button id="mybutton">click !</button>
+
         </body>
       </html>
     `
@@ -149,47 +146,56 @@ console.log('default')
   render(){
 
     return (
-      <div>
+      <div style={{width:"100%"}}>
+      <h2 className="titre">IDE - testez vos codes librement</h2>
+      <button onClick={()=>{this.setState({htmlclick:false,langagechoose:false,resultat:false,jsclick:true})}}>React/JS</button>
+      <button onClick={()=>{this.setState({jsclick:false,langagechoose:false,resultat:false,htmlclick:true})}}>HTML</button>
+
+      <button onClick={()=>{this.setState({htmlclick:false,jsclick:false,resultat:false,langagechoose:true})}}>ton langage</button>
+
+      <button onClick={()=>{this.setState({htmlclick:false,jsclick:false,langagechoose:false,resultat:true})}}>Résultat</button>
 
       <br/>
-      <CodeMirror id="js"
+{this.state.jsclick &&
+  <div>
+  <CodeMirror id="js"
 
-        value='//crée une fonction pour déplacer ton perso'
-        options={{
-          mode: 'text/jsx',
-          gutters: ["CodeMirror-lint-markers"],
-          lint:true,
-          styleActiveLine: true,
-          lineNumbers: true
-        }}
-        style={{width:'100%',height:'50%',marginTop:"2em"}}
-        onChange={(editor, data, value) => {
+    value="//React/jsx  ou ES6( rend le composant avec document.getElementById('test'))"
+    options={{
+      mode: 'text/jsx',
+      gutters: ["CodeMirror-lint-markers"],
+      lint:true,
+      styleActiveLine: true,
+      lineNumbers: true
+    }}
+    style={{width:'100%',height:'50%',marginTop:"2em",position:"relative",top:"57rem"}}
+    onChange={(editor, data, value) => {
 
-if(editor.getValue().includes(this.state.solution)){
-  console.log('vous avez trouvez la solution')
-}else{
 
-console.log( this.state.solution+"</br>"+editor.getValue())
-}
+console.log(editor.getValue())
+
 
 const getJS = jsx => Babel.transform(jsx, {
-    presets: ["es2015"],
-    plugins: ["transform-react-jsx"]
+presets: ["es2015"],
+plugins: ["transform-react-jsx"]
 }).code;
-        this.setState({valeurjs:  getJS(editor.getValue())})
+    this.setState({valeurjs:  getJS(editor.getValue())})
 
 
 
+}}
+/>
+<button onClick={()=>{
+  this.setState({click: true});
+  setTimeout(()=>{
+   this.setState({click: false})
+},2000)
+}}>compile</button>
+</div>
 }
 
-  }
-  />
-  <button onClick={()=>{
-    this.setState({click: true});
-    setTimeout(()=>{
-     this.setState({click: false})
-  },2000)
-}}>compile</button>
+
+{this.state.htmlclick  &&
   <CodeMirror
 
     value='//html'
@@ -201,7 +207,7 @@ const getJS = jsx => Babel.transform(jsx, {
       styleActiveLine: true,
       lineNumbers: true
     }}
-    style={{width:'100%',height:'50%',marginTop:"2em"}}
+    style={{width:'100%',height:'50%',marginTop:"2em",position:"relative",top:"57rem"}}
     onChange={(editor, data, value) => {
 
 
@@ -216,66 +222,81 @@ const getJS = jsx => Babel.transform(jsx, {
 }
 />
 
+}
 
-<div>
-<CodeMirror
 
-  value='//python'
-  options={{
-    mode: this.state.mode,
-    gutters: ["CodeMirror-lint-markers"],
-    lint:true,
-    styleActiveLine: true,
-    lineNumbers: true
+
+
+{this.state.langagechoose  &&
+  <div>
+  <CodeMirror
+
+    value='//choisissez votre mode'
+    options={{
+      mode: this.state.mode,
+      gutters: ["CodeMirror-lint-markers"],
+      lint:true,
+      styleActiveLine: true,
+      lineNumbers: true
+    }}
+    style={{width:'100%',height:'50%',marginTop:"2em",position:"relative",top:"57rem"}}
+    onChange={(editor, data, value) => {
+
+
+
+    const langages =this.state.mode
+    switch (langages) {
+      case "text/x-python":
+  this.setState({valeurpython:  editor.getValue()})
+  break;
+        case "text/javascript":
+  this.setState({valeurjs:  editor.getValue()})
+  break;
+          case "text/xml":
+  this.setState({valeurhtml:  editor.getValue()})
+  break;
+            case "text/css":
+  this.setState({valeurcss:  editor.getValue()})
+  break;
+      default:
+
+  console.log('default')
+       }
+
+
+
+
+
+
   }}
-  style={{width:'100%',height:'50%',marginTop:"2em"}}
-  onChange={(editor, data, value) => {
-
-  console.log(this.state.mode+"affcihe")
 
 
-  const langages =this.state.mode
-  switch (langages) {
-    case "text/x-python":
-this.setState({valeurpython:  editor.getValue()})
-break;
-      case "text/javascript":
-this.setState({valeurjs:  editor.getValue()})
-break;
-        case "text/xml":
-this.setState({valeurhtml:  editor.getValue()})
-break;
-          case "text/css":
-this.setState({valeurcss:  editor.getValue()})
-break;
-    default:
+  />
+  <button onClick={()=>{
+    this.setState({click: true});
+    setTimeout(()=>{
+     this.setState({click: false})
+  },2000)
+}}>compile</button>
 
-console.log('default')
-     }
-
-
-
-
-
-
-}}
-
-
-/>
+  </div>
+}
 <select name="idLanguage" id="select" onChange={()=>{this.selectMode()}}>
 <option value="1">text/x-python</option>
 <option value="10">text/javascript</option>
 
 <option value="40">text/xml</option>
 
-<option value="44">text/css</option>
+<option value="44" >text/css</option>
 </select>
-</div>
-      <iframe ref={this.test} id="iframe" style={{width:"100%",height:"200px"}}>
+
+  <div id="test"></div>
+  <iframe ref={this.test} id="iframe" style={{width:"100%",height:"30rem"}}>
 
 
 
-      </iframe>
+  </iframe>
+
 
 
 </div>

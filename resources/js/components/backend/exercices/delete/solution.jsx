@@ -5,12 +5,14 @@ import store from "../../../../redux/store"
 import Icon from '@mdi/react'
 import {  mdiDeleteForever, mdiCheck  } from '@mdi/js';
 import { UPDATE_SOLUTION } from "../../../../redux/constantes/index";
+import soluImg from '../../../../../../public/images/solution.png';
+
 const styles = {
   borderBottom: '2px solid #eee',
   background: '#fafafa',
-  margin: '.75rem auto',
+  margin: ' 7em',
   padding: '.6rem 1rem',
-  maxWidth: '500px',
+
   borderRadius: '7px'
 };
 window.store=store;
@@ -22,19 +24,23 @@ export default ({ solution: { type, solution,ref, _id }, onDelete,onUpdate }) =>
   const [refNew, setRef] = useState('');
 
   return (
-    <div style={ styles }>
-      <h2>{ type }</h2>
-      <p>{ref}</p>
-      <h2>Solutions:</h2>
+    <div style={ styles } className="update">
+    <img src={soluImg} alt="solution"/>
+
+<div className="bandeau">
+<h2>{ type }</h2>
+<p>{ref}</p>
+<h2>Solutions:</h2>
 
 {
-    solution.map((solution,index)=>{
-    return(
-        <p key={solution._id}>{solution.toString()}</p>
-    )
-  })
+solution[0].map((solution,index)=>{
+return(
+  <p key={solution._id}>{solution.toString()}</p>
+)
+})
 }
 
+</div>
       <form >
 
 
@@ -46,7 +52,7 @@ export default ({ solution: { type, solution,ref, _id }, onDelete,onUpdate }) =>
       rows="8"
       placeholder="Solution"
       className="form-control"
-      name="solution"
+      name="solutions"
        onChange={event => setSolution(event.target.value)}
       defaultValue={
           solution.map((solution,index)=>{
